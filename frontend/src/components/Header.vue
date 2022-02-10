@@ -11,7 +11,8 @@
         </router-link>
       </div>
       <div v-if="isLoggedIn" class="profileURL">
-        <img class="profileImage" :src="profileURL" />
+        <img v-if="profileURL.length > 0" class="profileImage" :src="profileURL" />
+        <img v-if="profileURL.length == 0" class="profileImage" src="../images/profile.png" />
         <div @click="logout" class="logoutDiv">Log out</div>
       </div>
 
