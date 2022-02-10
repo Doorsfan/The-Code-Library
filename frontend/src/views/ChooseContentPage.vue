@@ -140,7 +140,6 @@ button {
 .loginFooter {
   position: relative;
   top: calc(100vh - 407px);
-  width: calc(100vw - 20px);
-  padding-right: 20px;
+
 }
 </style>

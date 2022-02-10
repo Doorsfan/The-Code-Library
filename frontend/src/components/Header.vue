@@ -13,7 +13,7 @@
       <div v-if="isLoggedIn" class="profileURL">
         <img @click="goToMyContent" v-if="profileURL.length > 0" class="profileImage" :src="profileURL" />
         <img @click="goToMyContent" v-if="profileURL.length == 0" class="profileImage" src="../images/profile.png" />
-        <div @click="logout" class="logoutDiv">Log out</div>
+        <div @click="logout" class="logoutDiv">Logout</div>
       </div>
 
       <div class="searchDiv">
@@ -69,8 +69,8 @@ export default {
   top: 60px;
   background-color: white;
   border-radius: 10px;
-  padding-left: 3px;
-  padding-right: 3px;
+  padding-left: 6px;
+  padding-right: 6px;
   border: solid 0.6px black;
 }
 .upperGrid {
@@ -90,6 +90,8 @@ export default {
   text-align: center;
   color: #ffffff;
   padding-top: 16px;
+  position: relative;
+  left: -6px;
 }
 .loginButton,
 .profileImage {
@@ -100,6 +102,14 @@ export default {
   width: 45px;
   height: 45px;
   margin-top: 11px;
+}
+.loginButton{
+  position: relative;
+  left: -20px;
+}
+.profileImage{
+  position: relative;
+  left: -5px;
 }
 .homeIcon {
   height: 30px;
@@ -113,7 +123,7 @@ export default {
   border: solid 0.3px black;
   padding-left: 5px;
   width: 140px;
-  margin-left: 32vw;
+  margin-left: 115px;
   margin-bottom: 3px;
   display: inline-block;
   margin-top: 16px;
@@ -121,7 +131,7 @@ export default {
 .glassIcon {
   position: relative;
   top: -30px;
-  left: 70vw;
+  left: 270px;
   width: 30px;
   border-radius: 10px;
   border: solid 2px #c4c4c4;
@@ -130,5 +140,10 @@ export default {
 .libraryText {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
+    font-size: 20px;
+}
+.profileURL{
+  position: relative;
+  left: -18px;
 }
 </style>
