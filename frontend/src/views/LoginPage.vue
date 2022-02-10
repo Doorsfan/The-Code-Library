@@ -44,6 +44,9 @@
     >
       Login
     </button>
+    <router-link class="registerLink" to="/Register">
+      <div class="registerLinkDiv">Register a New Account</div>
+    </router-link>
   </div>
   <Footer class="loginFooter" />
 </template>
@@ -69,9 +72,6 @@ export default {
       this.$router.push('/');
     },
     async login() {
-      let user = {
-        username: this.wantedUserName,
-      };
       let res = await fetch(
         '/rest/users/username/' +
           this.wantedUsername +
@@ -86,11 +86,8 @@ export default {
       if (response.username == '' && response.profileURL == '') {
         alert('Bad credentials');
       } else {
-        let user = {
-          username: this.wantedUsername,
-          profileURL: response.profileURL,
-        };
         localStorage.setItem('username', this.wantedUsername);
+        console.log(response);
         localStorage.setItem('profileURL', response.profileURL);
         this.$router.push('/');
       }
@@ -112,6 +109,12 @@ export default {
   width: 293px;
   height: 24px;
   padding-left: 5px;
+}
+
+.registerLink, .registerLink:visited{
+  text-decoration: none;
+  color: blue;
+  width: max-content;
 }
 .disabledLoginButton {
   width: 140px;
@@ -169,7 +172,7 @@ export default {
   color: #ffffff;
 }
 .LoginBox {
-  height: 242px;
+  height: 247px;
   width: 389px;
   background-color: #61bfc5;
   position: relative;
@@ -200,6 +203,12 @@ export default {
     1px 1px 0 #000;
   color: #ffffff;
 }
+.registerLinkDiv{
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+}
 .homeDiv {
   background-color: red;
   position: absolute;
@@ -227,6 +236,6 @@ export default {
 }
 .loginFooter {
   position: relative;
-  top: calc(100vh - 395px);
+  top: calc(100vh - 399px);
 }
 </style>

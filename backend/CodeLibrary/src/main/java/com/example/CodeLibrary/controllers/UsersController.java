@@ -7,6 +7,8 @@ import com.example.CodeLibrary.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.*;
+import java.io.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,7 +16,7 @@ import java.util.Optional;
 // @RestController Spring Boot specifikt, tillåter oss använda @RequestBody för att
 // automatiskt konvertera JSON till Java objekt. Med vanlig @Controller är det flera extra steg.
 @RestController
-@RequestMapping("/rest") // Sätter denna strängen att komma automatiskt efter localhost:4000{minSträng}
+@RequestMapping(value = "/rest", method = RequestMethod.POST) // Sätter denna strängen att komma automatiskt efter localhost:4000{minSträng}
 public class UsersController {
 
     @Autowired
@@ -38,16 +40,28 @@ public class UsersController {
         for(int i = 0; i < relevantUsers.size(); i++){
             if(relevantUsers.get(i).getUsername().equals(username) && relevantUsers.get(i).getPassword().equals(password)){
                 userDTO.setUsername(relevantUsers.get(i).getUsername());
-                userDTO.setProfileURL(relevantUsers.get(i).getProfileURL());
+                userDTO.setProfileURL(relevantUsers.get(i).getImage());
             }
         }
         return userDTO;
     }
 
     // @RequestBody konverterar Req JSON objektet till det specifika java objektet vi anger som parameter
-    @PostMapping("/users")
-    public User createNewUser(@RequestBody User user){
-        return userService.saveNewUserToDB(user);
+    @PostMapping("/users/register/{username}/{password}")
+    public UserWithoutPW createNewUser(@PathVariable String username, @PathVariable String password, @RequestBody String image){
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(password);
+        newUser.setImage(image.substring(1, image.length() - 1));
+        try{
+            newUser = userService.saveNewUserToDB(newUser);
+            UserWithoutPW relevantUser = new UserWithoutPW(newUser.getUsername(), newUser.getImage());
+            return relevantUser;
+        }
+        catch(Exception e){
+            newUser.setUsername("");
+        }
+        return new UserWithoutPW(newUser.getUsername(), newUser.getImage());
     }
 
     @DeleteMapping("/users/{id}")

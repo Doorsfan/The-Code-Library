@@ -30,13 +30,10 @@ public class User {
         this.password = password;
     }
 
-    public String getProfileURL() {
-        return this.profileURL;
-    }
+    public String getImage() { return this.image; }
 
-    public void setProfileURL(String profileURL){
-        this.profileURL = profileURL;
-    }
+    public void setImage(String image) { this.image = image; }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,7 +41,7 @@ public class User {
 
     private String username;
     private String password;
-    private String profileURL;
+    private String image;
 
     public User() {
 

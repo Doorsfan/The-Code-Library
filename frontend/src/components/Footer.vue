@@ -35,8 +35,8 @@ export default {
   display: grid;
   grid-template-columns: max-content auto max-content;
   height: 65px;
-  position: relative;
-  top: calc(100vh - 194px);
+  position: absolute;
+  top: calc(100vh - 64px);
   width: 100vw;
 }
 .homeIcon {
