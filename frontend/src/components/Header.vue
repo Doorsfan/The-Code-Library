@@ -11,8 +11,8 @@
         </router-link>
       </div>
       <div v-if="isLoggedIn" class="profileURL">
-        <img v-if="profileURL.length > 0" class="profileImage" :src="profileURL" />
-        <img v-if="profileURL.length == 0" class="profileImage" src="../images/profile.png" />
+        <img @click="goToMyContent" v-if="profileURL.length > 0" class="profileImage" :src="profileURL" />
+        <img @click="goToMyContent" v-if="profileURL.length == 0" class="profileImage" src="../images/profile.png" />
         <div @click="logout" class="logoutDiv">Log out</div>
       </div>
 
@@ -51,6 +51,9 @@ export default {
       this.profileURL = '';
       this.$router.push('/');
     },
+    goToMyContent() {
+      this.$router.push('/myContent')
+    }
   },
 };
 </script>

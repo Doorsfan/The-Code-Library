@@ -4,6 +4,8 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from './views/HomePage.vue';
 import LoginPage from './views/LoginPage.vue';
 import RegisterPage from './views/RegisterPage.vue';
+import ChooseContentPage from './views/ChooseContentPage.vue';
+import CreateArticlePage from './views/CreateArticlePage.vue';
 
 export default createRouter({
   history: createWebHistory(),
@@ -19,6 +21,14 @@ export default createRouter({
     {
       path: '/Register',
       component: RegisterPage
+    },
+    {
+      path: '/myContent',
+      component: ChooseContentPage
+    },
+    {
+      path: '/createNewArticle',
+      component: CreateArticlePage
     }
   ],
 });
