@@ -88,7 +88,11 @@
     cols="33"
     placeholder="Your second description.. (Optional)"
   />
-  <input type="text" class="secondTitleInput" placeholder="Your second title.. (Optional)" />
+  <input
+    type="text"
+    class="secondTitleInput"
+    placeholder="Your second title.. (Optional)"
+  />
   <textarea
     v-model="wantedFirstSection"
     class="secondSectionInput"
@@ -106,7 +110,11 @@
     cols="33"
     placeholder="Your third description.. (Optional)"
   />
-  <input type="text" class="thirdTitleInput" placeholder="Your third title.. (Optional)" />
+  <input
+    type="text"
+    class="thirdTitleInput"
+    placeholder="Your third title.. (Optional)"
+  />
   <textarea
     v-model="wantedFirstSection"
     class="thirdSectionInput"
@@ -131,7 +139,7 @@ export default {
     return {
       wantedTitle: '',
       wantedFirstDescription: '',
-      wantedFirstSection: ''
+      wantedFirstSection: '',
     };
   },
   mounted() {},
@@ -174,7 +182,7 @@ export default {
   left: 160px;
   width: max-content;
   border: solid 1px black;
-  background-color: #C4C4C4;
+  background-color: #c4c4c4;
   font-size: 23px;
   padding-left: 5px;
   padding-right: 5px;
@@ -218,7 +226,9 @@ export default {
 .thirdTagBox {
   top: 171px;
 }
-.firstSectionInput, .secondSectionInput, .thirdSectionInput{
+.firstSectionInput,
+.secondSectionInput,
+.thirdSectionInput {
   position: relative;
   top: 250px;
   left: 28px;
@@ -295,7 +305,9 @@ export default {
   width: 197px;
   height: 18px;
 }
-.firstDescriptionInput, .secondDescriptionInput, .thirdDescriptionInput {
+.firstDescriptionInput,
+.secondDescriptionInput,
+.thirdDescriptionInput {
   width: 306px;
   padding-left: 8px;
   padding-top: 4px;
@@ -307,10 +319,10 @@ export default {
   left: 45px;
   text-align: center;
 }
-.secondDescriptionInput{
+.secondDescriptionInput {
   margin-top: 16px;
 }
-.thirdDescriptionInput{
+.thirdDescriptionInput {
   margin-top: 16px;
 }
 .difficultyInput {
@@ -320,7 +332,9 @@ export default {
   height: 18px;
   top: -21px;
 }
-.firstTitleInput, .secondTitleInput, .thirdTitleInput {
+.firstTitleInput,
+.secondTitleInput,
+.thirdTitleInput {
   text-align: center;
   position: relative;
   right: -37px;

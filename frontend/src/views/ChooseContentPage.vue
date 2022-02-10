@@ -15,8 +15,12 @@
     >
       My Articles
     </button>
-    <button 
-      @click="goToCreateNewArticle" class="newArticleButton" type="button" value="Create New Article">
+    <button
+      @click="goToCreateNewArticle"
+      class="newArticleButton"
+      type="button"
+      value="Create New Article"
+    >
       Create New Article
     </button>
   </div>
@@ -45,7 +49,7 @@ export default {
     },
     goToCreateNewArticle() {
       this.$router.push('/createNewArticle');
-    }
+    },
   },
 };
 </script>
@@ -76,7 +80,8 @@ button {
   font-size: 22px;
 }
 
-.myArticlesButton, .newArticleButton{
+.myArticlesButton,
+.newArticleButton {
   position: relative;
   top: 30px;
 }
@@ -140,6 +145,5 @@ button {
 .loginFooter {
   position: relative;
   top: calc(100vh - 407px);
-
 }
 </style>

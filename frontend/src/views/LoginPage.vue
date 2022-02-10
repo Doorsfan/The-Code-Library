@@ -111,7 +111,8 @@ export default {
   padding-left: 5px;
 }
 
-.registerLink, .registerLink:visited{
+.registerLink,
+.registerLink:visited {
   text-decoration: none;
   color: blue;
   width: max-content;
@@ -203,7 +204,7 @@ export default {
     1px 1px 0 #000;
   color: #ffffff;
 }
-.registerLinkDiv{
+.registerLinkDiv {
   width: max-content;
   margin-left: auto;
   margin-right: auto;
