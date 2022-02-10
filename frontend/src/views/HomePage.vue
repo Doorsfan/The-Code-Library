@@ -29,4 +29,5 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Revalia&family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Revalia&family=Roboto:wght@300;400&display=swap');
+
 </style>
