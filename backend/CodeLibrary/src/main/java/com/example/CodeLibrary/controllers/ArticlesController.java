@@ -31,6 +31,11 @@ public class ArticlesController {
         return articleService.findAllArticles();
     }
 
+    @GetMapping("/articles/findArticleByTerm/{term}")
+    public List<Article> getArticlesContaining(@PathVariable String term){
+        return articleService.getArticlesContaining(term);
+    }
+
     @GetMapping("/articles/{id}")
     public Optional<Article> getOneArticle(@PathVariable int id){
         return articleService.findOneArticle(id);
