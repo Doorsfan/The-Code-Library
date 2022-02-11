@@ -1,10 +1,10 @@
 <template>
   <Header />
   <Article
-      v-for="(articleItem, index) of allArticles"
-      :key="index"
-      :article="articleItem"
-    />
+    v-for="(articleItem, index) of allArticles"
+    :key="index"
+    :article="articleItem"
+  />
   <Footer class="footerDiv" />
 </template>
 <script>
@@ -24,23 +24,20 @@ export default {
   beforeMount() {},
   data() {
     return {
-      allArticles: []
+      allArticles: [],
     };
   },
   async mounted() {
     this.allArticles = [];
-    let res = await fetch(
-        '/rest/articles/',
-        {
-          method: 'GET',
-        }
-      );
+    let res = await fetch('/rest/articles/', {
+      method: 'GET',
+    });
     let response = await res.json();
-    for(let i = 0; i < response.length; i++){
+    for (let i = 0; i < response.length; i++) {
       this.allArticles.push(response[i]);
     }
     console.log(response);
-    console.log(this.allArticles)
+    console.log(this.allArticles);
   },
   updated() {},
   unmounted() {},

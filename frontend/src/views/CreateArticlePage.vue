@@ -228,7 +228,7 @@ export default {
           thirddescription: this.wantedThirdDescription,
           thirdtitle: this.wantedThirdTitle,
           thirdsection: this.wantedThirdSection,
-          authorimage: localStorage.getItem('profileURL')
+          authorimage: localStorage.getItem('profileURL'),
         };
 
         let res = await fetch('/rest/articles/publish', {

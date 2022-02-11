@@ -56,9 +56,13 @@
         <div class="SpaceBlock" />
         <div class="firsttagdiv">{{ article.firsttag }}</div>
         <div class="SpaceBlock" />
-        <div v-if="article.secondtag.length > 0" class="secondtagdiv">{{ article.secondtag }}</div>
+        <div v-if="article.secondtag.length > 0" class="secondtagdiv">
+          {{ article.secondtag }}
+        </div>
         <div class="SpaceBlock" />
-        <div v-if="article.thirdtag.length > 0" class="thirdtagdiv">{{ article.thirdtag }}</div>
+        <div v-if="article.thirdtag.length > 0" class="thirdtagdiv">
+          {{ article.thirdtag }}
+        </div>
         <div class="SpaceBlock" />
       </div>
       <div class="SpaceBlock" />
@@ -124,7 +128,9 @@ export default {
   margin-left: 9px;
   padding-top: 10px;
 }
-.firsttagdiv, .secondtagdiv, .thirdtagdiv {
+.firsttagdiv,
+.secondtagdiv,
+.thirdtagdiv {
   background-color: black;
   color: white;
   width: max-content;
@@ -149,7 +155,7 @@ export default {
   display: grid;
   grid-template-columns: 12px max-content 3px max-content 3px max-content 3px;
 }
-.tagsGrid{
+.tagsGrid {
   background-color: transparent;
   width: 250px;
   justify-content: end;
