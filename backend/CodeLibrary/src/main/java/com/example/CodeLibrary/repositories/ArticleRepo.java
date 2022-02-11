@@ -21,4 +21,12 @@ public interface ArticleRepo extends CrudRepository<Article, Integer> {
 
     List<Article> findBymaintitleContainingIgnoreCase(String maintitle);
 
+    List<Article> findByAuthorContainingIgnoreCase(String author);
+
+    List<Article> findByfirsttagContainingIgnoreCase(String firsttag);
+
+    List<Article> findBysecondtagContainingIgnoreCase(String secondtag);
+
+    List<Article> findBythirdtagContainingIgnoreCase(String thirdtag);
+
 }

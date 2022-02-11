@@ -1,7 +1,11 @@
 <template>
   <div class="backgroundDiv">
     <div class="upperGrid">
-      <img class="homeIcon" src="../images/home.png" />
+      <img
+        @click="goBackToHomePage"
+        class="homeIcon"
+        src="../images/home.png"
+      />
       <div class="codeTextDiv">
         <p class="libraryText">--=== The Code Library ===--</p>
       </div>
@@ -27,8 +31,13 @@
       </div>
 
       <div class="searchDiv">
-        <input class="searchInput" placeholder="Search.." type="text" />
-        <img class="glassIcon" src="../images/glass.png" />
+        <input
+          v-model="searchTerm"
+          class="searchInput"
+          placeholder="Search.."
+          type="text"
+        />
+        <img @click="search" class="glassIcon" src="../images/glass.png" />
       </div>
     </div>
   </div>
@@ -38,11 +47,12 @@ import store from '../store';
 
 export default {
   name: 'Header',
-  emits: [],
+  emits: ['searchResult'],
   data() {
     return {
       isLoggedIn: false,
       profileURL: '',
+      searchTerm: '',
     };
   },
 
@@ -54,6 +64,32 @@ export default {
   },
 
   methods: {
+    async goBackToHomePage() {
+      let res = await fetch('/rest/articles/', {
+        method: 'GET',
+      });
+      let response = await res.json();
+      this.$emit('searchResult', response);
+      this.searchTerm = '';
+    },
+    async search() {
+      if (this.searchTerm.length == 0) {
+        let res = await fetch('/rest/articles/', {
+          method: 'GET',
+        });
+        let response = await res.json();
+        this.$emit('searchResult', response);
+      } else {
+        let res = await fetch(
+          '/rest/articles/findArticleByTerm/' + this.searchTerm,
+          {
+            method: 'GET',
+          }
+        );
+        let response = await res.json();
+        this.$emit('searchResult', response);
+      }
+    },
     async logout() {
       localStorage.removeItem('username');
       localStorage.removeItem('profileURL');

@@ -6,6 +6,7 @@ import com.example.CodeLibrary.repositories.ArticleRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +62,47 @@ public class ArticleService {
     }
 
     public List<Article> getArticlesContaining(String maintitle){
-        return articleRepo.findBymaintitleContainingIgnoreCase(maintitle);
+        ArrayList<Article> myList = new ArrayList<Article>();
+        ArrayList<Integer> coveredIds = new ArrayList<Integer>();
+        var searchBasedOnTitle = articleRepo.findBymaintitleContainingIgnoreCase(maintitle);
+        for(int i = 0; i < searchBasedOnTitle.size(); i++){
+            myList.add(searchBasedOnTitle.get(i));
+            coveredIds.add(searchBasedOnTitle.get(i).getId());
+        }
+
+        var searchBasedOnAuthor = articleRepo.findByAuthorContainingIgnoreCase(maintitle);
+        for(int a = 0; a < searchBasedOnAuthor.size(); a++){
+            if(!coveredIds.contains(searchBasedOnAuthor.get(a).getId())){
+                myList.add(searchBasedOnAuthor.get(a));
+                coveredIds.add(searchBasedOnAuthor.get(a).getId());
+            }
+        }
+
+        var searchBasedOnFirstTag = articleRepo.findByfirsttagContainingIgnoreCase(maintitle);
+        for(int b = 0; b < searchBasedOnFirstTag.size(); b++) {
+            if(!coveredIds.contains(searchBasedOnFirstTag.get(b).getId())){
+                myList.add(searchBasedOnFirstTag.get(b));
+                coveredIds.add(searchBasedOnFirstTag.get(b).getId());
+            }
+        }
+
+        var searchBasedOnSecondTag = articleRepo.findBysecondtagContainingIgnoreCase(maintitle);
+        for(int c = 0; c < searchBasedOnSecondTag.size(); c++) {
+            if(!coveredIds.contains(searchBasedOnSecondTag.get(c).getId())){
+                myList.add(searchBasedOnSecondTag.get(c));
+                coveredIds.add(searchBasedOnSecondTag.get(c).getId());
+            }
+        }
+
+        var searchBasedOnThirdTag = articleRepo.findBythirdtagContainingIgnoreCase(maintitle);
+        for(int d = 0; d < searchBasedOnThirdTag.size(); d++) {
+            if(!coveredIds.contains(searchBasedOnThirdTag.get(d).getId())){
+                myList.add(searchBasedOnThirdTag.get(d));
+                coveredIds.add(searchBasedOnThirdTag.get(d).getId());
+            }
+        }
+
+        return myList;
     }
 
     public Article saveNewArticleToDB(Article article){

@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <Header @searchResult="updateList" />
   <Article
     v-for="(articleItem, index) of allArticles"
     :key="index"
@@ -42,11 +42,22 @@ export default {
   updated() {},
   unmounted() {},
 
-  methods: {},
+  methods: {
+    updateList(searchResults) {
+      this.allArticles = [];
+      for (let i = 0; i < searchResults.length; i++) {
+        this.allArticles.push(searchResults[i]);
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Revalia&family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Revalia&family=Roboto:wght@300;400&display=swap');
+
+* {
+  overflow-y: hidden;
+}
 </style>
