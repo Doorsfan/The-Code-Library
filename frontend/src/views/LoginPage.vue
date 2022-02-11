@@ -87,7 +87,6 @@ export default {
         alert('Bad credentials');
       } else {
         localStorage.setItem('username', this.wantedUsername);
-        console.log(response);
         localStorage.setItem('profileURL', response.profileURL);
         this.$router.push('/');
       }

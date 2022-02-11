@@ -1,6 +1,7 @@
 package com.example.CodeLibrary.entitites;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "articles")
@@ -166,31 +167,15 @@ public class Article {
         this.thirdsection = thirdsection;
     }
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", maintitle='" + maintitle + '\'' +
-                ", author='" + author + '\'' +
-                ", firsttag='" + firsttag + '\'' +
-                ", secondtag='" + secondtag + '\'' +
-                ", thirdtag='" + thirdtag + '\'' +
-                ", firstprerequisite='" + firstprerequisite + '\'' +
-                ", secondprerequisite='" + secondprerequisite + '\'' +
-                ", thirdprerequisite='" + thirdprerequisite + '\'' +
-                ", difficulty='" + difficulty + '\'' +
-                ", language='" + language + '\'' +
-                ", firstdescription='" + firstdescription + '\'' +
-                ", firsttitle='" + firsttitle + '\'' +
-                ", firstsection='" + firstsection + '\'' +
-                ", seconddescription='" + seconddescription + '\'' +
-                ", secondtitle='" + secondtitle + '\'' +
-                ", secondcontent='" + secondcontent + '\'' +
-                ", thirddescription='" + thirddescription + '\'' +
-                ", thirdtitle='" + thirdtitle + '\'' +
-                ", thirdsection='" + thirdsection + '\'' +
-                '}';
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -215,6 +200,36 @@ public class Article {
     private String thirddescription;
     private String thirdtitle;
     private String thirdsection;
+    private Timestamp timestamp;
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", maintitle='" + maintitle + '\'' +
+                ", author='" + author + '\'' +
+                ", firsttag='" + firsttag + '\'' +
+                ", secondtag='" + secondtag + '\'' +
+                ", thirdtag='" + thirdtag + '\'' +
+                ", firstprerequisite='" + firstprerequisite + '\'' +
+                ", secondprerequisite='" + secondprerequisite + '\'' +
+                ", thirdprerequisite='" + thirdprerequisite + '\'' +
+                ", difficulty='" + difficulty + '\'' +
+                ", language='" + language + '\'' +
+                ", firstdescription='" + firstdescription + '\'' +
+                ", firsttitle='" + firsttitle + '\'' +
+                ", firstsection='" + firstsection + '\'' +
+                ", seconddescription='" + seconddescription + '\'' +
+                ", secondtitle='" + secondtitle + '\'' +
+                ", secondcontent='" + secondcontent + '\'' +
+                ", thirddescription='" + thirddescription + '\'' +
+                ", thirdtitle='" + thirdtitle + '\'' +
+                ", thirdsection='" + thirdsection + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
+    }
+
+
 
     public Article() {
 

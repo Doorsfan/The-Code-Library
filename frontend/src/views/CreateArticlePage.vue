@@ -8,19 +8,25 @@
         class="titleInput"
         type="text"
         placeholder="Your title.."
-        v-model="wantedTitle"
+        v-model="wantedMainTitle"
       />
       <div class="AuthorText">Author</div>
       <div class="firstTagBox">
-        <input type="text" placeholder="Tag 1" class="firstTagInput" />
+        <input
+          v-model="wantedFirstTag"
+          type="text"
+          placeholder="Tag 1"
+          class="firstTagInput"
+        />
       </div>
-      <img class="profileImage" src="../images/profile.png" />
-      <div class="AuthorName">John Doe</div>
+      <img class="profileImage" :src="currentProfile" />
+      <div class="AuthorName">{{ currentUsername }}</div>
       <div class="secondTagBox">
         <input
           type="text"
           placeholder="Tag 2 (Optional)"
           class="secondTagInput"
+          v-model="wantedSecondTag"
         />
       </div>
       <div class="thirdTagBox">
@@ -28,26 +34,37 @@
           type="text"
           placeholder="Tag 3 (Optional)"
           class="thirdTagInput"
+          v-model="wantedThirdTag"
         />
       </div>
       <div class="preRequisitesDiv">
         <div class="preReqText">Pre-requisites:</div>
       </div>
+
       <div class="reqInputOneDiv">
-        <input type="text" placeholder="Pre-requisite 1" class="reqInputOne" />
         <input
+          v-model="wantedFirstPreReq"
           type="text"
-          placeholder="Your difficulty.."
-          class="difficultyInput"
-        />
-        <input
-          type="text"
-          placeholder="Your language.."
-          class="languageInput"
+          placeholder="Pre-requisite 1"
+          class="reqInputOne"
         />
       </div>
+      <input
+        v-model="wantedDifficulty"
+        type="text"
+        placeholder="Your difficulty.."
+        class="difficultyInput"
+      />
+      <input
+        v-model="wantedLanguage"
+        type="text"
+        placeholder="Your language.."
+        class="languageInput"
+      />
+
       <div class="reqInputTwoDiv">
         <input
+          v-model="wantedSecondPreReq"
           type="text"
           placeholder="Pre-requisite 2 (Optional)"
           class="reqInputTwo"
@@ -55,6 +72,7 @@
       </div>
       <div class="reqInputThreeDiv">
         <input
+          v-model="wantedThirdPreReq"
           type="text"
           placeholder="Pre-requisite 3 (Optional)"
           class="reqInputThree"
@@ -71,7 +89,12 @@
     cols="33"
     placeholder="Your first description.."
   />
-  <input type="text" class="firstTitleInput" placeholder="Your first title.." />
+  <input
+    v-model="wantedFirstTitle"
+    type="text"
+    class="firstTitleInput"
+    placeholder="Your first title.."
+  />
   <textarea
     v-model="wantedFirstSection"
     class="firstSectionInput"
@@ -81,7 +104,7 @@
     placeholder="Your first section of content.."
   />
   <textarea
-    v-model="wantedFirstDescription"
+    v-model="wantedSecondDescription"
     class="secondDescriptionInput"
     type="textarea"
     rows="1"
@@ -89,21 +112,21 @@
     placeholder="Your second description.. (Optional)"
   />
   <input
+    v-model="wantedSecondTitle"
     type="text"
     class="secondTitleInput"
     placeholder="Your second title.. (Optional)"
   />
   <textarea
-    v-model="wantedFirstSection"
+    v-model="wantedSecondSection"
     class="secondSectionInput"
     type="textarea"
     rows="1"
     cols="33"
     placeholder="Your second section of content.. (Optional)"
   />
-  <div class="fromhere"></div>
   <textarea
-    v-model="wantedFirstDescription"
+    v-model="wantedThirdDescription"
     class="thirdDescriptionInput"
     type="textarea"
     rows="1"
@@ -111,19 +134,22 @@
     placeholder="Your third description.. (Optional)"
   />
   <input
+    v-model="wantedThirdTitle"
     type="text"
     class="thirdTitleInput"
     placeholder="Your third title.. (Optional)"
   />
   <textarea
-    v-model="wantedFirstSection"
+    v-model="wantedThirdSection"
     class="thirdSectionInput"
     type="textarea"
     rows="1"
     cols="33"
     placeholder="Your third section of content.. (Optional)"
   />
-  <button class="publishButton" value="Publish">Publish</button>
+  <button @click="publishArticle" class="publishButton" value="Publish">
+    Publish
+  </button>
   <Footer class="loginFooter" />
 </template>
 <script>
@@ -137,14 +163,82 @@ export default {
   },
   data() {
     return {
-      wantedTitle: '',
+      currentUsername:
+        localStorage.getItem('username') != null
+          ? localStorage.getItem('username')
+          : 'John Doe',
+      currentProfile:
+        localStorage.getItem('profileURL') != null
+          ? localStorage.getItem('profileURL')
+          : '../images/profile.png',
+      wantedMainTitle: '',
+      wantedFirstTag: '',
+      wantedSecondTag: '',
+      wantedThirdTag: '',
+      wantedFirstPreReq: '',
+      wantedSecondPreReq: '',
+      wantedThirdPreReq: '',
+      wantedDifficulty: '',
+      wantedLanguage: '',
       wantedFirstDescription: '',
+      wantedFirstTitle: '',
       wantedFirstSection: '',
+      wantedSecondDescription: '',
+      wantedSecondTitle: '',
+      wantedSecondSection: '',
+      wantedThirdDescription: '',
+      wantedThirdTitle: '',
+      wantedThirdSection: '',
     };
   },
   mounted() {},
   watch: {},
   methods: {
+    async publishArticle() {
+      if (
+        this.wantedMainTitle.length == 0 ||
+        this.wantedFirstTag.length == 0 ||
+        this.wantedFirstPreReq.length == 0 ||
+        this.wantedDifficulty.length == 0 ||
+        this.wantedLanguage.length == 0 ||
+        this.wantedFirstDescription.length == 0 ||
+        this.wantedFirstTitle.length == 0 ||
+        this.wantedFirstSection.length == 0
+      ) {
+        alert('All non-optional fields are required to be filled out.');
+        return;
+      } else {
+        let newArticle = {
+          maintitle: this.wantedMainTitle,
+          author: localStorage.getItem('username'),
+          firsttag: this.wantedFirstTag,
+          secondtag: this.wantedSecondTag,
+          thirdtag: this.wantedThirdTag,
+          firstprerequisite: this.wantedFirstPreReq,
+          secondprerequisite: this.wantedSecondPreReq,
+          thirdprerequisite: this.wantedThirdPreReq,
+          difficulty: this.wantedDifficulty,
+          language: this.wantedLanguage,
+          firstdescription: this.wantedFirstDescription,
+          firsttitle: this.wantedFirstTitle,
+          firstsection: this.wantedFirstSection,
+          seconddescription: this.wantedSecondDescription,
+          secondtitle: this.wantedSecondTitle,
+          secondcontent: this.wantedSecondSection,
+          thirddescription: this.wantedThirdDescription,
+          thirdtitle: this.wantedThirdTitle,
+          thirdsection: this.wantedThirdSection,
+        };
+
+        let res = await fetch('/rest/articles/publish', {
+          method: 'POST',
+          body: JSON.stringify(newArticle),
+        });
+
+        let response = await res.json();
+        this.$router.push('/');
+      }
+    },
     goToHomepage() {
       this.$router.push('/');
     },
@@ -165,6 +259,7 @@ export default {
 * {
   outline: none;
   border: none;
+  overflow-x: clip;
 }
 
 .AuthorText {
@@ -198,6 +293,7 @@ export default {
   top: -29px;
 }
 .titleInput {
+  position: relative;
   width: 346px;
   margin-left: 9px;
   margin-top: 15px;
@@ -285,6 +381,7 @@ export default {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
   color: #ffffff;
+  height: max-content;
 }
 
 .profileImage {
@@ -356,6 +453,10 @@ export default {
 .reqInputThree {
   position: relative;
   top: -4px;
+}
+.reqInputOne {
+  position: relative;
+  top: 0px;
 }
 .homeDiv {
   background-color: red;
