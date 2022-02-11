@@ -11,8 +11,18 @@
         </router-link>
       </div>
       <div v-if="isLoggedIn" class="profileURL">
-        <img @click="goToMyContent" v-if="profileURL.length > 0" class="profileImage" :src="profileURL" />
-        <img @click="goToMyContent" v-if="profileURL.length == 0" class="profileImage" src="../images/profile.png" />
+        <img
+          @click="goToMyContent"
+          v-if="profileURL.length > 0"
+          class="profileImage"
+          :src="profileURL"
+        />
+        <img
+          @click="goToMyContent"
+          v-if="profileURL.length == 0"
+          class="profileImage"
+          src="../images/profile.png"
+        />
         <div @click="logout" class="logoutDiv">Logout</div>
       </div>
 
@@ -52,8 +62,8 @@ export default {
       this.$router.push('/');
     },
     goToMyContent() {
-      this.$router.push('/myContent')
-    }
+      this.$router.push('/myContent');
+    },
   },
 };
 </script>
@@ -103,11 +113,11 @@ export default {
   height: 45px;
   margin-top: 11px;
 }
-.loginButton{
+.loginButton {
   position: relative;
   left: -20px;
 }
-.profileImage{
+.profileImage {
   position: relative;
   left: -5px;
 }
@@ -140,9 +150,9 @@ export default {
 .libraryText {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
-    font-size: 20px;
+  font-size: 20px;
 }
-.profileURL{
+.profileURL {
   position: relative;
   left: -18px;
 }
