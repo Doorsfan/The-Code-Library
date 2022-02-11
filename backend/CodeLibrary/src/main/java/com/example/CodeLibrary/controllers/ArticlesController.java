@@ -63,6 +63,11 @@ public class ArticlesController {
         newArticle.setThirdsection(StringFormatter.removeFirstAndLastChar(jsonObject.get("thirdsection").toString()));
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         newArticle.setTimestamp(Timestamp.from(ZonedDateTime.now().toInstant()));
+        newArticle.setLikes(0);
+        newArticle.setDislikes(0);
+        newArticle.setComments(0);
+        newArticle.setAuthorimage(StringFormatter.removeFirstAndLastChar(jsonObject.get("authorimage").toString()));
+
         return articleService.saveNewArticleToDB(newArticle);
 
     }

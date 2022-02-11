@@ -176,31 +176,38 @@ public class Article {
     }
 
 
+    public Integer getLikes() {
+        return likes;
+    }
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    public void setLikes(Integer likes) {
+        this.likes = likes;
+    }
 
-    private String maintitle;
-    private String author;
-    private String firsttag;
-    private String secondtag;
-    private String thirdtag;
-    private String firstprerequisite;
-    private String secondprerequisite;
-    private String thirdprerequisite;
-    private String difficulty;
-    private String language;
-    private String firstdescription;
-    private String firsttitle;
-    private String firstsection;
-    private String seconddescription;
-    private String secondtitle;
-    private String secondcontent;
-    private String thirddescription;
-    private String thirdtitle;
-    private String thirdsection;
-    private Timestamp timestamp;
+    public Integer getDislikes() {
+        return dislikes;
+    }
+
+    public void setDislikes(Integer dislikes) {
+        this.dislikes = dislikes;
+    }
+
+    public Integer getComments() {
+        return comments;
+    }
+
+    public void setComments(Integer comments) {
+        this.comments = comments;
+    }
+
+    public String getAuthorimage() {
+        return authorimage;
+    }
+
+    public void setAuthorimage(String authorimage) {
+        this.authorimage = authorimage;
+    }
+
 
     @Override
     public String toString() {
@@ -226,8 +233,41 @@ public class Article {
                 ", thirdtitle='" + thirdtitle + '\'' +
                 ", thirdsection='" + thirdsection + '\'' +
                 ", timestamp=" + timestamp +
+                ", likes=" + likes +
+                ", dislikes=" + dislikes +
+                ", comments=" + comments +
+                ", authorimage='" + authorimage + '\'' +
                 '}';
     }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    private String maintitle;
+    private String author;
+    private String firsttag;
+    private String secondtag;
+    private String thirdtag;
+    private String firstprerequisite;
+    private String secondprerequisite;
+    private String thirdprerequisite;
+    private String difficulty;
+    private String language;
+    private String firstdescription;
+    private String firsttitle;
+    private String firstsection;
+    private String seconddescription;
+    private String secondtitle;
+    private String secondcontent;
+    private String thirddescription;
+    private String thirdtitle;
+    private String thirdsection;
+    private Timestamp timestamp;
+    private Integer likes;
+    private Integer dislikes;
+    private Integer comments;
+    private String authorimage;
 
 
 
