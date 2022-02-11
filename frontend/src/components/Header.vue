@@ -75,7 +75,7 @@ export default {
 .logoutDiv {
   width: max-content;
   position: absolute;
-  right: 2px;
+  right: -2px;
   top: 60px;
   background-color: white;
   border-radius: 10px;
@@ -119,7 +119,7 @@ export default {
 }
 .profileImage {
   position: relative;
-  left: -5px;
+  left: 0px;
 }
 .homeIcon {
   height: 30px;
