@@ -1,5 +1,5 @@
 <template>
-  <main class="app-main">
+  <main class="app-main" ondragstart="return false;" ondrop="return false;">
     <div class="BackDrop">
       <router-view />
     </div>

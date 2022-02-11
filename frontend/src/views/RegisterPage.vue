@@ -102,19 +102,23 @@ export default {
     },
     async register() {
       let user = {
-        username: this.wantedUsername
-      }
+        username: this.wantedUsername,
+      };
 
-
-      let res = await fetch('/rest/users/register/' + this.wantedUsername.toString() + '/'+ this.wantedPassword.toString() ,{
-        method: 'POST',
-        body: JSON.stringify(this.wantedImageURL)
-      });
+      let res = await fetch(
+        '/rest/users/register/' +
+          this.wantedUsername.toString() +
+          '/' +
+          this.wantedPassword.toString(),
+        {
+          method: 'POST',
+          body: JSON.stringify(this.wantedImageURL),
+        }
+      );
       let response = await res.json();
-      if(response.username.length == 0){
-        alert("That username is already taken. Please try again.");
-      }
-      else{
+      if (response.username.length == 0) {
+        alert('That username is already taken. Please try again.');
+      } else {
         localStorage.setItem('username', this.wantedUsername);
         localStorage.setItem('profileURL', response.profileURL);
         this.$router.push('/');
