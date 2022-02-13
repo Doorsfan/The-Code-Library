@@ -157,7 +157,7 @@ import Footer from '../components/Footer.vue';
 import store from '../store';
 
 export default {
-  name: 'ChooseContentPage',
+  name: 'CreateArticlePage',
   components: {
     Footer,
   },

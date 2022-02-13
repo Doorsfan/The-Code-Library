@@ -6,6 +6,7 @@ import LoginPage from './views/LoginPage.vue';
 import RegisterPage from './views/RegisterPage.vue';
 import ChooseContentPage from './views/ChooseContentPage.vue';
 import CreateArticlePage from './views/CreateArticlePage.vue';
+import ArticlePage from './views/ArticlePage.vue';
 
 export default createRouter({
   history: createWebHistory(),
@@ -29,6 +30,10 @@ export default createRouter({
     {
       path: '/createNewArticle',
       component: CreateArticlePage
+    },
+    {
+      path: '/Article/:id',
+      component: ArticlePage
     }
   ],
 });

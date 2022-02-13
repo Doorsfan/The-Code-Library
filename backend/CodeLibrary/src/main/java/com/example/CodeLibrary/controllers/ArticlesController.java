@@ -37,7 +37,7 @@ public class ArticlesController {
     }
 
     @GetMapping("/articles/{id}")
-    public Optional<Article> getOneArticle(@PathVariable int id){
+    public Article getOneArticle(@PathVariable int id){
         return articleService.findOneArticle(id);
     }
 
