@@ -45,8 +45,9 @@ public class ArticleService {
      * @param id
      * @return
      */
-    public Optional<Article> findOneArticle(int id){
-        Optional<Article> article = articleRepo.findById(id);
+    public Article findOneArticle(int id){
+        Article article = articleRepo.findBySpecificId(id);
+        System.out.println(article);
 
         return article;
         /*

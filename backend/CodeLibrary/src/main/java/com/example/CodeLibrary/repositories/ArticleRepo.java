@@ -1,7 +1,9 @@
 package com.example.CodeLibrary.repositories;
 
 import com.example.CodeLibrary.entitites.Article;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,6 +18,9 @@ public interface ArticleRepo extends CrudRepository<Article, Integer> {
     @Query(value = "SELECT * FROM users WHERE name = :name", nativeQuery = true)
     List<User> customFindUsersByName(@Param("name") String name);
     */
+
+    @Query(value = "SELECT * FROM articles WHERE id = :id", nativeQuery = true)
+    Article findBySpecificId(@Param("id") Integer id);
 
     Article findByAuthor(String author);
 
