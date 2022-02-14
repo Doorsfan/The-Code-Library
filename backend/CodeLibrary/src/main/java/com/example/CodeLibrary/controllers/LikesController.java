@@ -1,0 +1,37 @@
+package com.example.CodeLibrary.controllers;
+
+import com.example.CodeLibrary.DTOs.UserWithoutPW;
+import com.example.CodeLibrary.entitites.Like;
+import com.example.CodeLibrary.entitites.User;
+import com.example.CodeLibrary.services.LikesService;
+import com.example.CodeLibrary.services.UserService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+// Använd @RestController istället för @Controller
+// @RestController Spring Boot specifikt, tillåter oss använda @RequestBody för att
+// automatiskt konvertera JSON till Java objekt. Med vanlig @Controller är det flera extra steg.
+@RestController
+@RequestMapping(value = "/rest", method = RequestMethod.POST)
+public class LikesController {
+
+    @Autowired
+    private LikesService likesService;
+
+    @DeleteMapping("/likes/{userid}/{articleId}")
+    public String deletelikeByID(@PathVariable int userid, @PathVariable int articleId){
+        return likesService.deleteLikeByID(userid, articleId);
+    }
+
+    @PostMapping("/likes/likeArticle/{userid}/{articleId}")
+    public Like likeArticle(@PathVariable int userid, @PathVariable int articleId){
+        Like myLike = new Like();
+        myLike.setArticleId(articleId);
+        myLike.setUserid(userid);
+        return likesService.saveNewLikeToDB(myLike);
+    }
+}
