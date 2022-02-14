@@ -27,10 +27,11 @@ public class LikesController {
         return likesService.deleteLikeByID(userid, articleId);
     }
 
-    @PostMapping("/likes/likeArticle/{userid}/{articleId}")
-    public Like likeArticle(@PathVariable int userid, @PathVariable int articleId){
+    @GetMapping("/likes/{userid}/{articleid}")
+    public Like likeArticle(@PathVariable int userid, @PathVariable int articleid){
+        System.out.println("Got in here");
         Like myLike = new Like();
-        myLike.setArticleId(articleId);
+        myLike.setArticleId(articleid);
         myLike.setUserid(userid);
         return likesService.saveNewLikeToDB(myLike);
     }

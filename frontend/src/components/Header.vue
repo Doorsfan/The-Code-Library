@@ -93,6 +93,7 @@ export default {
     async logout() {
       localStorage.removeItem('username');
       localStorage.removeItem('profileURL');
+      localStorage.removeItem('userid');
       this.isLoggedIn = false;
       this.profileURL = '';
       this.$router.push('/');

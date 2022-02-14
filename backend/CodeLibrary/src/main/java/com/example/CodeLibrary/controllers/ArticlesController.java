@@ -1,6 +1,7 @@
 package com.example.CodeLibrary.controllers;
 
 import com.example.CodeLibrary.entitites.Article;
+import com.example.CodeLibrary.entitites.User;
 import com.example.CodeLibrary.services.ArticleService;
 
 import com.example.CodeLibrary.utility.StringFormatter;
@@ -82,12 +83,11 @@ public class ArticlesController {
         return articleService.deleteArticleByID(id);
     }
 
-    @PutMapping("/articles")
-    public String updateArticle(@RequestBody Article article){
-        return articleService.updateArticle(article);
+
+    @PutMapping("/articles/likeArticle/{id}")
+    public int updateArticle(@PathVariable int id){
+        return articleService.likeArticle(id);
     }
-
-
 }
 
 

@@ -14,11 +14,11 @@ public class Like {
     }
 
     public Integer getArticleId() {
-        return articleId;
+        return articleid;
     }
 
     public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
+        this.articleid = articleId;
     }
 
     public Integer getUserid() {
@@ -29,20 +29,30 @@ public class Like {
         this.userid = userid;
     }
 
-    @Override
-    public String toString() {
-        return "Like{" +
-                "id=" + id +
-                ", articleId=" + articleId +
-                ", userid=" + userid +
-                '}';
-    }
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
 
-    Integer articleId;
+    public Integer getarticleid() {
+        return articleid;
+    }
+
+    public void setarticleid(Integer articleid) {
+        this.articleid = articleid;
+    }
+
+    @Override
+    public String toString() {
+        return "Like{" +
+                "id=" + id +
+                ", articleid=" + articleid +
+                ", userid=" + userid +
+                '}';
+    }
+
+    Integer articleid;
     Integer userid;
 
     public Like() {}

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This service class handles the logic of writing and reading from the database.
@@ -106,6 +105,11 @@ public class ArticleService {
         return myList;
     }
 
+    public int likeArticle(int id) {
+        articleRepo.updateLikesOfArticle(id);
+        return articleRepo.findLikesForArticleWithId(id);
+    }
+
     public Article saveNewArticleToDB(Article article){
         return articleRepo.save(article);
     }
@@ -113,15 +117,6 @@ public class ArticleService {
     public String deleteArticleByID(int id){
         try {
             articleRepo.deleteById(id);
-            return "Success";
-        } catch (Exception e){
-            return "Failed";
-        }
-    }
-
-    public String updateArticle(Article article){
-        try {
-            articleRepo.save(article);
             return "Success";
         } catch (Exception e){
             return "Failed";

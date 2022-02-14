@@ -32,11 +32,12 @@ public class UsersController {
 
     @GetMapping("/users/username/{username}/{password}")
     public UserWithoutPW getUsersContaining(@PathVariable String username, @PathVariable String password){
-        UserWithoutPW userDTO = new UserWithoutPW("", "");
+        UserWithoutPW userDTO = new UserWithoutPW(0, "", "");
         List<User> relevantUsers = userService.getUsersContaining(username);
         System.out.println(password);
         for(int i = 0; i < relevantUsers.size(); i++){
             if(relevantUsers.get(i).getUsername().equals(username) && relevantUsers.get(i).getPassword().equals(password)){
+                userDTO.setId(relevantUsers.get(i).getId());
                 userDTO.setUsername(relevantUsers.get(i).getUsername());
                 userDTO.setProfileURL(relevantUsers.get(i).getImage());
             }
@@ -53,13 +54,13 @@ public class UsersController {
         newUser.setImage(image.substring(1, image.length() - 1));
         try{
             newUser = userService.saveNewUserToDB(newUser);
-            UserWithoutPW relevantUser = new UserWithoutPW(newUser.getUsername(), newUser.getImage());
+            UserWithoutPW relevantUser = new UserWithoutPW(newUser.getId(), newUser.getUsername(), newUser.getImage());
             return relevantUser;
         }
         catch(Exception e){
             newUser.setUsername("");
         }
-        return new UserWithoutPW(newUser.getUsername(), newUser.getImage());
+        return new UserWithoutPW(newUser.getId(), newUser.getUsername(), newUser.getImage());
     }
 
     @DeleteMapping("/users/{id}")

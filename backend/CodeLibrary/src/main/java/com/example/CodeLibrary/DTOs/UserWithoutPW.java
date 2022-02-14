@@ -2,6 +2,7 @@ package com.example.CodeLibrary.DTOs;
 
 public class UserWithoutPW {
     String username, profileURL;
+    Integer id;
 
     public String getUsername() {
         return username;
@@ -19,15 +20,27 @@ public class UserWithoutPW {
         this.profileURL = profileURL;
     }
 
+
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     @Override
     public String toString() {
         return "UserWithoutPW{" +
                 "username='" + username + '\'' +
                 ", profileURL='" + profileURL + '\'' +
+                ", id=" + id +
                 '}';
     }
 
-    public UserWithoutPW(String username, String profileURL){
+    public UserWithoutPW(Integer id, String username, String profileURL){
+        this.id = id;
         this.username = username;
         this.profileURL = profileURL;
     }
