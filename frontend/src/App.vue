@@ -31,7 +31,6 @@ export default {
 }
 .BackDrop {
   background-color: #131313;
-  overflow-y: hidden;
   height: -webkit-fill-available;
 }
 </style>

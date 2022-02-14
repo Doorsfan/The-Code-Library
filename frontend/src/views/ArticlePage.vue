@@ -1,51 +1,113 @@
 <template>
-  <div class="profileHeader">
-    <div @click="goToHomepage" class="homeDiv">
-      <img class="homeIcon" src="../images/home.png" />
+  <div class="mainDiv">
+    <div class="profileHeader">
+      <div @click="goToHomepage" class="homeDiv">
+        <img class="homeIcon" src="../images/home.png" />
+      </div>
     </div>
+    <div class="BodyBox">
+      <div class="titleBox">{{ maintitle }}</div>
+      <div class="AuthorText">Author</div>
+      <div class="topGrid">
+        <div class="SpaceBlock" />
+        <img class="authorImage" :src="authorimage" />
+        <div class="SpaceBlock" />
+        <div class="authorText">{{ author }}</div>
+        <div class="SpaceBlock" />
+        <div class="firstTag">{{ firstTag }}</div>
+        <div class="SpaceBlock" />
+        <div class="secondTag">{{ secondTag }}</div>
+        <div class="SpaceBlock" />
+        <div class="thirdTag">{{ thirdTag }}</div>
+        <div class="SpaceBlock" />
+      </div>
+      <div class="preReqAndDifficultyGrid">
+        <div class="SpaceBlock" />
+        <div class="preReqDiv">Pre-requisites:</div>
+        <div class="SpaceBlock" />
+        <div class="difficultyDiv">Difficulty: {{ difficulty }}</div>
+        <div class="SpaceBlock" />
+      </div>
+      <div class="firstPreReqAndLanguageGrid">
+        <div class="SpaceBlock" />
+        <div class="firstPreReqDiv">{{ firstPreReq }}</div>
+        <div class="SpaceBlock" />
+        <div class="languageDiv">Language: {{ language }}</div>
+        <div class="SpaceBlock" />
+      </div>
+      <div class="secondPreReqGrid">
+        <div class="SpaceBlock" />
+        <div class="secondPreReqDiv">{{ secondPreReq }}</div>
+        <div class="SpaceBlock" />
+      </div>
+      <div class="thirdPreReqGrid">
+        <div class="SpaceBlock" />
+        <div class="thirdPreReqDiv">{{ thirdPreReq }}</div>
+        <div class="SpaceBlock" />
+      </div>
+      <div class="firstDescription">
+        {{ firstdescription }}
+      </div>
+      <div class="firstTitle">
+        {{ firsttitle }}
+      </div>
+      <div class="firstsection">
+        {{ firstsection }}
+      </div>
+      <div v-if="seconddescription.length > 0" class="secondDescription">
+        {{ seconddescription }}
+      </div>
+      <div v-if="secondtitle.length > 0" class="secondTitle">
+        {{ secondtitle }}
+      </div>
+      <div v-if="thirdsection.length > 0" class="thirdsection">
+        {{ secondsection }}
+      </div>
+      <div v-if="thirddescription.length > 0" class="thirdDescription">
+        {{ thirddescription }}
+      </div>
+      <div v-if="thirdtitle.length > 0" class="thirdTitle">
+        {{ thirdtitle }}
+      </div>
+      <div v-if="thirdsection.length > 0" class="thirdsection">
+        {{ thirdsection }}
+      </div>
+      <div class="bigGrid">
+        <div clas="SpaceBlock" />
+        <div class="likesGrid">
+          <div class="SpaceBlock" />
+          <div class="likesNumber">
+            {{ likes }}
+          </div>
+          <div class="SpaceBlock" />
+          <img class="likesIcon" src="../images/up_arrow.png" />
+          <div class="SpaceBlock" />
+        </div>
+        <div clas="SpaceBlock" />
+        <div class="dislikesGrid">
+          <div class="SpaceBlock" />
+          <div class="dislikesNumber">
+            {{ dislikes }}
+          </div>
+          <div class="SpaceBlock" />
+          <img class="dislikesIcon" src="../images/down_arrow.png" />
+          <div class="SpaceBlock" />
+        </div>
+        <div clas="SpaceBlock" />
+        <div class="commentsGrid">
+          <div class="SpaceBlock" />
+          <div class="commentsNumber">
+            {{ comments }}
+          </div>
+          <div class="SpaceBlock" />
+          <img class="commentIcon" src="../images/comment.png" />
+          <div class="SpaceBlock" />
+        </div>
+        <div class="SpaceBlock" />
+      </div>
+    </div>
+    <Footer class="loginFooter" />
   </div>
-  <div class="BodyBox">
-    <div class="titleBox">{{maintitle}}</div>
-    <div class="AuthorText">Author</div>
-    <div class="topGrid">
-      <div class="SpaceBlock" />
-      <img class="authorImage" :src="authorimage" />
-      <div class="SpaceBlock" />
-      <div class="authorText">{{author}}</div>
-      <div class="SpaceBlock" />
-      <div class="firstTag">{{firstTag}}</div>
-      <div class="SpaceBlock" />
-      <div class="secondTag">{{secondTag}}</div>
-      <div class="SpaceBlock" />
-      <div class="thirdTag">{{thirdTag}}</div>
-      <div class="SpaceBlock" />
-    </div>
-    <div class="preReqAndDifficultyGrid">
-      <div class="SpaceBlock" />
-      <div class="preReqDiv">Pre-requisites:</div>
-      <div class="SpaceBlock" />
-      <div class="difficultyDiv">Difficulty: {{difficulty}}</div>
-      <div class="SpaceBlock" />
-    </div>
-    <div class="firstPreReqAndLanguageGrid">
-      <div class="SpaceBlock" />
-      <div class="firstPreReqDiv">{{firstPreReq}}</div>
-      <div class="SpaceBlock" />
-      <div class="languageDiv">Language: {{language}}</div>
-      <div class="SpaceBlock" />
-    </div>
-    <div class="secondPreReqGrid">
-      <div class="SpaceBlock" />
-      <div class="secondPreReqDiv">{{secondPreReq}}</div>
-      <div class="SpaceBlock" />
-    </div>
-    <div class="thirdPreReqGrid">
-      <div class="SpaceBlock" />
-      <div class="thirdPreReqDiv">{{thirdPreReq}}</div>
-      <div class="SpaceBlock" />
-    </div>
-  </div>
-  <Footer class="loginFooter" />
 </template>
 <script>
 import Footer from '../components/Footer.vue';
@@ -61,7 +123,7 @@ export default {
       currentUsername:
         localStorage.getItem('username') != null
           ? localStorage.getItem('username')
-          : 'John Doe',
+          : null,
       currentProfile:
         localStorage.getItem('profileURL') != null
           ? localStorage.getItem('profileURL')
@@ -76,14 +138,26 @@ export default {
       firstPreReq: '',
       language: '',
       secondPreReq: '',
-      thirdPreReq: ''
+      thirdPreReq: '',
+      firstdescription: '',
+      firsttitle: '',
+      firstsection: '',
+      seconddescription: '',
+      secondtitle: '',
+      secondsection: '',
+      thirddescription: '',
+      thirdtitle: '',
+      thirdsection: '',
+      likes: 0,
+      dislikes: 0,
+      comments: 0,
     };
   },
   async mounted() {
-    console.log(this.$route.params.id)
+    console.log(this.$route.params.id);
     let res = await fetch('/rest/articles/' + this.$route.params.id, {
-        method: 'GET'
-      });
+      method: 'GET',
+    });
     let response = await res.json();
     console.log(response.maintitle);
     this.maintitle = response.maintitle;
@@ -97,65 +171,27 @@ export default {
     this.language = response.language;
     this.secondPreReq = response.secondprerequisite;
     this.thirdPreReq = response.thirdprerequisite;
-
+    this.firstdescription = response.firstdescription;
+    this.firsttitle = response.firsttitle;
+    this.firstsection = response.firstsection;
+    this.seconddescription = response.seconddescription;
+    this.secondtitle = response.secondtitle;
+    this.secondsection = response.secondcontent;
+    this.thirddescription = response.thirddescription;
+    this.thirdtitle = response.thirdtitle;
+    this.thirdsection = response.thirdsection;
+    this.likes = response.likes;
+    this.dislikes = response.dislikes;
+    this.comments = 0;
   },
   watch: {},
   methods: {
-    async publishArticle() {
-      if (
-        this.wantedMainTitle.length == 0 ||
-        this.wantedFirstTag.length == 0 ||
-        this.wantedFirstPreReq.length == 0 ||
-        this.wantedDifficulty.length == 0 ||
-        this.wantedLanguage.length == 0 ||
-        this.wantedFirstDescription.length == 0 ||
-        this.wantedFirstTitle.length == 0 ||
-        this.wantedFirstSection.length == 0
-      ) {
-        alert('All non-optional fields are required to be filled out.');
-        return;
-      } else {
-        let newArticle = {
-          maintitle: this.wantedMainTitle,
-          author: localStorage.getItem('username'),
-          firsttag: this.wantedFirstTag,
-          secondtag: this.wantedSecondTag,
-          thirdtag: this.wantedThirdTag,
-          firstprerequisite: this.wantedFirstPreReq,
-          secondprerequisite: this.wantedSecondPreReq,
-          thirdprerequisite: this.wantedThirdPreReq,
-          difficulty: this.wantedDifficulty,
-          language: this.wantedLanguage,
-          firstdescription: this.wantedFirstDescription,
-          firsttitle: this.wantedFirstTitle,
-          firstsection: this.wantedFirstSection,
-          seconddescription: this.wantedSecondDescription,
-          secondtitle: this.wantedSecondTitle,
-          secondcontent: this.wantedSecondSection,
-          thirddescription: this.wantedThirdDescription,
-          thirdtitle: this.wantedThirdTitle,
-          thirdsection: this.wantedThirdSection,
-          authorimage: localStorage.getItem('profileURL'),
-        };
-
-        let res = await fetch('/rest/articles/publish', {
-          method: 'POST',
-          body: JSON.stringify(newArticle),
-        });
-
-        let response = await res.json();
-        this.$router.push('/');
-      }
-    },
     goToHomepage() {
       this.$router.push('/');
     },
     goToMyArticles() {
       this.$router.push('/myArticles');
-    },
-    goToCreateNewArticle() {
-      this.$router.push('/createNewArticle');
-    },
+    }
   },
 };
 </script>
@@ -168,8 +204,77 @@ export default {
   outline: none;
   border: none;
   overflow-x: clip;
+  overflow-y: clip;
 }
 
+.mainDiv {
+  height: 100%;
+  background-color: #131313;
+}
+.firstDescription,
+.secondDescription {
+  background-color: white;
+  width: 314px;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 1px black;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.bigGrid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto max-content auto max-content auto max-content auto max-content auto;
+  position: relative;
+  top: -2px;
+}
+
+.likesIcon,
+.dislikesIcon,
+.commentIcon {
+  width: 20px;
+  height: 20px;
+  border-radius: 30px;
+  margin-top: 0px;
+}
+
+.likesNumber,
+.dislikesNumber,
+.commentsNumber {
+  margin-top: 2px;
+}
+
+.bigGrid {
+  background-color: #61bfc5;
+  margin-top: 25px;
+}
+.likesGrid,
+.dislikesGrid,
+.commentsGrid {
+  display: grid;
+  grid-template-columns: 12px max-content 3px max-content 3px max-content 3px;
+}
+
+.firstTitle,
+.secondTitle {
+  width: 100%;
+  text-align: center;
+  margin-top: 5px;
+  text-decoration: underline;
+  margin-bottom: 4px;
+}
+
+.firstsection,
+.secondsection {
+  background-color: white;
+  width: 367px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 13px;
+  border: solid 1px black;
+}
 .AuthorText {
   font-family: Roboto;
   font-style: normal;
@@ -191,18 +296,19 @@ export default {
   grid-template-columns: auto max-content auto max-content auto max-content auto max-content auto max-content auto;
 }
 
-.preReqAndDifficultyGrid{
+.preReqAndDifficultyGrid {
   display: grid;
   grid-template-columns: auto max-content auto max-content auto;
 }
 
-.firstPreReqAndLanguageGrid{
+.firstPreReqAndLanguageGrid {
   display: grid;
   grid-template-columns: 85px max-content 133px max-content auto;
   margin-top: 13px;
 }
 
-.secondPreReqGrid, .thirdPreReqGrid{
+.secondPreReqGrid,
+.thirdPreReqGrid {
   display: grid;
   grid-template-columns: 85px max-content;
 }
@@ -214,7 +320,7 @@ export default {
 }
 
 .BodyBox {
-  height: 700px;
+  height: max-content;
   width: 390px;
   display: block;
   margin-left: 3vw;
@@ -224,6 +330,7 @@ export default {
   position: relative;
   top: -55px;
   border-radius: 10px;
+  padding-bottom: 28px;
 }
 .homeIcon {
   width: 30px;
@@ -231,7 +338,7 @@ export default {
   border-radius: 30px;
   margin-bottom: 14px;
 }
-.titleBox{
+.titleBox {
   margin-left: auto;
   margin-right: auto;
   width: max-content;
@@ -255,7 +362,7 @@ export default {
   height: max-content;
 }
 
-.languageDiv{
+.languageDiv {
   position: absolute;
   left: 233px;
 }
@@ -265,22 +372,13 @@ export default {
   height: 30px;
   margin-left: 10px;
 }
-.reqInputOne,
-.reqInputTwo,
-.reqInputThree,
-.difficultyInput,
-.languageInput {
-  border: solid 1px black;
-  margin-left: 14px;
-  margin-right: 5px;
-  padding-left: 5px;
-  width: 197px;
-  height: 18px;
-}
-.authorText{
+
+.authorText {
   margin-top: 10px;
 }
-.firstTag, .secondTag, .thirdTag {
+.firstTag,
+.secondTag,
+.thirdTag {
   margin-top: 10px;
   color: white;
   background-color: black;
@@ -289,62 +387,7 @@ export default {
   padding-right: 3px;
   border-radius: 10px;
 }
-.firstDescriptionInput,
-.secondDescriptionInput,
-.thirdDescriptionInput {
-  width: 306px;
-  padding-left: 8px;
-  padding-top: 4px;
-  padding-bottom: 34px;
-  border-radius: 10px;
-  border: solid 1px black;
-  position: relative;
-  top: 240px;
-  left: 45px;
-  text-align: center;
-}
-.secondDescriptionInput {
-  margin-top: 16px;
-}
-.thirdDescriptionInput {
-  margin-top: 16px;
-}
-.difficultyInput {
-  position: relative;
-  left: 214px;
-  width: 125px;
-  height: 18px;
-  top: -21px;
-}
-.firstTitleInput,
-.secondTitleInput,
-.thirdTitleInput {
-  text-align: center;
-  position: relative;
-  right: -37px;
-  width: 330px;
-  border: solid 1px black;
-  top: 240px;
-}
-.languageInput {
-  position: relative;
-  left: 63px;
-  width: 125px;
-  height: 18px;
-  top: 5px;
-}
-.reqInputTwo {
-  position: relative;
-  top: -13px;
-}
-.reqInputThree {
-  position: relative;
-  top: -4px;
-}
-.reqInputOne {
-  position: relative;
-  top: 0px;
-}
+
 .homeDiv {
   background-color: red;
   position: absolute;
