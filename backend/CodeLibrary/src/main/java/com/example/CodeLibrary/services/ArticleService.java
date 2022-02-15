@@ -110,6 +110,11 @@ public class ArticleService {
         return articleRepo.findLikesForArticleWithId(id);
     }
 
+    public int dislikeArticle(int id) {
+        articleRepo.updateDislikesOfArticle(id);
+        return articleRepo.findDislikesForArticleWithId(id);
+    }
+
     public Article saveNewArticleToDB(Article article){
         return articleRepo.save(article);
     }

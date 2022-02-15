@@ -85,8 +85,13 @@ public class ArticlesController {
 
 
     @PutMapping("/articles/likeArticle/{id}")
-    public int updateArticle(@PathVariable int id){
+    public int updateArticleLikes(@PathVariable int id){
         return articleService.likeArticle(id);
+    }
+
+    @PutMapping("/articles/dislikeArticle/{id}")
+    public int updateArticleDislikes(@PathVariable int id){
+        return articleService.dislikeArticle(id);
     }
 }
 

@@ -94,7 +94,11 @@
             {{ dislikes }}
           </div>
           <div class="SpaceBlock" />
-          <img class="dislikesIcon" src="../images/down_arrow.png" />
+          <img
+            @click="dislikeArticle"
+            class="dislikesIcon"
+            src="../images/down_arrow.png"
+          />
           <div class="SpaceBlock" />
         </div>
         <div clas="SpaceBlock" />
@@ -188,6 +192,56 @@ export default {
   },
   watch: {},
   methods: {
+    async dislikeArticle() {
+      if (localStorage.getItem('username')) {
+        let myArticle = {
+          maintitle: this.maintitle,
+          authorimage: this.authorimage,
+          author: this.author,
+          firsttag: this.firstTag,
+          secondtag: this.secondTag,
+          thirdtag: this.thirdTag,
+          difficulty: this.difficulty,
+          firstprerequisite: this.firstPreReq,
+          language: this.language,
+          secondprerequisite: this.secondPreReq,
+          thirdprerequisite: this.thirdPreReq,
+          firstdescription: this.firstdescription,
+          firsttitle: this.firsttitle,
+          firstsection: this.firstsection,
+          seconddescription: this.seconddescription,
+          secondtitle: this.secondtitle,
+          secondcontent: this.secondsection,
+          thirddescription: this.thirddescription,
+          thirdtitle: this.thirdtitle,
+          thirdsection: this.thirdsection,
+          likes: this.likes,
+          dislikes: this.dislikes,
+          comments: 0,
+        };
+        let res = await fetch(
+          '/rest/articles/dislikeArticle/' + this.$route.params.id,
+          {
+            method: 'PUT',
+            body: JSON.stringify(myArticle),
+          }
+        );
+        let response = await res.json();
+        this.dislikes = response;
+
+        let secondres = await fetch(
+          '/rest/dislikes/' +
+            localStorage.getItem('userid') +
+            '/' +
+            this.$route.params.id,
+          {
+            method: 'GET',
+          }
+        );
+      } else {
+        alert('You have to be logged in to dislike Articles.');
+      }
+    },
     async likeArticle() {
       if (localStorage.getItem('username')) {
         let myArticle = {

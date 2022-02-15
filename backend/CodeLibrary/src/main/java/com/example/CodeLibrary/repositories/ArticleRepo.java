@@ -26,8 +26,16 @@ public interface ArticleRepo extends CrudRepository<Article, Integer> {
     @Query(value = "UPDATE articles SET likes = (likes + 1) WHERE id = :id", nativeQuery = true)
     int updateLikesOfArticle(@Param("id") Integer id);
 
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query(value = "UPDATE articles SET dislikes = (dislikes + 1) WHERE id = :id", nativeQuery = true)
+    int updateDislikesOfArticle(@Param("id") Integer id);
+
     @Query(value ="SELECT likes FROM articles WHERE id = :id", nativeQuery = true)
     int findLikesForArticleWithId(@Param("id") Integer id);
+
+    @Query(value ="SELECT dislikes FROM articles WHERE id = :id", nativeQuery = true)
+    int findDislikesForArticleWithId(@Param("id") Integer id);
 
     @Query(value = "SELECT * FROM articles WHERE id = :id", nativeQuery = true)
     Article findBySpecificId(@Param("id") Integer id);
