@@ -6,7 +6,29 @@
       </div>
     </div>
     <div class="BodyBox">
-      <div class="titleBox">{{ maintitle }}</div>
+      <div class="titleAndEditGrid">
+        <div class="SpaceBlock" />
+        <div v-if="currentUsername" class="loggedInMainTitleDiv">
+          {{ maintitle }}
+        </div>
+        <div v-if="!currentUsername" class="nonLoggedInMainTitleDiv">
+          {{ maintitle }}
+        </div>
+        <div class="SpaceBlock" />
+        <img
+          v-if="currentUsername"
+          class="editIcon"
+          src="../images/light_pen.png"
+          @click="enableEditMode"
+        />
+        <div class="SpaceBlock" />
+        <img
+          v-if="currentUsername"
+          class="trashIcon"
+          src="../images/Light_Trash.png"
+        />
+        <div class="SpaceBlock" />
+      </div>
       <div class="AuthorText">Author</div>
       <div class="topGrid">
         <div class="SpaceBlock" />
@@ -159,6 +181,7 @@ export default {
       likes: 0,
       dislikes: 0,
       comments: 0,
+      editMode: false
     };
   },
   async mounted() {
@@ -242,6 +265,9 @@ export default {
         alert('You have to be logged in to dislike Articles.');
       }
     },
+    enableEditMode() {
+      this.editMode = true;
+    },
     async likeArticle() {
       if (localStorage.getItem('username')) {
         let myArticle = {
@@ -313,6 +339,21 @@ export default {
   overflow-y: clip;
 }
 
+.titleAndEditGrid {
+  display: grid;
+  grid-template-columns: auto max-content auto max-content 5px max-content 15px;
+}
+
+.trashIcon {
+  width: 25px;
+  height: 25px;
+  margin-top: 2px;
+}
+.editIcon {
+  width: 22px;
+  height: 22px;
+  margin-top: 4px;
+}
 .mainDiv {
   height: 100%;
   background-color: #131313;
@@ -390,7 +431,17 @@ export default {
   margin-left: 8px;
   margin-top: 10px;
 }
-
+.loggedInMainTitleDiv {
+  width: 100%;
+  text-align: center;
+  padding-top: 5px;
+  margin-left: 30px;
+}
+.nonLoggedInMainTitleDiv {
+  width: 100%;
+  text-align: center;
+  padding-top: 5px;
+}
 .authorImage {
   width: 40px;
   height: 40px;
@@ -444,13 +495,7 @@ export default {
   border-radius: 30px;
   margin-bottom: 14px;
 }
-.titleBox {
-  margin-left: auto;
-  margin-right: auto;
-  width: max-content;
-  font-size: 24px;
-  font-size: bold;
-}
+
 .codeLibraryText {
   width: max-content;
   left: 45px;
