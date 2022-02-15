@@ -36,8 +36,7 @@ export default {
     for (let i = 0; i < response.length; i++) {
       this.allArticles.push(response[i]);
     }
-    console.log(response);
-    console.log(this.allArticles);
+
   },
   updated() {},
   unmounted() {},

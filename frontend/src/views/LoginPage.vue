@@ -88,6 +88,7 @@ export default {
       } else {
         localStorage.setItem('username', this.wantedUsername);
         localStorage.setItem('profileURL', response.profileURL);
+        localStorage.setItem('userid', response.id);
         this.$router.push('/');
       }
     },
