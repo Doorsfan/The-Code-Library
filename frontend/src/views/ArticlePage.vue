@@ -14,58 +14,127 @@
         <div v-if="!currentUsername" class="nonLoggedInMainTitleDiv">
           {{ maintitle }}
         </div>
+        <div v-if="editMode" class="mainTitleInputDiv">
+          <input
+            class="mainTitleInput"
+            v-if="editMode"
+            type="text"
+            :placeholder="maintitle"
+          />
+        </div>
         <div class="SpaceBlock" />
         <img
-          v-if="currentUsername"
+          v-if="currentUsername && !editMode"
           class="editIcon"
           src="../images/light_pen.png"
           @click="enableEditMode"
         />
+        <img
+          v-if="currentUsername && editMode"
+          class="saveIcon"
+          src="../images/floppy.png"
+          @click="enableEditMode"
+        />
         <div class="SpaceBlock" />
         <img
-          v-if="currentUsername"
+          v-if="currentUsername && !editMode"
           class="trashIcon"
+          src="../images/Light_Trash.png"
+        />
+        <img
+          v-if="currentUsername && editMode"
+          class="editingTrashIcon"
           src="../images/Light_Trash.png"
         />
         <div class="SpaceBlock" />
       </div>
-      <div class="AuthorText">Author</div>
+      <div v-if="!editMode" class="AuthorText">Author</div>
+      <div v-if="editMode" class="EditAuthorText">Author</div>
       <div class="topGrid">
         <div class="SpaceBlock" />
-        <img class="authorImage" :src="authorimage" />
+        <img v-if="!editMode" class="authorImage" :src="authorimage" />
+        <img v-if="editMode" class="editAuthorImage" :src="authorimage" />
         <div class="SpaceBlock" />
-        <div class="authorText">{{ author }}</div>
+        <div v-if="!editMode" class="authorText">{{ author }}</div>
+        <div v-if="editMode" class="EditAuthorName">{{ author }}</div>
         <div class="SpaceBlock" />
-        <div class="firstTag">{{ firstTag }}</div>
+        <div v-if="!editMode" class="firstTag">{{ firstTag }}</div>
+        <div v-if="editMode" class="editFirstTag">
+          <input class="firstTagInput" type="text" :placeholder="firstTag" />
+        </div>
         <div class="SpaceBlock" />
-        <div class="secondTag">{{ secondTag }}</div>
+        <div v-if="!editMode" class="secondTag">{{ secondTag }}</div>
         <div class="SpaceBlock" />
-        <div class="thirdTag">{{ thirdTag }}</div>
+        <div v-if="!editMode" class="thirdTag">{{ thirdTag }}</div>
         <div class="SpaceBlock" />
       </div>
+      <div v-if="editMode" class="editSecondTag">
+        <input class="secondTagInput" type="text" :placeholder="secondTag" />
+      </div>
+      <div v-if="editMode" class="editThirdTag">
+        <input class="thirdTagInput" type="text" :placeholder="thirdTag" />
+      </div>
+      <div v-if="editMode" class="EditpreReqDiv">Pre-requisites:</div>
       <div class="preReqAndDifficultyGrid">
         <div class="SpaceBlock" />
-        <div class="preReqDiv">Pre-requisites:</div>
+        <div v-if="!editMode" class="preReqDiv">Pre-requisites:</div>
         <div class="SpaceBlock" />
-        <div class="difficultyDiv">Difficulty: {{ difficulty }}</div>
+        <div v-if="!editMode" class="difficultyDiv">
+          Difficulty: {{ difficulty }}
+        </div>
         <div class="SpaceBlock" />
+      </div>
+      <div v-if="editMode" class="editDifficultyDiv">
+        <input
+          class="editDifficultyInput"
+          type="text"
+          :placeholder="difficultyPlaceholder + difficulty"
+        />
+      </div>
+      <div v-if="editMode" class="editLanguageDiv">
+        <input
+          class="editLanguageInput"
+          type="text"
+          :placeholder="languagePlaceholder + language"
+        />
       </div>
       <div class="firstPreReqAndLanguageGrid">
         <div class="SpaceBlock" />
-        <div class="firstPreReqDiv">{{ firstPreReq }}</div>
+        <div v-if="!editMode" class="firstPreReqDiv">{{ firstPreReq }}</div>
         <div class="SpaceBlock" />
-        <div class="languageDiv">Language: {{ language }}</div>
+        <div v-if="!editMode" class="languageDiv">Language: {{ language }}</div>
         <div class="SpaceBlock" />
       </div>
-      <div class="secondPreReqGrid">
+      <div v-if="editMode" class="editFirstPreReqDiv">
+        <input
+          type="text"
+          class="editFirstPreReqInput"
+          :placeholder="firstPreReq"
+        />
+      </div>
+      <div v-if="!editMode" class="secondPreReqGrid">
         <div class="SpaceBlock" />
         <div class="secondPreReqDiv">{{ secondPreReq }}</div>
         <div class="SpaceBlock" />
       </div>
-      <div class="thirdPreReqGrid">
+      <div v-if="editMode" class="editSecondPreReqDiv">
+        <input
+          type="text"
+          class="editSecondPreReqInput"
+          :placeholder="secondPreReq"
+        />
+      </div>
+      <div v-if="!editMode" class="thirdPreReqGrid">
         <div class="SpaceBlock" />
         <div class="thirdPreReqDiv">{{ thirdPreReq }}</div>
         <div class="SpaceBlock" />
+      </div>
+      <div v-if="editMode" class="editThirdPreReqDiv">
+        <input
+          type="text"
+          class="editThirdPreReqInput"
+          :placeholder="thirdPreReq"
+        />
       </div>
       <div class="firstDescription">
         {{ firstdescription }}
@@ -181,7 +250,9 @@ export default {
       likes: 0,
       dislikes: 0,
       comments: 0,
-      editMode: false
+      difficultyPlaceholder: 'Difficulty: ',
+      languagePlaceholder: 'Language: ',
+      editMode: false,
     };
   },
   async mounted() {
@@ -336,7 +407,6 @@ export default {
   outline: none;
   border: none;
   overflow-x: clip;
-  overflow-y: clip;
 }
 
 .titleAndEditGrid {
@@ -349,10 +419,32 @@ export default {
   height: 25px;
   margin-top: 2px;
 }
+.editingTrashIcon {
+  width: 25px;
+  height: 25px;
+  margin-top: 2px;
+  position: relative;
+  right: 20px;
+  top: 1px;
+}
 .editIcon {
   width: 22px;
   height: 22px;
   margin-top: 4px;
+}
+.saveIcon {
+  width: 25px;
+  height: 25px;
+  margin-top: 4px;
+  position: relative;
+  right: 40px;
+}
+.firstTagInput,
+.secondTagInput,
+.thirdTagInput {
+  padding-left: 5px;
+  margin-left: 5px;
+  width: 180px;
 }
 .mainDiv {
   height: 100%;
@@ -386,7 +478,9 @@ export default {
   border-radius: 30px;
   margin-top: 0px;
 }
-
+.editLanguageInput {
+  padding-left: 5px;
+}
 .likesNumber,
 .dislikesNumber,
 .commentsNumber {
@@ -422,6 +516,44 @@ export default {
   padding-left: 13px;
   border: solid 1px black;
 }
+.editDifficultyDiv {
+  position: relative;
+  right: -232px;
+  width: 125px;
+  top: -27px;
+}
+.editLanguageDiv {
+  position: relative;
+  right: -232px;
+  width: 125px;
+  top: -25px;
+}
+.editDifficultyInput {
+  padding-left: 5px;
+}
+.EditAuthorName {
+  position: relative;
+  top: 30px;
+}
+.editFirstPreReqDiv {
+  position: relative;
+  left: 20px;
+  top: -75px;
+}
+.editSecondPreReqDiv{
+  position: relative;
+  left: 20px;
+  top: -73px;
+}
+.editThirdPreReqDiv{
+  position: relative;
+  left: 20px;
+  top: -71px;
+}
+.editSecondPreReqInput, .editThirdPreReqInput, .editFirstPreReqInput{
+  padding-left: 5px;
+}
+
 .AuthorText {
   font-family: Roboto;
   font-style: normal;
@@ -431,11 +563,40 @@ export default {
   margin-left: 8px;
   margin-top: 10px;
 }
+.EditAuthorText {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
+  margin-left: 12px;
+  position: relative;
+  top: 20px;
+}
+.preReqDiv {
+  margin-left: 20px;
+}
+.EditpreReqDiv {
+  margin-left: 20px;
+  position: relative;
+  top: -35px;
+}
 .loggedInMainTitleDiv {
   width: 100%;
   text-align: center;
   padding-top: 5px;
   margin-left: 30px;
+}
+.mainTitleInputDiv {
+  margin-left: -60px;
+  margin-top: 7px;
+  border: solid 1px black;
+  width: 290px;
+}
+
+.mainTitleInput {
+  padding-left: 5px;
+  width: 290px;
 }
 .nonLoggedInMainTitleDiv {
   width: 100%;
@@ -447,7 +608,13 @@ export default {
   height: 40px;
   border-radius: 30px;
 }
-
+.editAuthorImage {
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  margin-top: 20px;
+  margin-left: 0px;
+}
 .topGrid {
   display: grid;
   grid-template-columns: auto max-content auto max-content auto max-content auto max-content auto max-content auto;
@@ -539,6 +706,33 @@ export default {
   border-radius: 10px;
 }
 
+.editFirstTag,
+.editSecondTag,
+.editThirdTag {
+  color: white;
+  background-color: black;
+  height: 20px;
+  padding-left: 5px;
+  padding-right: 3px;
+  border-radius: 10px;
+  width: 200px;
+}
+.editFirstTag {
+  position: relative;
+  top: 2px;
+  left: -2px;
+}
+.editSecondTag {
+  position: relative;
+  top: -30px;
+  left: 125px;
+}
+.editThirdTag {
+  position: relative;
+  top: -22px;
+  left: 125px;
+}
+
 .homeDiv {
   background-color: red;
   position: absolute;
@@ -552,6 +746,6 @@ export default {
 
 .loginFooter {
   position: relative;
-  top: calc(100vh - 525px);
+  top: calc(100vh - 532px);
 }
 </style>
