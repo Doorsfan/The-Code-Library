@@ -33,7 +33,7 @@
           v-if="currentUsername && editMode"
           class="saveIcon"
           src="../images/floppy.png"
-          @click="enableEditMode"
+          @click="saveChanges"
         />
         <div class="SpaceBlock" />
         <img
@@ -60,7 +60,12 @@
         <div class="SpaceBlock" />
         <div v-if="!editMode" class="firstTag">{{ firstTag }}</div>
         <div v-if="editMode" class="editFirstTag">
-          <input class="firstTagInput" type="text" :placeholder="firstTag" />
+          <input
+            class="firstTagInput"
+            v-model="wantedFirstTag"
+            type="text"
+            :placeholder="firstTag"
+          />
         </div>
         <div class="SpaceBlock" />
         <div v-if="!editMode" class="secondTag">{{ secondTag }}</div>
@@ -69,10 +74,20 @@
         <div class="SpaceBlock" />
       </div>
       <div v-if="editMode" class="editSecondTag">
-        <input class="secondTagInput" type="text" :placeholder="secondTag" />
+        <input
+          class="secondTagInput"
+          v-model="wantedSecondTag"
+          type="text"
+          :placeholder="secondTag"
+        />
       </div>
       <div v-if="editMode" class="editThirdTag">
-        <input class="thirdTagInput" type="text" :placeholder="thirdTag" />
+        <input
+          class="thirdTagInput"
+          v-model="wantedThirdTag"
+          type="text"
+          :placeholder="thirdTag"
+        />
       </div>
       <div v-if="editMode" class="EditpreReqDiv">Pre-requisites:</div>
       <div class="preReqAndDifficultyGrid">
@@ -89,6 +104,7 @@
           class="editDifficultyInput"
           type="text"
           :placeholder="difficultyPlaceholder + difficulty"
+          v-model="wantedDifficulty"
         />
       </div>
       <div v-if="editMode" class="editLanguageDiv">
@@ -96,6 +112,7 @@
           class="editLanguageInput"
           type="text"
           :placeholder="languagePlaceholder + language"
+          v-model="wantedLanguage"
         />
       </div>
       <div class="firstPreReqAndLanguageGrid">
@@ -110,6 +127,7 @@
           type="text"
           class="editFirstPreReqInput"
           :placeholder="firstPreReq"
+          v-model="wantedFirstPreReq"
         />
       </div>
       <div v-if="!editMode" class="secondPreReqGrid">
@@ -122,6 +140,7 @@
           type="text"
           class="editSecondPreReqInput"
           :placeholder="secondPreReq"
+          v-model="wantedSecondPreReq"
         />
       </div>
       <div v-if="!editMode" class="thirdPreReqGrid">
@@ -134,35 +153,114 @@
           type="text"
           class="editThirdPreReqInput"
           :placeholder="thirdPreReq"
+          v-model="wantedThirdPreReq"
         />
       </div>
-      <div class="firstDescription">
+      <div v-if="!editMode" class="firstDescription">
         {{ firstdescription }}
       </div>
-      <div class="firstTitle">
+      <textarea
+        v-if="editMode"
+        name="yourReply"
+        class="editFirstDescription"
+        rows="5"
+        cols="33"
+        :placeholder="firstdescription"
+        v-model="wantedFirstDescription"
+      />
+      <div v-if="!editMode" class="firstTitle">
         {{ firsttitle }}
       </div>
-      <div class="firstsection">
+      <div v-if="editMode" class="editFirstTitle">
+        <input
+          type="text"
+          :placeholder="firsttitle"
+          class="editFirstTitleInput"
+        />
+      </div>
+      <div v-if="!editMode" class="firstsection">
         {{ firstsection }}
       </div>
-      <div v-if="seconddescription.length > 0" class="secondDescription">
+      <textarea
+        v-if="editMode"
+        class="editFirstSection"
+        rows="5"
+        cols="33"
+        :placeholder="firstsection"
+        v-model="wantedFirstSection"
+      />
+      <div
+        v-if="seconddescription.length > 0 && !editMode"
+        class="secondDescription"
+      >
         {{ seconddescription }}
       </div>
-      <div v-if="secondtitle.length > 0" class="secondTitle">
+      <textarea
+        v-if="editMode && seconddescription.length > 0"
+        name="yourReply"
+        class="editSecondDescription"
+        rows="5"
+        cols="33"
+        :placeholder="seconddescription"
+        v-model="wantedSecondDescription"
+      />
+      <div v-if="secondtitle.length > 0 && !editMode" class="secondTitle">
         {{ secondtitle }}
       </div>
-      <div v-if="thirdsection.length > 0" class="thirdsection">
+      <div v-if="editMode && secondtitle.length > 0" class="editSecondTitle">
+        <input
+          type="text"
+          :placeholder="secondtitle"
+          class="editSecondTitleInput"
+        />
+      </div>
+      <div v-if="secondsection.length > 0 && !editMode" class="secondsection">
         {{ secondsection }}
       </div>
-      <div v-if="thirddescription.length > 0" class="thirdDescription">
+      <textarea
+        v-if="editMode"
+        class="editSecondSection"
+        rows="5"
+        cols="33"
+        :placeholder="secondsection"
+        v-model="wantedSecondSection"
+      />
+      <div
+        v-if="thirddescription.length > 0 && !editMode"
+        class="thirdDescription"
+      >
         {{ thirddescription }}
       </div>
-      <div v-if="thirdtitle.length > 0" class="thirdTitle">
+      <textarea
+        v-if="editMode"
+        class="editThirdDescription"
+        rows="5"
+        cols="33"
+        :placeholder="thirddescription"
+        v-model="wantedThirdDescription"
+      />
+      <div v-if="thirdtitle.length > 0 && !editMode" class="thirdTitle">
         {{ thirdtitle }}
       </div>
-      <div v-if="thirdsection.length > 0" class="thirdsection">
+      <div v-if="editMode" class="editThirdTitle">
+        <input
+          type="text"
+          :placeholder="thirdtitle"
+          v-model="wantedThirdTitle"
+          class="editThirdTitleInput"
+        />
+      </div>
+      <div v-if="thirdsection.length > 0 && !editMode" class="thirdsection">
         {{ thirdsection }}
       </div>
+      <textarea
+        v-if="editMode"
+        class="editThirdSection"
+        rows="5"
+        cols="33"
+        :placeholder="thirdsection"
+        v-model="wantedThirdSection"
+      />
       <div class="bigGrid">
         <div clas="SpaceBlock" />
         <div class="likesGrid">
@@ -205,7 +303,8 @@
         <div class="SpaceBlock" />
       </div>
     </div>
-    <Footer class="loginFooter" />
+    <Footer v-if="editMode" class="EditLoginFooter" />
+    <Footer v-if="!editMode" class="loginFooter" />
   </div>
 </template>
 <script>
@@ -239,6 +338,23 @@ export default {
       secondPreReq: '',
       thirdPreReq: '',
       firstdescription: '',
+      wantedFirstTag: '',
+      wantedSecondTag: '',
+      wantedThirdTag: '',
+      wantedFirstDescription: '',
+      wantedSecondDescription: '',
+      wantedThirdDescription: '',
+      wantedFirstSection: '',
+      wantedSecondSection: '',
+      wantedThirdSection: '',
+      wantedFirstPreReq: '',
+      wantedSecondPreReq: '',
+      wantedThirdPreReq: '',
+      wantedDifficulty: '',
+      wantedLanguage: '',
+      wantedFirstTitle: '',
+      wantedSecondTitle: '',
+      wantedThirdTitle: '',
       firsttitle: '',
       firstsection: '',
       seconddescription: '',
@@ -338,6 +454,9 @@ export default {
     },
     enableEditMode() {
       this.editMode = true;
+    },
+    saveChanges() {
+      this.editMode = false;
     },
     async likeArticle() {
       if (localStorage.getItem('username')) {
@@ -451,7 +570,8 @@ export default {
   background-color: #131313;
 }
 .firstDescription,
-.secondDescription {
+.secondDescription,
+.thirdDescription {
   background-color: white;
   width: 314px;
   margin-left: auto;
@@ -460,6 +580,26 @@ export default {
   border-radius: 10px;
   text-align: center;
   margin-top: 10px;
+}
+
+.editFirstDescription,
+.editFirstSection,
+.editSecondDescription,
+.editSecondSection,
+.editThirdDescription,
+.editThirdSection {
+  background-color: white;
+  width: 314px;
+  display: block;
+  border: solid 1px black;
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 3px;
+  position: relative;
+  top: -65px;
 }
 
 .bigGrid {
@@ -499,7 +639,8 @@ export default {
 }
 
 .firstTitle,
-.secondTitle {
+.secondTitle,
+.thirdTitle {
   width: 100%;
   text-align: center;
   margin-top: 5px;
@@ -507,8 +648,28 @@ export default {
   margin-bottom: 4px;
 }
 
+.editFirstTitle,
+.editSecondTitle,
+.editThirdTitle {
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+  display: block;
+}
+
+.editFirstTitleInput,
+.editSecondTitleInput,
+.editThirdTitleInput {
+  width: 360px;
+  margin-bottom: 5px;
+  text-align: center;
+  position: relative;
+  top: -60px;
+}
+
 .firstsection,
-.secondsection {
+.secondsection,
+.thirdsection {
   background-color: white;
   width: 367px;
   margin-left: auto;
@@ -540,17 +701,19 @@ export default {
   left: 20px;
   top: -75px;
 }
-.editSecondPreReqDiv{
+.editSecondPreReqDiv {
   position: relative;
   left: 20px;
   top: -73px;
 }
-.editThirdPreReqDiv{
+.editThirdPreReqDiv {
   position: relative;
   left: 20px;
   top: -71px;
 }
-.editSecondPreReqInput, .editThirdPreReqInput, .editFirstPreReqInput{
+.editSecondPreReqInput,
+.editThirdPreReqInput,
+.editFirstPreReqInput {
   padding-left: 5px;
 }
 
@@ -746,6 +909,11 @@ export default {
 
 .loginFooter {
   position: relative;
-  top: calc(100vh - 532px);
+  top: calc(100vh - 680px);
+}
+
+.EditLoginFooter{
+  position: relative;
+  top: calc(100vh - 771px);
 }
 </style>
