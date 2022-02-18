@@ -115,6 +115,8 @@ public class ArticleService {
         return articleRepo.findDislikesForArticleWithId(id);
     }
 
+    public int updateArticle(int id, String maintitle, String firsttag, String secondtag, String thirdtag, String firstprereq, String secondprereq, String thirdprereq, String difficulty, String language, String firstdescription, String firsttitle, String firstsection, String seconddescription, String secondtitle, String secondcontent, String thirddescription, String thirdtitle, String thirdsection) { return articleRepo.updateArticle(id, maintitle, firsttag, secondtag, thirdtag, firstprereq, secondprereq, thirdprereq, difficulty, language, firstdescription, firsttitle, firstsection, seconddescription, secondtitle, secondcontent, thirddescription, thirdtitle, thirdsection); }
+
     public Article saveNewArticleToDB(Article article){
         return articleRepo.save(article);
     }

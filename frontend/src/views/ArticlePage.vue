@@ -20,6 +20,7 @@
             v-if="editMode"
             type="text"
             :placeholder="maintitle"
+            v-model="wantedMainTitle"
           />
         </div>
         <div class="SpaceBlock" />
@@ -83,10 +84,11 @@
       </div>
       <div v-if="editMode" class="editThirdTag">
         <input
-          class="thirdTagInput"
+          class="editThirdTagInput"
           v-model="wantedThirdTag"
           type="text"
           :placeholder="thirdTag"
+          v-if="editMode"
         />
       </div>
       <div v-if="editMode" class="EditpreReqDiv">Pre-requisites:</div>
@@ -99,14 +101,15 @@
         </div>
         <div class="SpaceBlock" />
       </div>
-      <div v-if="editMode" class="editDifficultyDiv">
-        <input
-          class="editDifficultyInput"
-          type="text"
-          :placeholder="difficultyPlaceholder + difficulty"
-          v-model="wantedDifficulty"
-        />
-      </div>
+
+      <input
+        class="editDifficultyInput"
+        type="text"
+        v-if="editMode"
+        :placeholder="difficultyPlaceholder + difficulty"
+        v-model="wantedDifficulty"
+      />
+
       <div v-if="editMode" class="editLanguageDiv">
         <input
           class="editLanguageInput"
@@ -122,40 +125,43 @@
         <div v-if="!editMode" class="languageDiv">Language: {{ language }}</div>
         <div class="SpaceBlock" />
       </div>
-      <div v-if="editMode" class="editFirstPreReqDiv">
-        <input
-          type="text"
-          class="editFirstPreReqInput"
-          :placeholder="firstPreReq"
-          v-model="wantedFirstPreReq"
-        />
-      </div>
+
+      <input
+        type="text"
+        class="editFirstPreReqInput"
+        :placeholder="firstPreReq"
+        v-model="wantedFirstPreReq"
+        v-if="editMode"
+      />
+
       <div v-if="!editMode" class="secondPreReqGrid">
         <div class="SpaceBlock" />
         <div class="secondPreReqDiv">{{ secondPreReq }}</div>
         <div class="SpaceBlock" />
       </div>
-      <div v-if="editMode" class="editSecondPreReqDiv">
-        <input
-          type="text"
-          class="editSecondPreReqInput"
-          :placeholder="secondPreReq"
-          v-model="wantedSecondPreReq"
-        />
-      </div>
+
+      <input
+        type="text"
+        class="editSecondPreReqInput"
+        :placeholder="secondPreReq"
+        v-model="wantedSecondPreReq"
+        v-if="editMode"
+      />
+
       <div v-if="!editMode" class="thirdPreReqGrid">
         <div class="SpaceBlock" />
         <div class="thirdPreReqDiv">{{ thirdPreReq }}</div>
         <div class="SpaceBlock" />
       </div>
-      <div v-if="editMode" class="editThirdPreReqDiv">
-        <input
-          type="text"
-          class="editThirdPreReqInput"
-          :placeholder="thirdPreReq"
-          v-model="wantedThirdPreReq"
-        />
-      </div>
+
+      <input
+        type="text"
+        class="editThirdPreReqInput"
+        :placeholder="thirdPreReq"
+        v-model="wantedThirdPreReq"
+        v-if="editMode"
+      />
+
       <div v-if="!editMode" class="firstDescription">
         {{ firstdescription }}
       </div>
@@ -176,6 +182,7 @@
           type="text"
           :placeholder="firsttitle"
           class="editFirstTitleInput"
+          v-model="wantedFirstTitle"
         />
       </div>
       <div v-if="!editMode" class="firstsection">
@@ -212,6 +219,7 @@
           type="text"
           :placeholder="secondtitle"
           class="editSecondTitleInput"
+          v-model="wantedSecondTitle"
         />
       </div>
       <div v-if="secondsection.length > 0 && !editMode" class="secondsection">
@@ -318,14 +326,12 @@ export default {
   },
   data() {
     return {
-      currentUsername:
-        localStorage.getItem('username') != null
-          ? localStorage.getItem('username')
-          : null,
+      currentUsername: null,
       currentProfile:
         localStorage.getItem('profileURL') != null
           ? localStorage.getItem('profileURL')
           : '../images/profile.png',
+      wantedMainTitle: '',
       maintitle: '',
       authorimage: '',
       author: '',
@@ -399,6 +405,9 @@ export default {
     this.likes = response.likes;
     this.dislikes = response.dislikes;
     this.comments = 0;
+    if(localStorage.getItem('username') == this.author){
+      this.currentUsername = localStorage.getItem('username');
+    }
   },
   watch: {},
   methods: {
@@ -455,7 +464,67 @@ export default {
     enableEditMode() {
       this.editMode = true;
     },
-    saveChanges() {
+    async saveChanges() {
+      let res = await fetch(
+        '/rest/articles/updateArticle/' + this.$route.params.id + '/' + 
+        (this.wantedMainTitle.length  == 0 ? this.maintitle : this.wantedMainTitle)
+        + '/' + 
+        (this.wantedFirstTag.length == 0 ? this.firstTag : this.wantedFirstTag) 
+        + '/' + 
+        (this.wantedSecondTag.length == 0 ? this.secondTag : this.wantedSecondTag) 
+        + '/' + 
+        (this.wantedThirdTag.length == 0 ? this.thirdTag : this.wantedThirdTag)
+        + '/' +
+        (this.wantedFirstPreReq.length == 0 ? this.firstPreReq : this.wantedFirstPreReq)
+        + '/' +
+        (this.wantedSecondPreReq.length == 0 ? this.secondPreReq : this.wantedSecondPreReq)
+        + '/' +
+        (this.wantedThirdPreReq.length == 0 ? this.thirdPreReq : this.wantedThirdPreReq)
+        + '/' +
+        (this.wantedDifficulty.length == 0 ? this.difficulty : this.wantedDifficulty)
+        + '/' +
+        (this.wantedLanguage.length == 0 ? this.language : this.wantedLanguage)
+        + '/' +
+        (this.wantedFirstDescription.length == 0 ? this.firstdescription : this.wantedFirstDescription)
+        + '/' +
+        (this.wantedFirstTitle.length == 0 ? this.firsttitle : this.wantedFirstTitle)
+        + '/' +
+        (this.wantedFirstSection.length == 0 ? this.firstsection : this.wantedFirstSection)
+        + '/' +
+        (this.wantedSecondDescription.length == 0 ? this.seconddescription : this.wantedSecondDescription)
+        + '/' +
+        (this.wantedSecondTitle.length == 0 ? this.secondtitle : this.wantedSecondTitle)
+        + '/' +
+        (this.wantedSecondSection.length == 0 ? this.secondsection : this.wantedSecondSection)
+        + '/' +
+        (this.wantedThirdDescription.length == 0 ? this.thirddescription : this.wantedThirdDescription)
+        + '/' +
+        (this.wantedThirdTitle.length == 0 ? this.thirdtitle : this.wantedThirdTitle)
+        + '/' +
+        (this.wantedThirdSection.length == 0 ? this.thirdsection : this.wantedThirdSection),
+        {
+          method: 'PUT'
+        }
+      );
+      this.maintitle = this.wantedMainTitle.length  == 0 ? this.maintitle : this.wantedMainTitle;
+      this.firstTag = this.wantedFirstTag.length == 0 ? this.firstTag : this.wantedFirstTag;
+      this.secondTag = this.wantedSecondTag.length == 0 ? this.secondTag : this.wantedSecondTag;
+      this.thirdTag = this.wantedThirdTag.length == 0 ? this.thirdTag : this.wantedThirdTag;
+      this.firstPreReq = this.wantedFirstPreReq.length == 0 ? this.firstPreReq : this.wantedFirstPreReq;
+      this.secondPreReq = this.wantedSecondPreReq.length == 0 ? this.secondPreReq : this.wantedSecondPreReq;
+      this.thirdPreReq = this.wantedThirdPreReq.length == 0 ? this.thirdPreReq : this.wantedThirdPreReq;
+      this.difficulty = this.wantedDifficulty.length == 0 ? this.difficulty : this.wantedDifficulty;
+      this.language = this.wantedLanguage.length == 0 ? this.language : this.wantedLanguage;
+      this.firstdescription = this.wantedFirstDescription.length == 0 ? this.firstdescription : this.wantedFirstDescription;
+      this.firsttitle = this.wantedFirstTitle.length == 0 ? this.firsttitle : this.wantedFirstTitle;
+      this.firstsection = this.wantedFirstSection.length == 0 ? this.firstsection : this.wantedFirstSection;
+      this.seconddescription = this.wantedSecondDescription.length == 0 ? this.seconddescription : this.wantedSecondDescription;
+      this.secondtitle = this.wantedSecondTitle.length == 0 ? this.secondtitle : this.wantedSecondTitle;
+      this.secondsection = this.wantedSecondSection.length == 0 ? this.secondsection : this.wantedSecondSection;
+      this.thirddescription = this.wantedThirdDescription.length == 0 ? this.thirddescription : this.wantedThirdDescription;
+      this.thirdtitle = this.wantedThirdTitle.length == 0 ? this.thirdtitle : this.wantedThirdTitle;
+      this.thirdsection = this.wantedThirdSection.length == 0 ? this.thirdsection : this.wantedThirdSection;
+      let response = await res.json();
       this.editMode = false;
     },
     async likeArticle() {
@@ -546,6 +615,13 @@ export default {
   right: 20px;
   top: 1px;
 }
+.editDifficultyInput {
+  position: relative;
+  left: 205px;
+  top: -26px;
+  padding-left: 5px;
+  width: 120px;
+}
 .editIcon {
   width: 22px;
   height: 22px;
@@ -564,6 +640,14 @@ export default {
   padding-left: 5px;
   margin-left: 5px;
   width: 180px;
+}
+.editThirdTagInput{
+  padding-left: 5px;
+  margin-left: 5px;
+  width: 180px;
+  position: absolute;
+  top: 2px;
+  left: 5px;
 }
 .mainDiv {
   height: 100%;
@@ -599,7 +683,7 @@ export default {
   margin-right: auto;
   padding-top: 3px;
   position: relative;
-  top: -65px;
+  top: -35px;
 }
 
 .bigGrid {
@@ -609,7 +693,11 @@ export default {
   position: relative;
   top: -2px;
 }
-
+.editSecondPreReqInput{
+  position: absolute;
+  top: 167px;
+  left: 20px;
+}
 .likesIcon,
 .dislikesIcon,
 .commentIcon {
@@ -620,6 +708,7 @@ export default {
 }
 .editLanguageInput {
   padding-left: 5px;
+
 }
 .likesNumber,
 .dislikesNumber,
@@ -627,6 +716,11 @@ export default {
   margin-top: 2px;
 }
 
+.editFirstPreReqInput {
+  position: relative;
+  left: 20px;
+  top: -75px;
+}
 .bigGrid {
   background-color: #61bfc5;
   margin-top: 25px;
@@ -664,7 +758,7 @@ export default {
   margin-bottom: 5px;
   text-align: center;
   position: relative;
-  top: -60px;
+  top: -30px;
 }
 
 .firstsection,
@@ -685,13 +779,11 @@ export default {
 }
 .editLanguageDiv {
   position: relative;
-  right: -232px;
+  right: -205px;
   width: 125px;
   top: -25px;
 }
-.editDifficultyInput {
-  padding-left: 5px;
-}
+
 .EditAuthorName {
   position: relative;
   top: 30px;
@@ -715,6 +807,13 @@ export default {
 .editThirdPreReqInput,
 .editFirstPreReqInput {
   padding-left: 5px;
+}
+
+.editThirdPreReqInput{
+  position: absolute;
+  top: 184px;
+  left: 20px;
+  width: 170px;
 }
 
 .AuthorText {
@@ -743,6 +842,7 @@ export default {
   margin-left: 20px;
   position: relative;
   top: -35px;
+  width: max-content;
 }
 .loggedInMainTitleDiv {
   width: 100%;
@@ -753,13 +853,13 @@ export default {
 .mainTitleInputDiv {
   margin-left: -60px;
   margin-top: 7px;
-  border: solid 1px black;
   width: 290px;
 }
 
 .mainTitleInput {
   padding-left: 5px;
-  width: 290px;
+  width: 265px;
+  border: solid 1px black;
 }
 .nonLoggedInMainTitleDiv {
   width: 100%;
@@ -780,12 +880,13 @@ export default {
 }
 .topGrid {
   display: grid;
-  grid-template-columns: auto max-content auto max-content auto max-content auto max-content auto max-content auto;
+  grid-template-columns: 15px max-content auto max-content auto max-content auto max-content auto max-content auto;
 }
 
 .preReqAndDifficultyGrid {
   display: grid;
-  grid-template-columns: auto max-content auto max-content auto;
+  grid-template-columns: 15px max-content 106px max-content auto;
+  margin-top: 5px;
 }
 
 .firstPreReqAndLanguageGrid {
@@ -892,7 +993,7 @@ export default {
 }
 .editThirdTag {
   position: relative;
-  top: -22px;
+  top: -25.5px;
   left: 125px;
 }
 
@@ -912,7 +1013,7 @@ export default {
   top: calc(100vh - 680px);
 }
 
-.EditLoginFooter{
+.EditLoginFooter {
   position: relative;
   top: calc(100vh - 771px);
 }
