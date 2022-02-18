@@ -83,6 +83,9 @@ public class ArticlesController {
         return articleService.deleteArticleByID(id);
     }
 
+    @PutMapping("/articles/updateArticle/{id}/{maintitle}/{firsttag}/{secondtag}/{thirdtag}/{firstprereq}/{secondprereq}/{thirdprereq}/{difficulty}/{language}/{firstdescription}/{firsttitle}/{firstsection}/{seconddescription}/{secondtitle}/{secondcontent}/{thirddescription}/{thirdtitle}/{thirdsection}")
+    public int updateArticle(@PathVariable int id, @PathVariable String maintitle, @PathVariable String firsttag, @PathVariable String secondtag, @PathVariable String thirdtag, @PathVariable String firstprereq, @PathVariable String secondprereq, @PathVariable String thirdprereq, @PathVariable String difficulty, @PathVariable String language, @PathVariable String firstdescription, @PathVariable String firsttitle, @PathVariable String firstsection, @PathVariable String seconddescription, @PathVariable String secondtitle, @PathVariable String secondcontent, @PathVariable String thirddescription, @PathVariable String thirdtitle, @PathVariable String thirdsection) { return articleService.updateArticle(id, maintitle, firsttag, secondtag, thirdtag, firstprereq, secondprereq, thirdprereq, difficulty, language, firstdescription, firsttitle, firstsection, seconddescription, secondtitle, secondcontent, thirddescription, thirdtitle, thirdsection); }
+
 
     @PutMapping("/articles/likeArticle/{id}")
     public int updateArticleLikes(@PathVariable int id){

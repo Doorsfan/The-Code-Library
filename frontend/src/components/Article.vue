@@ -1,5 +1,4 @@
 <template>
-  
   <div @click="goToArticle" class="BoxDiv">
     <div class="titleGrid">
       <div class="SpaceBlock" />
@@ -86,8 +85,8 @@ export default {
   },
   methods: {
     goToArticle() {
-      this.$router.push("/Article/" + this.article.id);
-    }
+      this.$router.push('/Article/' + this.article.id);
+    },
   },
 };
 </script>

@@ -27,10 +27,12 @@ export default {
   padding: 0px;
 }
 .app-main {
-  height: 100vh;
+  min-height: 100vh;
+  height: max-content;
 }
 .BackDrop {
   background-color: #131313;
-  height: -webkit-fill-available;
+  min-height: 100vh;
+  height: max-content;
 }
 </style>
