@@ -17,10 +17,13 @@ public class LikesController {
     @Autowired
     private LikesService likesService;
 
-    @DeleteMapping("/likes/{userid}/{articleId}")
-    public String deletelikeByID(@PathVariable int userid, @PathVariable int articleId){
-        return likesService.deleteLikeByID(userid, articleId);
+    @DeleteMapping("/likes/{userid}/{articleid}")
+    public String deletelikeByID(@PathVariable int userid, @PathVariable int articleid){
+        return likesService.deleteLikeByID(userid, articleid);
     }
+
+    @DeleteMapping("/likes/deleteLikesByArticleId/{articleid}")
+    public void deleteLikesByArticleId(@PathVariable int articleid) { likesService.deleteLikesByArticleId(articleid); }
 
     @GetMapping("/likes/{userid}/{articleid}")
     public Like likeArticle(@PathVariable int userid, @PathVariable int articleid){

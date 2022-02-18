@@ -56,6 +56,15 @@ public class LikesService {
         return likeRepo.save(like);
     }
 
+    public void deleteLikesByArticleId(int articleid){
+        try {
+            likeRepo.deleteByarticleid(articleid);
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public String deleteLikeByID(int articleid, int userid){
         try {
             likeRepo.deleteLikeByArticleIdAndUserId(articleid, userid);

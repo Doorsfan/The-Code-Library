@@ -48,6 +48,17 @@ public class DislikeService {
         return owner; */
     }
 
+    public void deleteDislikesByArticleId(int articleid){
+        try {
+            dislikeRepo.deleteByarticleid(articleid);
+
+        }
+        catch(Exception e) {
+            System.out.println(e);
+
+        }
+    }
+
     public List<Dislike> getDislikesForArticle(Integer id){
         return dislikeRepo.findDislikesByArticleId(id);
     }

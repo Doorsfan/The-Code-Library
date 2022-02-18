@@ -41,11 +41,13 @@
           v-if="currentUsername && !editMode"
           class="trashIcon"
           src="../images/Light_Trash.png"
+          @click="deleteArticle"
         />
         <img
           v-if="currentUsername && editMode"
           class="editingTrashIcon"
           src="../images/Light_Trash.png"
+          @click="deleteArticle"
         />
         <div class="SpaceBlock" />
       </div>
@@ -411,6 +413,30 @@ export default {
   },
   watch: {},
   methods: {
+    async deleteArticle() {
+      let deleteDislikesRes = await fetch(
+        '/rest/dislikes/deleteDislikesByArticleId/' + this.$route.params.id,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      let deleteLikesRes = await fetch(
+        '/rest/likes/deleteLikesByArticleId/' + this.$route.params.id,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      let deleteArticleRes = await fetch(
+        '/rest/articles/deleteArticle/' + this.$route.params.id,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      this.$router.push('/');
+    },
     async dislikeArticle() {
       if (localStorage.getItem('username')) {
         let myArticle = {

@@ -22,6 +22,9 @@ public class DislikesController {
         return dislikeService.deleteLikeByID(userid, articleId);
     }
 
+    @DeleteMapping("/dislikes/deleteDislikesByArticleId/{articleid}")
+    public void deleteDislikesByArticleId(@PathVariable int articleid) { dislikeService.deleteDislikesByArticleId(articleid); }
+
     @GetMapping("/dislikes/{userid}/{articleid}")
     public Dislike dislikeArticle(@PathVariable int userid, @PathVariable int articleid){
         System.out.println("Got in here");
