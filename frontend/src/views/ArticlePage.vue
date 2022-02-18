@@ -405,7 +405,7 @@ export default {
     this.likes = response.likes;
     this.dislikes = response.dislikes;
     this.comments = 0;
-    if(localStorage.getItem('username') == this.author){
+    if (localStorage.getItem('username') == this.author) {
       this.currentUsername = localStorage.getItem('username');
     }
   },
@@ -466,64 +466,150 @@ export default {
     },
     async saveChanges() {
       let res = await fetch(
-        '/rest/articles/updateArticle/' + this.$route.params.id + '/' + 
-        (this.wantedMainTitle.length  == 0 ? this.maintitle : this.wantedMainTitle)
-        + '/' + 
-        (this.wantedFirstTag.length == 0 ? this.firstTag : this.wantedFirstTag) 
-        + '/' + 
-        (this.wantedSecondTag.length == 0 ? this.secondTag : this.wantedSecondTag) 
-        + '/' + 
-        (this.wantedThirdTag.length == 0 ? this.thirdTag : this.wantedThirdTag)
-        + '/' +
-        (this.wantedFirstPreReq.length == 0 ? this.firstPreReq : this.wantedFirstPreReq)
-        + '/' +
-        (this.wantedSecondPreReq.length == 0 ? this.secondPreReq : this.wantedSecondPreReq)
-        + '/' +
-        (this.wantedThirdPreReq.length == 0 ? this.thirdPreReq : this.wantedThirdPreReq)
-        + '/' +
-        (this.wantedDifficulty.length == 0 ? this.difficulty : this.wantedDifficulty)
-        + '/' +
-        (this.wantedLanguage.length == 0 ? this.language : this.wantedLanguage)
-        + '/' +
-        (this.wantedFirstDescription.length == 0 ? this.firstdescription : this.wantedFirstDescription)
-        + '/' +
-        (this.wantedFirstTitle.length == 0 ? this.firsttitle : this.wantedFirstTitle)
-        + '/' +
-        (this.wantedFirstSection.length == 0 ? this.firstsection : this.wantedFirstSection)
-        + '/' +
-        (this.wantedSecondDescription.length == 0 ? this.seconddescription : this.wantedSecondDescription)
-        + '/' +
-        (this.wantedSecondTitle.length == 0 ? this.secondtitle : this.wantedSecondTitle)
-        + '/' +
-        (this.wantedSecondSection.length == 0 ? this.secondsection : this.wantedSecondSection)
-        + '/' +
-        (this.wantedThirdDescription.length == 0 ? this.thirddescription : this.wantedThirdDescription)
-        + '/' +
-        (this.wantedThirdTitle.length == 0 ? this.thirdtitle : this.wantedThirdTitle)
-        + '/' +
-        (this.wantedThirdSection.length == 0 ? this.thirdsection : this.wantedThirdSection),
+        '/rest/articles/updateArticle/' +
+          this.$route.params.id +
+          '/' +
+          (this.wantedMainTitle.length == 0
+            ? this.maintitle
+            : this.wantedMainTitle) +
+          '/' +
+          (this.wantedFirstTag.length == 0
+            ? this.firstTag
+            : this.wantedFirstTag) +
+          '/' +
+          (this.wantedSecondTag.length == 0
+            ? this.secondTag
+            : this.wantedSecondTag) +
+          '/' +
+          (this.wantedThirdTag.length == 0
+            ? this.thirdTag
+            : this.wantedThirdTag) +
+          '/' +
+          (this.wantedFirstPreReq.length == 0
+            ? this.firstPreReq
+            : this.wantedFirstPreReq) +
+          '/' +
+          (this.wantedSecondPreReq.length == 0
+            ? this.secondPreReq
+            : this.wantedSecondPreReq) +
+          '/' +
+          (this.wantedThirdPreReq.length == 0
+            ? this.thirdPreReq
+            : this.wantedThirdPreReq) +
+          '/' +
+          (this.wantedDifficulty.length == 0
+            ? this.difficulty
+            : this.wantedDifficulty) +
+          '/' +
+          (this.wantedLanguage.length == 0
+            ? this.language
+            : this.wantedLanguage) +
+          '/' +
+          (this.wantedFirstDescription.length == 0
+            ? this.firstdescription
+            : this.wantedFirstDescription) +
+          '/' +
+          (this.wantedFirstTitle.length == 0
+            ? this.firsttitle
+            : this.wantedFirstTitle) +
+          '/' +
+          (this.wantedFirstSection.length == 0
+            ? this.firstsection
+            : this.wantedFirstSection) +
+          '/' +
+          (this.wantedSecondDescription.length == 0
+            ? this.seconddescription
+            : this.wantedSecondDescription) +
+          '/' +
+          (this.wantedSecondTitle.length == 0
+            ? this.secondtitle
+            : this.wantedSecondTitle) +
+          '/' +
+          (this.wantedSecondSection.length == 0
+            ? this.secondsection
+            : this.wantedSecondSection) +
+          '/' +
+          (this.wantedThirdDescription.length == 0
+            ? this.thirddescription
+            : this.wantedThirdDescription) +
+          '/' +
+          (this.wantedThirdTitle.length == 0
+            ? this.thirdtitle
+            : this.wantedThirdTitle) +
+          '/' +
+          (this.wantedThirdSection.length == 0
+            ? this.thirdsection
+            : this.wantedThirdSection),
         {
-          method: 'PUT'
+          method: 'PUT',
         }
       );
-      this.maintitle = this.wantedMainTitle.length  == 0 ? this.maintitle : this.wantedMainTitle;
-      this.firstTag = this.wantedFirstTag.length == 0 ? this.firstTag : this.wantedFirstTag;
-      this.secondTag = this.wantedSecondTag.length == 0 ? this.secondTag : this.wantedSecondTag;
-      this.thirdTag = this.wantedThirdTag.length == 0 ? this.thirdTag : this.wantedThirdTag;
-      this.firstPreReq = this.wantedFirstPreReq.length == 0 ? this.firstPreReq : this.wantedFirstPreReq;
-      this.secondPreReq = this.wantedSecondPreReq.length == 0 ? this.secondPreReq : this.wantedSecondPreReq;
-      this.thirdPreReq = this.wantedThirdPreReq.length == 0 ? this.thirdPreReq : this.wantedThirdPreReq;
-      this.difficulty = this.wantedDifficulty.length == 0 ? this.difficulty : this.wantedDifficulty;
-      this.language = this.wantedLanguage.length == 0 ? this.language : this.wantedLanguage;
-      this.firstdescription = this.wantedFirstDescription.length == 0 ? this.firstdescription : this.wantedFirstDescription;
-      this.firsttitle = this.wantedFirstTitle.length == 0 ? this.firsttitle : this.wantedFirstTitle;
-      this.firstsection = this.wantedFirstSection.length == 0 ? this.firstsection : this.wantedFirstSection;
-      this.seconddescription = this.wantedSecondDescription.length == 0 ? this.seconddescription : this.wantedSecondDescription;
-      this.secondtitle = this.wantedSecondTitle.length == 0 ? this.secondtitle : this.wantedSecondTitle;
-      this.secondsection = this.wantedSecondSection.length == 0 ? this.secondsection : this.wantedSecondSection;
-      this.thirddescription = this.wantedThirdDescription.length == 0 ? this.thirddescription : this.wantedThirdDescription;
-      this.thirdtitle = this.wantedThirdTitle.length == 0 ? this.thirdtitle : this.wantedThirdTitle;
-      this.thirdsection = this.wantedThirdSection.length == 0 ? this.thirdsection : this.wantedThirdSection;
+      this.maintitle =
+        this.wantedMainTitle.length == 0
+          ? this.maintitle
+          : this.wantedMainTitle;
+      this.firstTag =
+        this.wantedFirstTag.length == 0 ? this.firstTag : this.wantedFirstTag;
+      this.secondTag =
+        this.wantedSecondTag.length == 0
+          ? this.secondTag
+          : this.wantedSecondTag;
+      this.thirdTag =
+        this.wantedThirdTag.length == 0 ? this.thirdTag : this.wantedThirdTag;
+      this.firstPreReq =
+        this.wantedFirstPreReq.length == 0
+          ? this.firstPreReq
+          : this.wantedFirstPreReq;
+      this.secondPreReq =
+        this.wantedSecondPreReq.length == 0
+          ? this.secondPreReq
+          : this.wantedSecondPreReq;
+      this.thirdPreReq =
+        this.wantedThirdPreReq.length == 0
+          ? this.thirdPreReq
+          : this.wantedThirdPreReq;
+      this.difficulty =
+        this.wantedDifficulty.length == 0
+          ? this.difficulty
+          : this.wantedDifficulty;
+      this.language =
+        this.wantedLanguage.length == 0 ? this.language : this.wantedLanguage;
+      this.firstdescription =
+        this.wantedFirstDescription.length == 0
+          ? this.firstdescription
+          : this.wantedFirstDescription;
+      this.firsttitle =
+        this.wantedFirstTitle.length == 0
+          ? this.firsttitle
+          : this.wantedFirstTitle;
+      this.firstsection =
+        this.wantedFirstSection.length == 0
+          ? this.firstsection
+          : this.wantedFirstSection;
+      this.seconddescription =
+        this.wantedSecondDescription.length == 0
+          ? this.seconddescription
+          : this.wantedSecondDescription;
+      this.secondtitle =
+        this.wantedSecondTitle.length == 0
+          ? this.secondtitle
+          : this.wantedSecondTitle;
+      this.secondsection =
+        this.wantedSecondSection.length == 0
+          ? this.secondsection
+          : this.wantedSecondSection;
+      this.thirddescription =
+        this.wantedThirdDescription.length == 0
+          ? this.thirddescription
+          : this.wantedThirdDescription;
+      this.thirdtitle =
+        this.wantedThirdTitle.length == 0
+          ? this.thirdtitle
+          : this.wantedThirdTitle;
+      this.thirdsection =
+        this.wantedThirdSection.length == 0
+          ? this.thirdsection
+          : this.wantedThirdSection;
       let response = await res.json();
       this.editMode = false;
     },
@@ -641,7 +727,7 @@ export default {
   margin-left: 5px;
   width: 180px;
 }
-.editThirdTagInput{
+.editThirdTagInput {
   padding-left: 5px;
   margin-left: 5px;
   width: 180px;
@@ -693,7 +779,7 @@ export default {
   position: relative;
   top: -2px;
 }
-.editSecondPreReqInput{
+.editSecondPreReqInput {
   position: absolute;
   top: 167px;
   left: 20px;
@@ -708,7 +794,6 @@ export default {
 }
 .editLanguageInput {
   padding-left: 5px;
-
 }
 .likesNumber,
 .dislikesNumber,
@@ -809,7 +894,7 @@ export default {
   padding-left: 5px;
 }
 
-.editThirdPreReqInput{
+.editThirdPreReqInput {
   position: absolute;
   top: 184px;
   left: 20px;
