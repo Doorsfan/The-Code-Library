@@ -8,10 +8,13 @@
     <div class="BodyBox">
       <div class="titleAndEditGrid">
         <div class="SpaceBlock" />
-        <div v-if="currentUsername" class="loggedInMainTitleDiv">
+        <div v-if="currentUsername && !editMode" class="loggedInMainTitleDiv">
           {{ maintitle }}
         </div>
-        <div v-if="!currentUsername" class="nonLoggedInMainTitleDiv">
+        <div
+          v-if="!currentUsername && !editMode"
+          class="nonLoggedInMainTitleDiv"
+        >
           {{ maintitle }}
         </div>
         <div v-if="editMode" class="mainTitleInputDiv">
@@ -199,7 +202,11 @@
         v-model="wantedFirstSection"
       />
       <div
-        v-if="seconddescription.length > 0 && !editMode"
+        v-if="
+          seconddescription.length > 0 &&
+          !editMode &&
+          seconddescription != 'null'
+        "
         class="secondDescription"
       >
         {{ seconddescription }}
@@ -210,21 +217,31 @@
         class="editSecondDescription"
         rows="5"
         cols="33"
-        :placeholder="seconddescription"
+        :placeholder="
+          seconddescription == 'null'
+            ? 'Second description..'
+            : seconddescription
+        "
         v-model="wantedSecondDescription"
       />
-      <div v-if="secondtitle.length > 0 && !editMode" class="secondTitle">
+      <div
+        v-if="secondtitle.length > 0 && !editMode && secondtitle != 'null'"
+        class="secondTitle"
+      >
         {{ secondtitle }}
       </div>
       <div v-if="editMode && secondtitle.length > 0" class="editSecondTitle">
         <input
           type="text"
-          :placeholder="secondtitle"
+          :placeholder="secondtitle == 'null' ? 'Second title..' : secondtitle"
           class="editSecondTitleInput"
           v-model="wantedSecondTitle"
         />
       </div>
-      <div v-if="secondsection.length > 0 && !editMode" class="secondsection">
+      <div
+        v-if="secondsection.length > 0 && !editMode && secondsection != 'null'"
+        class="secondsection"
+      >
         {{ secondsection }}
       </div>
       <textarea
@@ -232,11 +249,15 @@
         class="editSecondSection"
         rows="5"
         cols="33"
-        :placeholder="secondsection"
+        :placeholder="
+          secondsection == 'null' ? 'Second section..' : secondsection
+        "
         v-model="wantedSecondSection"
       />
       <div
-        v-if="thirddescription.length > 0 && !editMode"
+        v-if="
+          thirddescription.length > 0 && !editMode && thirddescription != 'null'
+        "
         class="thirdDescription"
       >
         {{ thirddescription }}
@@ -246,21 +267,29 @@
         class="editThirdDescription"
         rows="5"
         cols="33"
-        :placeholder="thirddescription"
+        :placeholder="
+          thirddescription == 'null' ? 'Third description..' : thirddescription
+        "
         v-model="wantedThirdDescription"
       />
-      <div v-if="thirdtitle.length > 0 && !editMode" class="thirdTitle">
+      <div
+        v-if="thirdtitle.length > 0 && !editMode && thirdtitle != 'null'"
+        class="thirdTitle"
+      >
         {{ thirdtitle }}
       </div>
       <div v-if="editMode" class="editThirdTitle">
         <input
           type="text"
-          :placeholder="thirdtitle"
+          :placeholder="thirdtitle == 'null' ? 'Third title..' : thirdtitle"
           v-model="wantedThirdTitle"
           class="editThirdTitleInput"
         />
       </div>
-      <div v-if="thirdsection.length > 0 && !editMode" class="thirdsection">
+      <div
+        v-if="thirdsection.length > 0 && !editMode && thirdsection != 'null'"
+        class="thirdsection"
+      >
         {{ thirdsection }}
       </div>
       <textarea
@@ -268,7 +297,7 @@
         class="editThirdSection"
         rows="5"
         cols="33"
-        :placeholder="thirdsection"
+        :placeholder="thirdsection == 'null' ? 'Third section..' : thirdsection"
         v-model="wantedThirdSection"
       />
       <div class="bigGrid">
@@ -312,22 +341,65 @@
         </div>
         <div class="SpaceBlock" />
       </div>
+      <Comment
+        v-for="(commentItem, index) of commentsArray"
+        :key="index"
+        :comment="commentItem"
+      />
+      <div v-if="!currentUsername" class="loginBox">
+        <div class="loginTextDiv">
+          To post a comment or like this article, you must first log in
+        </div>
+        <button
+          @click="goToLoginPage"
+          class="loginBoxButton"
+          value="Go to Login"
+        >
+          Go to Login
+        </button>
+      </div>
+      <div v-if="currentUsername" class="postNewCommentBox">
+        <div class="commenterGrid">
+          <div class="SpaceBlock" />
+          <img class="profileImage" :src="currentProfile" />
+          <div class="SpaceBlock" />
+          <div class="authorNameDiv">
+            {{ author }}
+          </div>
+          <div class="SpaceBlock" />
+          <div class="DateDiv">
+            {{ currentDate }}
+          </div>
+          <div class="SpaceBlock" />
+        </div>
+        <textarea
+          class="commentArea"
+          rows="5"
+          cols="33"
+          :placeholder="'What do you think, ' + currentUsername + '?'"
+          v-model="wantedComment"
+        />
+        <button @click="postComment" class="postCommentButton">Post</button>
+      </div>
     </div>
-    <Footer v-if="editMode" class="EditLoginFooter" />
-    <Footer v-if="!editMode" class="loginFooter" />
   </div>
+  <Footer v-if="editMode" class="EditLoginFooter" />
+  <Footer v-if="!editMode" class="loginFooter" />
 </template>
 <script>
 import Footer from '../components/Footer.vue';
 import store from '../store';
+import Comment from '../components/Comment.vue';
 
 export default {
   name: 'ArticlePage',
   components: {
     Footer,
+    Comment,
   },
   data() {
     return {
+      currentDate: new Date().toString().substring(4, 25).substring(0, 17),
       currentUsername: null,
       currentProfile:
         localStorage.getItem('profileURL') != null
@@ -377,6 +449,8 @@ export default {
       difficultyPlaceholder: 'Difficulty: ',
       languagePlaceholder: 'Language: ',
       editMode: false,
+      wantedComment: '',
+      commentsArray: [],
     };
   },
   async mounted() {
@@ -384,35 +458,81 @@ export default {
       method: 'GET',
     });
     let response = await res.json();
-    this.maintitle = response.maintitle;
-    this.authorimage = response.authorimage;
-    this.author = response.author;
-    this.firstTag = response.firsttag;
-    this.secondTag = response.secondtag;
-    this.thirdTag = response.thirdtag;
-    this.difficulty = response.difficulty;
-    this.firstPreReq = response.firstprerequisite;
-    this.language = response.language;
-    this.secondPreReq = response.secondprerequisite;
-    this.thirdPreReq = response.thirdprerequisite;
-    this.firstdescription = response.firstdescription;
-    this.firsttitle = response.firsttitle;
-    this.firstsection = response.firstsection;
-    this.seconddescription = response.seconddescription;
-    this.secondtitle = response.secondtitle;
-    this.secondsection = response.secondcontent;
-    this.thirddescription = response.thirddescription;
-    this.thirdtitle = response.thirdtitle;
-    this.thirdsection = response.thirdsection;
-    this.likes = response.likes;
-    this.dislikes = response.dislikes;
-    this.comments = 0;
+    this.maintitle = response.maintitle == null ? '' : response.maintitle;
+    this.authorimage =
+      response.authorimage == null
+        ? '../images/profile.png'
+        : response.authorimage;
+    this.author = response.author == null ? 'John Doe' : response.author;
+    this.firstTag = response.firsttag == null ? 'N/A' : response.firsttag;
+    this.secondTag = response.secondtag == null ? '' : response.secondtag;
+    this.thirdTag = response.thirdtag == null ? '' : response.thirdtag;
+    this.difficulty = response.difficulty == null ? '' : response.difficulty;
+    this.firstPreReq =
+      response.firstprerequisite == null ? '' : response.firstprerequisite;
+    this.language = response.language == null ? '' : response.language;
+    this.secondPreReq =
+      response.secondprerequisite == null ? '' : response.secondprerequisite;
+    this.thirdPreReq =
+      response.thirdprerequisite == null ? '' : response.thirdprerequisite;
+    this.firstdescription =
+      response.firstdescription == null ? '' : response.firstdescription;
+    this.firsttitle = response.firsttitle == null ? '' : response.firsttitle;
+    this.firstsection =
+      response.firstsection == null ? '' : response.firstsection;
+    this.seconddescription =
+      response.seconddescription == null ? '' : response.seconddescription;
+    this.secondtitle = response.secondtitle == null ? '' : response.secondtitle;
+    this.secondsection =
+      response.secondcontent == null ? '' : response.secondcontent;
+    this.thirddescription =
+      response.thirddescription == null ? '' : response.thirddescription;
+    this.thirdtitle = response.thirdtitle == null ? '' : response.thirdtitle;
+    this.thirdsection =
+      response.thirdsection == null ? '' : response.thirdsection;
+    this.likes = response.likes == null ? 0 : response.likes;
+    this.dislikes = response.dislikes == null ? 0 : response.dislikes;
+    this.comments = response.comments == null ? 0 : response.comments;
     if (localStorage.getItem('username') == this.author) {
       this.currentUsername = localStorage.getItem('username');
+    }
+
+    let getCommentsRes = await fetch(
+      '/rest/comments/getCommentsForArticle/' + this.$route.params.id,
+      {
+        method: 'GET',
+      }
+    );
+
+    let articleCommentsRes = await getCommentsRes.json();
+    console.log(articleCommentsRes);
+    this.comments = articleCommentsRes.length;
+    this.commentsArray = [];
+    for (let i = 0; i < articleCommentsRes.length; i++) {
+      this.commentsArray.push(articleCommentsRes[i]);
     }
   },
   watch: {},
   methods: {
+    async postComment() {
+      let comment = {
+        articleid: this.$route.params.id,
+        content: this.wantedComment,
+        authorname: this.currentUsername,
+        authorurl: this.authorimage,
+      };
+      let postCommentRes = await fetch('/rest/comments/postNewComment', {
+        method: 'POST',
+        body: JSON.stringify(comment),
+      });
+
+      let commentRes = await postCommentRes.json();
+      this.commentsArray.push(commentRes);
+      console.log(commentRes);
+    },
+    goToLoginPage() {
+      this.$router.push('/login');
+    },
     async deleteArticle() {
       let deleteDislikesRes = await fetch(
         '/rest/dislikes/deleteDislikesByArticleId/' + this.$route.params.id,
@@ -496,75 +616,111 @@ export default {
           this.$route.params.id +
           '/' +
           (this.wantedMainTitle.length == 0
-            ? this.maintitle
+            ? this.maintitle.length == 0
+              ? 'null'
+              : this.maintitle
             : this.wantedMainTitle) +
           '/' +
           (this.wantedFirstTag.length == 0
-            ? this.firstTag
+            ? this.firstTag.length == 0
+              ? 'null'
+              : this.firstTag
             : this.wantedFirstTag) +
           '/' +
           (this.wantedSecondTag.length == 0
-            ? this.secondTag
+            ? this.secondTag.length == 0
+              ? 'null'
+              : this.secondTag
             : this.wantedSecondTag) +
           '/' +
           (this.wantedThirdTag.length == 0
-            ? this.thirdTag
+            ? this.thirdTag.length == 0
+              ? 'null'
+              : this.thirdTag
             : this.wantedThirdTag) +
           '/' +
           (this.wantedFirstPreReq.length == 0
-            ? this.firstPreReq
+            ? this.firstPreReq.length == 0
+              ? 'null'
+              : this.firstPreReq
             : this.wantedFirstPreReq) +
           '/' +
           (this.wantedSecondPreReq.length == 0
-            ? this.secondPreReq
+            ? this.secondPreReq.length == 0
+              ? 'null'
+              : this.secondPreReq
             : this.wantedSecondPreReq) +
           '/' +
           (this.wantedThirdPreReq.length == 0
-            ? this.thirdPreReq
+            ? this.thirdPreReq.length == 0
+              ? 'null'
+              : this.thirdPreReq
             : this.wantedThirdPreReq) +
           '/' +
           (this.wantedDifficulty.length == 0
-            ? this.difficulty
+            ? this.difficulty.length == 0
+              ? 'null'
+              : this.difficulty
             : this.wantedDifficulty) +
           '/' +
           (this.wantedLanguage.length == 0
-            ? this.language
+            ? this.language.length == 0
+              ? 'null'
+              : this.language
             : this.wantedLanguage) +
           '/' +
           (this.wantedFirstDescription.length == 0
-            ? this.firstdescription
+            ? this.firstdescription.length == 0
+              ? 'null'
+              : this.firstdescription
             : this.wantedFirstDescription) +
           '/' +
           (this.wantedFirstTitle.length == 0
-            ? this.firsttitle
+            ? this.firsttitle.length == 0
+              ? 'null'
+              : this.firsttitle
             : this.wantedFirstTitle) +
           '/' +
           (this.wantedFirstSection.length == 0
-            ? this.firstsection
+            ? this.firstsection.length == 0
+              ? 'null'
+              : this.firstsection
             : this.wantedFirstSection) +
           '/' +
           (this.wantedSecondDescription.length == 0
-            ? this.seconddescription
+            ? this.seconddescription.length == 0
+              ? 'null'
+              : this.seconddescription
             : this.wantedSecondDescription) +
           '/' +
           (this.wantedSecondTitle.length == 0
-            ? this.secondtitle
+            ? this.secondtitle.length == 0
+              ? 'null'
+              : this.secondtitle
             : this.wantedSecondTitle) +
           '/' +
           (this.wantedSecondSection.length == 0
-            ? this.secondsection
+            ? this.secondsection.length == 0
+              ? 'null'
+              : this.secondsection
             : this.wantedSecondSection) +
           '/' +
           (this.wantedThirdDescription.length == 0
-            ? this.thirddescription
+            ? this.thirddescription.length == 0
+              ? 'null'
+              : this.thirddescription
             : this.wantedThirdDescription) +
           '/' +
           (this.wantedThirdTitle.length == 0
-            ? this.thirdtitle
+            ? this.thirdtitle.length == 0
+              ? 'null'
+              : this.thirdtitle
             : this.wantedThirdTitle) +
           '/' +
           (this.wantedThirdSection.length == 0
-            ? this.thirdsection
+            ? this.thirdsection.length == 0
+              ? 'null'
+              : this.thirdsection
             : this.wantedThirdSection),
         {
           method: 'PUT',
@@ -709,6 +865,38 @@ export default {
   overflow-x: clip;
 }
 
+.commenterGrid {
+  display: grid;
+  grid-template-columns: 10px 30px 15px max-content auto max-content 10px;
+  background-color: white;
+  width: 346px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.authorNameDiv {
+  position: relative;
+  top: 5px;
+}
+
+.postCommentButton {
+  width: 70px;
+  height: 20px;
+  background-color: #c4c4c4;
+  border-radius: 10px;
+  border: 1px solid black;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.DateDiv {
+  position: relative;
+  top: 5px;
+}
 .titleAndEditGrid {
   display: grid;
   grid-template-columns: auto max-content auto max-content 5px max-content 15px;
@@ -717,14 +905,14 @@ export default {
 .trashIcon {
   width: 25px;
   height: 25px;
-  margin-top: 2px;
+  margin-top: 7px;
 }
 .editingTrashIcon {
   width: 25px;
   height: 25px;
-  margin-top: 2px;
+  margin-top: 7px;
   position: relative;
-  right: 20px;
+  right: 2px;
   top: 1px;
 }
 .editDifficultyInput {
@@ -737,14 +925,14 @@ export default {
 .editIcon {
   width: 22px;
   height: 22px;
-  margin-top: 4px;
+  margin-top: 9px;
 }
 .saveIcon {
   width: 25px;
   height: 25px;
-  margin-top: 4px;
+  margin-top: 9px;
   position: relative;
-  right: 40px;
+  right: 7px;
 }
 .firstTagInput,
 .secondTagInput,
@@ -752,6 +940,17 @@ export default {
   padding-left: 5px;
   margin-left: 5px;
   width: 180px;
+}
+.postNewCommentBox {
+  margin-top: 15px;
+  height: max-content;
+  background-color: white;
+  width: max-content;
+  margin-left: auto;
+  margin-right: auto;
+  border: solid 1px black;
+  border-radius: 10px;
+  padding-bottom: 10px;
 }
 .editThirdTagInput {
   padding-left: 5px;
@@ -776,8 +975,47 @@ export default {
   border-radius: 10px;
   text-align: center;
   margin-top: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 
+.loginBox {
+  width: 250px;
+  border-radius: 10px;
+  background-color: white;
+  color: black;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  border: solid 1px black;
+  text-align: center;
+}
+
+.loginBoxButton {
+  width: 120px;
+  text-align: center;
+  height: 25px;
+  border-radius: 10px;
+  border: solid 1px black;
+  background-color: #c4c4c4;
+  margin-top: 12px;
+  margin-bottom: 10px;
+}
+
+.commentArea {
+  margin-left: auto;
+  margin-right: auto;
+  width: 280px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 2px;
+  display: block;
+  border-radius: 10px;
+  border: solid 1px black;
+}
 .editFirstDescription,
 .editFirstSection,
 .editSecondDescription,
@@ -804,6 +1042,7 @@ export default {
   grid-template-columns: auto max-content auto max-content auto max-content auto max-content auto;
   position: relative;
   top: -2px;
+  margin-bottom: 10px;
 }
 .editSecondPreReqInput {
   position: absolute;
@@ -836,6 +1075,7 @@ export default {
   background-color: #61bfc5;
   margin-top: 25px;
 }
+
 .likesGrid,
 .dislikesGrid,
 .commentsGrid {
@@ -881,6 +1121,8 @@ export default {
   margin-right: auto;
   padding-left: 13px;
   border: solid 1px black;
+  padding-top: 3px;
+  padding-bottom: 3px;
 }
 .editDifficultyDiv {
   position: relative;
@@ -907,7 +1149,7 @@ export default {
 .editSecondPreReqDiv {
   position: relative;
   left: 20px;
-  top: -73px;
+  top: -72px;
 }
 .editThirdPreReqDiv {
   position: relative;
@@ -922,7 +1164,7 @@ export default {
 
 .editThirdPreReqInput {
   position: absolute;
-  top: 184px;
+  top: 187px;
   left: 20px;
   width: 170px;
 }
@@ -960,10 +1202,11 @@ export default {
   text-align: center;
   padding-top: 5px;
   margin-left: 30px;
+  margin-top: 5px;
 }
 .mainTitleInputDiv {
-  margin-left: -60px;
-  margin-top: 7px;
+  margin-left: 25px;
+  margin-top: 13px;
   width: 290px;
 }
 
@@ -1002,14 +1245,14 @@ export default {
 
 .firstPreReqAndLanguageGrid {
   display: grid;
-  grid-template-columns: 85px max-content 133px max-content auto;
-  margin-top: 13px;
+  grid-template-columns: 55px max-content 133px max-content auto;
+  margin-top: 5px;
 }
 
 .secondPreReqGrid,
 .thirdPreReqGrid {
   display: grid;
-  grid-template-columns: 85px max-content;
+  grid-template-columns: 55px max-content;
 }
 .profileHeader {
   display: grid;
@@ -1120,10 +1363,11 @@ export default {
 }
 
 .loginFooter {
-  position: relative;
-  top: calc(100vh - 680px);
+  position: sticky;
 }
-
+.mainDiv {
+  padding-bottom: 28px;
+}
 .EditLoginFooter {
   position: relative;
   top: calc(100vh - 771px);

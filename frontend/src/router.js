@@ -21,19 +21,19 @@ export default createRouter({
     },
     {
       path: '/Register',
-      component: RegisterPage
+      component: RegisterPage,
     },
     {
       path: '/myContent',
-      component: ChooseContentPage
+      component: ChooseContentPage,
     },
     {
       path: '/createNewArticle',
-      component: CreateArticlePage
+      component: CreateArticlePage,
     },
     {
       path: '/Article/:id',
-      component: ArticlePage
-    }
+      component: ArticlePage,
+    },
   ],
 });
