@@ -341,6 +341,11 @@
         </div>
         <div class="SpaceBlock" />
       </div>
+      <Comment
+        v-for="(commentItem, index) of commentsArray"
+        :key="index"
+        :comment="commentItem"
+      />
       <div v-if="!currentUsername" class="loginBox">
         <div class="loginTextDiv">
           To post a comment or like this article, you must first log in
@@ -353,7 +358,7 @@
           Go to Login
         </button>
       </div>
-      <div class="postNewCommentBox">
+      <div v-if="currentUsername" class="postNewCommentBox">
         <div class="commenterGrid">
           <div class="SpaceBlock" />
           <img class="profileImage" :src="currentProfile" />
@@ -377,22 +382,24 @@
         <button @click="postComment" class="postCommentButton">Post</button>
       </div>
     </div>
-    <Footer v-if="editMode" class="EditLoginFooter" />
-    <Footer v-if="!editMode" class="loginFooter" />
   </div>
+  <Footer v-if="editMode" class="EditLoginFooter" />
+  <Footer v-if="!editMode" class="loginFooter" />
 </template>
 <script>
 import Footer from '../components/Footer.vue';
 import store from '../store';
+import Comment from '../components/Comment.vue';
 
 export default {
   name: 'ArticlePage',
   components: {
     Footer,
+    Comment,
   },
   data() {
     return {
-      currentDate: new Date().toString().substring(4, 22),
+      currentDate: new Date().toString().substring(4, 25).substring(0, 17),
       currentUsername: null,
       currentProfile:
         localStorage.getItem('profileURL') != null
@@ -443,7 +450,7 @@ export default {
       languagePlaceholder: 'Language: ',
       editMode: false,
       wantedComment: '',
-      comments: [],
+      commentsArray: [],
     };
   },
   async mounted() {
@@ -489,6 +496,21 @@ export default {
     if (localStorage.getItem('username') == this.author) {
       this.currentUsername = localStorage.getItem('username');
     }
+
+    let getCommentsRes = await fetch(
+      '/rest/comments/getCommentsForArticle/' + this.$route.params.id,
+      {
+        method: 'GET',
+      }
+    );
+
+    let articleCommentsRes = await getCommentsRes.json();
+    console.log(articleCommentsRes);
+    this.comments = articleCommentsRes.length;
+    this.commentsArray = [];
+    for (let i = 0; i < articleCommentsRes.length; i++) {
+      this.commentsArray.push(articleCommentsRes[i]);
+    }
   },
   watch: {},
   methods: {
@@ -505,6 +527,7 @@ export default {
       });
 
       let commentRes = await postCommentRes.json();
+      this.commentsArray.push(commentRes);
       console.log(commentRes);
     },
     goToLoginPage() {
@@ -919,7 +942,7 @@ export default {
   width: 180px;
 }
 .postNewCommentBox {
-  margin-top: 33px;
+  margin-top: 15px;
   height: max-content;
   background-color: white;
   width: max-content;
@@ -1019,6 +1042,7 @@ export default {
   grid-template-columns: auto max-content auto max-content auto max-content auto max-content auto;
   position: relative;
   top: -2px;
+  margin-bottom: 10px;
 }
 .editSecondPreReqInput {
   position: absolute;
@@ -1051,6 +1075,7 @@ export default {
   background-color: #61bfc5;
   margin-top: 25px;
 }
+
 .likesGrid,
 .dislikesGrid,
 .commentsGrid {
@@ -1337,6 +1362,12 @@ export default {
   width: 30px;
 }
 
+.loginFooter {
+  position: sticky;
+}
+.mainDiv {
+  padding-bottom: 28px;
+}
 .EditLoginFooter {
   position: relative;
   top: calc(100vh - 771px);

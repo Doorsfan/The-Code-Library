@@ -59,9 +59,9 @@ export default createStore({
     setMatchedVideoList(state, list) {
       state.matchedVideoList = list;
     },
-    setMatchedUserList(state, list){
+    setMatchedUserList(state, list) {
       state.matchedUserList = list;
-    }
+    },
   },
   getters: {
     getIsDarkTheme: (state) => {
@@ -94,9 +94,9 @@ export default createStore({
     getMatchedVideoList: (state) => {
       return state.matchedVideoList;
     },
-    getMatchedUserList: (state) =>{
+    getMatchedUserList: (state) => {
       return state.matchedUserList;
-    }
+    },
   },
   actions: {
     async setDarkTheme(store, darkTheme) {
@@ -104,7 +104,7 @@ export default createStore({
     },
     async login(store, currentUser) {
       store.commit('setUser', currentUser);
-      localStorage.setItem('loggedInUser', JSON.stringify(currentUser))
+      localStorage.setItem('loggedInUser', JSON.stringify(currentUser));
       // store.commit('setMySearchHistoryList', [])
     },
     async updateSearchResult(store, searchResults) {
@@ -172,10 +172,13 @@ export default createStore({
       );
       return res.json();
     },
-    async fetchEightMoreVideos(store, lengthOfCurrentVideoList){
-      let res = await fetch('/rest/getEightNewVideos?' + new URLSearchParams({
-        lengthOfCurrentVideoList: lengthOfCurrentVideoList
-      }));
+    async fetchEightMoreVideos(store, lengthOfCurrentVideoList) {
+      let res = await fetch(
+        '/rest/getEightNewVideos?' +
+          new URLSearchParams({
+            lengthOfCurrentVideoList: lengthOfCurrentVideoList,
+          })
+      );
       return res.json();
     },
 
@@ -183,8 +186,8 @@ export default createStore({
       store.commit('setMatchedVideoList', list);
     },
 
-    async setMatchedUserList(store, list){
-      store.commit('setMatchedUserList', list)
-    }
+    async setMatchedUserList(store, list) {
+      store.commit('setMatchedUserList', list);
+    },
   },
 });
