@@ -37,6 +37,11 @@ public class ArticlesController {
         return articleService.getArticlesContaining(term);
     }
 
+    @GetMapping("/articles/findArticlesByAuthor/{author}")
+    public List<Article> getArticlesByAuthor(@PathVariable String author){
+        return articleService.findArticlesByAuthor(author);
+    }
+
     @GetMapping("/articles/{id}")
     public Article getOneArticle(@PathVariable int id){
         return articleService.findOneArticle(id);

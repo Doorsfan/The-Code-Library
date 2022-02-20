@@ -45,7 +45,7 @@ export default {
       this.$router.push('/');
     },
     goToMyArticles() {
-      this.$router.push('/myArticles');
+      this.$router.push('/profilePage/' + localStorage.getItem('username'));
     },
     goToCreateNewArticle() {
       this.$router.push('/createNewArticle');
