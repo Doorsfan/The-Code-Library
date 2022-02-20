@@ -3,7 +3,6 @@
     <div @click="goToHomepage" class="homeDiv">
       <img class="homeIcon" src="../images/home.png" />
     </div>
-
     <div class="codeLibraryText">--=== The Code Library ===--</div>
   </div>
   <div class="loginText">--=== Login ===--</div>

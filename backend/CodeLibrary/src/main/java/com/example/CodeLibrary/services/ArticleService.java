@@ -110,6 +110,10 @@ public class ArticleService {
         return articleRepo.findLikesForArticleWithId(id);
     }
 
+    public List<Article> findArticlesByAuthor(String author){
+        return articleRepo.findArticlesByAuthor(author);
+    }
+
     public int dislikeArticle(int id) {
         articleRepo.updateDislikesOfArticle(id);
         return articleRepo.findDislikesForArticleWithId(id);

@@ -45,6 +45,9 @@ public interface ArticleRepo extends CrudRepository<Article, Integer> {
     @Query(value = "SELECT * FROM articles WHERE id = :id", nativeQuery = true)
     Article findBySpecificId(@Param("id") Integer id);
 
+    @Query(value = "SELECT * FROM articles WHERE author = :author", nativeQuery = true)
+    List<Article> findArticlesByAuthor(@Param("author") String author);
+
     Article findByAuthor(String author);
 
     List<Article> findBymaintitleContainingIgnoreCase(String maintitle);
