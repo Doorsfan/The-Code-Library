@@ -7,6 +7,19 @@ import java.sql.Timestamp;
 @Table(name = "comments")
 public class Comment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+    Integer articleid;
+    Timestamp timestamp;
+    String content;
+    String authorname;
+    String authorurl;
+
+
+    public Comment() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -23,7 +36,6 @@ public class Comment {
         this.articleid = articleid;
     }
 
-
     public String getContent() {
         return content;
     }
@@ -32,7 +44,6 @@ public class Comment {
         this.content = content;
     }
 
-
     public Timestamp getTimestamp() {
         return timestamp;
     }
@@ -40,7 +51,6 @@ public class Comment {
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
     }
-
 
     @Override
     public String toString() {
@@ -69,18 +79,5 @@ public class Comment {
     public void setAuthorurl(String authorurl) {
         this.authorurl = authorurl;
     }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-
-    Integer articleid;
-    Timestamp timestamp;
-    String content;
-    String authorname;
-    String authorurl;
-
-
-    public Comment() {}
 
 }

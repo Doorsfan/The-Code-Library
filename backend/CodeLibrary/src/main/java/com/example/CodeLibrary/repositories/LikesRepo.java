@@ -1,6 +1,5 @@
 package com.example.CodeLibrary.repositories;
 
-import com.example.CodeLibrary.entitites.Article;
 import com.example.CodeLibrary.entitites.Like;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

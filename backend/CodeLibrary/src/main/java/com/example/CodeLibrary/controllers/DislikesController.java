@@ -2,7 +2,6 @@ package com.example.CodeLibrary.controllers;
 
 import com.example.CodeLibrary.entitites.Dislike;
 import com.example.CodeLibrary.services.DislikeService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,15 +17,17 @@ public class DislikesController {
     private DislikeService dislikeService;
 
     @DeleteMapping("/dislikes/{userid}/{articleId}")
-    public String deletedislikeByID(@PathVariable int userid, @PathVariable int articleId){
+    public String deletedislikeByID(@PathVariable int userid, @PathVariable int articleId) {
         return dislikeService.deleteLikeByID(userid, articleId);
     }
 
     @DeleteMapping("/dislikes/deleteDislikesByArticleId/{articleid}")
-    public void deleteDislikesByArticleId(@PathVariable int articleid) { dislikeService.deleteDislikesByArticleId(articleid); }
+    public void deleteDislikesByArticleId(@PathVariable int articleid) {
+        dislikeService.deleteDislikesByArticleId(articleid);
+    }
 
     @GetMapping("/dislikes/{userid}/{articleid}")
-    public Dislike dislikeArticle(@PathVariable int userid, @PathVariable int articleid){
+    public Dislike dislikeArticle(@PathVariable int userid, @PathVariable int articleid) {
         System.out.println("Got in here");
         Dislike myDislike = new Dislike();
         myDislike.setArticleId(articleid);

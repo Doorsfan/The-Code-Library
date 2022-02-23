@@ -79,6 +79,9 @@
         <div v-if="!editMode" class="thirdTag">{{ thirdTag }}</div>
         <div class="SpaceBlock" />
       </div>
+      <div v-if="!editMode && canFollow" class="followButtonDiv">
+        <button class="followButton">Follow</button>
+      </div>
       <div v-if="editMode" class="editSecondTag">
         <input
           class="secondTagInput"
@@ -451,6 +454,7 @@ export default {
       editMode: false,
       wantedComment: '',
       commentsArray: [],
+      canFollow: false
     };
   },
   async mounted() {
@@ -464,6 +468,9 @@ export default {
         ? '../images/profile.png'
         : response.authorimage;
     this.author = response.author == null ? 'John Doe' : response.author;
+    if(this.author != localStorage.getItem("username")){
+      this.canFollow = true;
+    }
     this.firstTag = response.firsttag == null ? 'N/A' : response.firsttag;
     this.secondTag = response.secondtag == null ? '' : response.secondtag;
     this.thirdTag = response.thirdtag == null ? '' : response.thirdtag;
@@ -959,6 +966,12 @@ export default {
   position: absolute;
   top: 2px;
   left: 5px;
+}
+.followButton{
+  padding: 2px;
+  border: solid 1px black;
+  margin-left: 12px;
+  margin-top: 2px;
 }
 .mainDiv {
   height: 100%;

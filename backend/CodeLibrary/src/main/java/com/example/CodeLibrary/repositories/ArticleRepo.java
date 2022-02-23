@@ -36,10 +36,10 @@ public interface ArticleRepo extends CrudRepository<Article, Integer> {
     @Query(value = "UPDATE articles SET maintitle = :maintitle, firsttag = :firsttag, secondtag = :secondtag, thirdtag = :thirdtag, firstprerequisite = :firstprereq, secondprerequisite = :secondprereq, thirdprerequisite = :thirdprereq, difficulty = :difficulty, language = :language, firstdescription = :firstdescription, firsttitle = :firsttitle, firstsection = :firstsection, seconddescription = :seconddescription, secondtitle = :secondtitle, secondsection = :secondsection, thirddescription = :thirddescription, thirdtitle = :thirdtitle, thirdsection = :thirdsection WHERE id = :id", nativeQuery = true)
     int updateArticle(@Param("id") Integer id, @Param("maintitle") String maintitle, @Param("firsttag") String firsttag, @Param("secondtag") String secondtag, @Param("thirdtag") String thirdtag, @Param("firstprereq") String firstprereq, @Param("secondprereq") String secondprereq, @Param("thirdprereq") String thirdprereq, @Param("difficulty") String difficulty, @Param("language") String language, @Param("firstdescription") String firstdescription, @Param("firsttitle") String firsttitle, @Param("firstsection") String firstsection, @Param("seconddescription") String seconddescription, @Param("secondtitle") String secondtitle, @Param("secondsection") String secondsection, @Param("thirddescription") String thirddescription, @Param("thirdtitle") String thirdtitle, @Param("thirdsection") String thirdsection);
 
-    @Query(value ="SELECT likes FROM articles WHERE id = :id", nativeQuery = true)
+    @Query(value = "SELECT likes FROM articles WHERE id = :id", nativeQuery = true)
     int findLikesForArticleWithId(@Param("id") Integer id);
 
-    @Query(value ="SELECT dislikes FROM articles WHERE id = :id", nativeQuery = true)
+    @Query(value = "SELECT dislikes FROM articles WHERE id = :id", nativeQuery = true)
     int findDislikesForArticleWithId(@Param("id") Integer id);
 
     @Query(value = "SELECT * FROM articles WHERE id = :id", nativeQuery = true)

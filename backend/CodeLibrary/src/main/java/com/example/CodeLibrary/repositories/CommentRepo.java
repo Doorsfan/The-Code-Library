@@ -19,9 +19,8 @@ public interface CommentRepo extends CrudRepository<Comment, Integer> {
     List<User> customFindUsersByName(@Param("name") String name);
     */
 
-    @Query(value ="SELECT * FROM comments WHERE articleid = :articleid", nativeQuery = true)
+    @Query(value = "SELECT * FROM comments WHERE articleid = :articleid", nativeQuery = true)
     List<Comment> findAllCommentsByArticleId(@Param("articleid") Integer articleid);
-
 
 
 }

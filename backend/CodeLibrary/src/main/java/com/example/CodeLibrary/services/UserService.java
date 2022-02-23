@@ -29,9 +29,10 @@ public class UserService {
      * When I retrieve ALL OWNERS, According to my system design, I don't want
      * to retrieve all of their pets, that will be a lot of data being sent over the server
      * when the request doesn't necessarily say they want information about the pets.
+     *
      * @return
      */
-    public List<User> findAllUsers(){
+    public List<User> findAllUsers() {
         return (List<User>) userRepo.findAll();
     }
 
@@ -40,10 +41,11 @@ public class UserService {
      * retrieve a list of all pets owned by this Owner. Since this will use the 'pets' table in the DB
      * We will go through the PetService to retrieve the Pets Info. Since this class is only
      * for 'OwnerService'. We add the list of pets to the owner object and returns the data.
+     *
      * @param id
      * @return
      */
-    public Optional<User> findOneUser(int id){
+    public Optional<User> findOneUser(int id) {
         Optional<User> user = userRepo.findById(id);
 
         return user;
@@ -55,32 +57,32 @@ public class UserService {
         return owner; */
     }
 
-    public User findUserByUsername(String username){
+    public User findUserByUsername(String username) {
         return userRepo.findByUsername(username);
     }
 
-    public List<User> getUsersContaining(String username){
+    public List<User> getUsersContaining(String username) {
         return userRepo.findByUsernameContainingIgnoreCase(username);
     }
 
-    public User saveNewUserToDB(User user){
+    public User saveNewUserToDB(User user) {
         return userRepo.save(user);
     }
 
-    public String deleteUserByID(int id){
+    public String deleteUserByID(int id) {
         try {
             userRepo.deleteById(id);
             return "Success";
-        } catch (Exception e){
+        } catch (Exception e) {
             return "Failed";
         }
     }
 
-    public String updateUser(User user){
+    public String updateUser(User user) {
         try {
             userRepo.save(user);
             return "Success";
-        } catch (Exception e){
+        } catch (Exception e) {
             return "Failed";
         }
     }

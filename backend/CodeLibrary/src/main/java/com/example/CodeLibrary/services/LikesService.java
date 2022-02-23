@@ -2,12 +2,10 @@ package com.example.CodeLibrary.services;
 
 import com.example.CodeLibrary.entitites.Like;
 import com.example.CodeLibrary.repositories.LikesRepo;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This service class handles the logic of writing and reading from the database.
@@ -27,16 +25,16 @@ public class LikesService {
     private LikesRepo likeRepo;
 
 
-
     /**
      * When I retrieve a single Owner, THEN I want according to my system design also
      * retrieve a list of all pets owned by this Owner. Since this will use the 'pets' table in the DB
      * We will go through the PetService to retrieve the Pets Info. Since this class is only
      * for 'OwnerService'. We add the list of pets to the owner object and returns the data.
+     *
      * @param id
      * @return
      */
-    public List<Like> findLikesByUserId(int id){
+    public List<Like> findLikesByUserId(int id) {
         List<Like> like = likeRepo.findLikesByUserId(id);
 
         return like;
@@ -48,28 +46,27 @@ public class LikesService {
         return owner; */
     }
 
-    public List<Like> getLikesForArticle(Integer id){
+    public List<Like> getLikesForArticle(Integer id) {
         return likeRepo.findLikesByArticleId(id);
     }
 
-    public Like saveNewLikeToDB(Like like){
+    public Like saveNewLikeToDB(Like like) {
         return likeRepo.save(like);
     }
 
-    public void deleteLikesByArticleId(int articleid){
+    public void deleteLikesByArticleId(int articleid) {
         try {
             likeRepo.deleteByarticleid(articleid);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
     }
 
-    public String deleteLikeByID(int articleid, int userid){
+    public String deleteLikeByID(int articleid, int userid) {
         try {
             likeRepo.deleteLikeByArticleIdAndUserId(articleid, userid);
             return "Success";
-        } catch (Exception e){
+        } catch (Exception e) {
             return "Failed";
         }
     }

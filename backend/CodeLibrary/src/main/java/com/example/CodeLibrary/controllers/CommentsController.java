@@ -1,10 +1,7 @@
 package com.example.CodeLibrary.controllers;
 
-import com.example.CodeLibrary.DTOs.UserWithoutPW;
 import com.example.CodeLibrary.entitites.Comment;
-import com.example.CodeLibrary.entitites.User;
 import com.example.CodeLibrary.services.CommentService;
-
 import com.example.CodeLibrary.utility.StringFormatter;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -27,7 +24,7 @@ public class CommentsController {
     private CommentService commentService;
 
     @PostMapping("/comments/postNewComment")
-    public Comment createNewUser(@RequestBody String comment){
+    public Comment createNewUser(@RequestBody String comment) {
         Gson gson = new Gson();
         JsonObject jsonObject = new JsonParser().parse(comment).getAsJsonObject();
         Comment newComment = new Comment();
@@ -43,7 +40,7 @@ public class CommentsController {
     }
 
     @GetMapping("/comments/getCommentsForArticle/{articleid}")
-    public List<Comment> getCommentsByArticleId(@PathVariable Integer articleid){
+    public List<Comment> getCommentsByArticleId(@PathVariable Integer articleid) {
         return commentService.getCommentsForArticleId(articleid);
     }
 

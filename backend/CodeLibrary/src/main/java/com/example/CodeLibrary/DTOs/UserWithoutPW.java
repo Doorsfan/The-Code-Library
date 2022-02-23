@@ -4,6 +4,12 @@ public class UserWithoutPW {
     String username, profileURL;
     Integer id;
 
+    public UserWithoutPW(Integer id, String username, String profileURL) {
+        this.id = id;
+        this.username = username;
+        this.profileURL = profileURL;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -20,8 +26,6 @@ public class UserWithoutPW {
         this.profileURL = profileURL;
     }
 
-
-
     public Integer getId() {
         return id;
     }
@@ -37,11 +41,5 @@ public class UserWithoutPW {
                 ", profileURL='" + profileURL + '\'' +
                 ", id=" + id +
                 '}';
-    }
-
-    public UserWithoutPW(Integer id, String username, String profileURL){
-        this.id = id;
-        this.username = username;
-        this.profileURL = profileURL;
     }
 }
