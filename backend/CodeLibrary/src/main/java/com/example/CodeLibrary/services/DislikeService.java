@@ -2,12 +2,10 @@ package com.example.CodeLibrary.services;
 
 import com.example.CodeLibrary.entitites.Dislike;
 import com.example.CodeLibrary.repositories.DislikesRepo;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * This service class handles the logic of writing and reading from the database.
@@ -27,16 +25,16 @@ public class DislikeService {
     private DislikesRepo dislikeRepo;
 
 
-
     /**
      * When I retrieve a single Owner, THEN I want according to my system design also
      * retrieve a list of all pets owned by this Owner. Since this will use the 'pets' table in the DB
      * We will go through the PetService to retrieve the Pets Info. Since this class is only
      * for 'OwnerService'. We add the list of pets to the owner object and returns the data.
+     *
      * @param id
      * @return
      */
-    public List<Dislike> findDislikesByUserId(int id){
+    public List<Dislike> findDislikesByUserId(int id) {
         List<Dislike> dislike = dislikeRepo.findDislikesByUserId(id);
 
         return dislike;
@@ -48,30 +46,29 @@ public class DislikeService {
         return owner; */
     }
 
-    public void deleteDislikesByArticleId(int articleid){
+    public void deleteDislikesByArticleId(int articleid) {
         try {
             dislikeRepo.deleteByarticleid(articleid);
 
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
 
         }
     }
 
-    public List<Dislike> getDislikesForArticle(Integer id){
+    public List<Dislike> getDislikesForArticle(Integer id) {
         return dislikeRepo.findDislikesByArticleId(id);
     }
 
-    public Dislike saveNewDislikeToDB(Dislike dislike){
+    public Dislike saveNewDislikeToDB(Dislike dislike) {
         return dislikeRepo.save(dislike);
     }
 
-    public String deleteLikeByID(int articleid, int userid){
+    public String deleteLikeByID(int articleid, int userid) {
         try {
             dislikeRepo.deleteDislikeByArticleIdAndUserId(articleid, userid);
             return "Success";
-        } catch (Exception e){
+        } catch (Exception e) {
             return "Failed";
         }
     }

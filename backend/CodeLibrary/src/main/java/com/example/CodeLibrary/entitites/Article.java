@@ -7,6 +7,38 @@ import java.sql.Timestamp;
 @Table(name = "articles")
 public class Article {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String maintitle;
+    private String author;
+    private String firsttag;
+    private String secondtag;
+    private String thirdtag;
+    private String firstprerequisite;
+    private String secondprerequisite;
+    private String thirdprerequisite;
+    private String difficulty;
+    private String language;
+    private String firstdescription;
+    private String firsttitle;
+    private String firstsection;
+    private String seconddescription;
+    private String secondtitle;
+    private String secondsection;
+    private String thirddescription;
+    private String thirdtitle;
+    private String thirdsection;
+    private Timestamp timestamp;
+    private Integer likes;
+    private Integer dislikes;
+    private Integer comments;
+    private String authorimage;
+
+    public Article() {
+
+    }
+
     public Integer getId() {
         return id;
     }
@@ -135,12 +167,12 @@ public class Article {
         this.secondtitle = secondtitle;
     }
 
-    public String getSecondcontent() {
-        return secondcontent;
+    public String getSecondsection() {
+        return secondsection;
     }
 
-    public void setSecondcontent(String secondcontent) {
-        this.secondcontent = secondcontent;
+    public void setSecondsection(String secondsection) {
+        this.secondsection = secondsection;
     }
 
     public String getThirddescription() {
@@ -175,7 +207,6 @@ public class Article {
         this.timestamp = timestamp;
     }
 
-
     public Integer getLikes() {
         return likes;
     }
@@ -208,7 +239,6 @@ public class Article {
         this.authorimage = authorimage;
     }
 
-
     @Override
     public String toString() {
         return "Article{" +
@@ -228,7 +258,7 @@ public class Article {
                 ", firstsection='" + firstsection + '\'' +
                 ", seconddescription='" + seconddescription + '\'' +
                 ", secondtitle='" + secondtitle + '\'' +
-                ", secondcontent='" + secondcontent + '\'' +
+                ", secondsection='" + secondsection + '\'' +
                 ", thirddescription='" + thirddescription + '\'' +
                 ", thirdtitle='" + thirdtitle + '\'' +
                 ", thirdsection='" + thirdsection + '\'' +
@@ -238,41 +268,6 @@ public class Article {
                 ", comments=" + comments +
                 ", authorimage='" + authorimage + '\'' +
                 '}';
-    }
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String maintitle;
-    private String author;
-    private String firsttag;
-    private String secondtag;
-    private String thirdtag;
-    private String firstprerequisite;
-    private String secondprerequisite;
-    private String thirdprerequisite;
-    private String difficulty;
-    private String language;
-    private String firstdescription;
-    private String firsttitle;
-    private String firstsection;
-    private String seconddescription;
-    private String secondtitle;
-    private String secondcontent;
-    private String thirddescription;
-    private String thirdtitle;
-    private String thirdsection;
-    private Timestamp timestamp;
-    private Integer likes;
-    private Integer dislikes;
-    private Integer comments;
-    private String authorimage;
-
-
-
-    public Article() {
-
     }
 
 }

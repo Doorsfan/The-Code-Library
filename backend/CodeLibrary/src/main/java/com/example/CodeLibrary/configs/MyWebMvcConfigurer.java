@@ -48,6 +48,7 @@ class MyWebMvcConfigurer implements WebMvcConfigurer {
     /**
      * THIS METHOD IS ONLY NEEDED WITH SQLITE!
      * If we use an other database such as MongoDB or MySQL, we don't need this method.
+     *
      * @return
      */
     @Bean

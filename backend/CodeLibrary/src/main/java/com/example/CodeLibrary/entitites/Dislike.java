@@ -5,6 +5,15 @@ import javax.persistence.*;
 @Entity
 @Table(name = "dislikes")
 public class Dislike {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+    Integer articleid;
+    Integer userid;
+
+    public Dislike() {
+    }
+
     public Integer getId() {
         return id;
     }
@@ -29,12 +38,6 @@ public class Dislike {
         this.userid = userid;
     }
 
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
-
     public Integer getarticleid() {
         return articleid;
     }
@@ -51,11 +54,6 @@ public class Dislike {
                 ", userid=" + userid +
                 '}';
     }
-
-    Integer articleid;
-    Integer userid;
-
-    public Dislike() {}
 
 
 }

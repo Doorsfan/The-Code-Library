@@ -79,6 +79,15 @@
         <div v-if="!editMode" class="thirdTag">{{ thirdTag }}</div>
         <div class="SpaceBlock" />
       </div>
+      <div
+        v-if="!editMode && canFollow && !isFollowing"
+        class="followButtonDiv"
+      >
+        <button @click="followUser" class="followButton">Follow</button>
+      </div>
+      <div v-if="!editMode && canFollow && isFollowing" class="followButtonDiv">
+        <button @click="unfollowUser" class="unfollowButton">Unfollow</button>
+      </div>
       <div v-if="editMode" class="editSecondTag">
         <input
           class="secondTagInput"
@@ -451,6 +460,8 @@ export default {
       editMode: false,
       wantedComment: '',
       commentsArray: [],
+      canFollow: false,
+      isFollowing: false,
     };
   },
   async mounted() {
@@ -464,6 +475,12 @@ export default {
         ? '../images/profile.png'
         : response.authorimage;
     this.author = response.author == null ? 'John Doe' : response.author;
+    if (
+      this.author != localStorage.getItem('username') &&
+      localStorage.getItem('username')
+    ) {
+      this.canFollow = true;
+    }
     this.firstTag = response.firsttag == null ? 'N/A' : response.firsttag;
     this.secondTag = response.secondtag == null ? '' : response.secondtag;
     this.thirdTag = response.thirdtag == null ? '' : response.thirdtag;
@@ -505,15 +522,56 @@ export default {
     );
 
     let articleCommentsRes = await getCommentsRes.json();
-    console.log(articleCommentsRes);
+
     this.comments = articleCommentsRes.length;
     this.commentsArray = [];
     for (let i = 0; i < articleCommentsRes.length; i++) {
       this.commentsArray.push(articleCommentsRes[i]);
     }
+
+    let getFollowersRes = await fetch(
+      '/rest/followers/getFollowersOf/' + this.author,
+      {
+        method: 'GET',
+      }
+    );
+
+    let followersRes = await getFollowersRes.json();
+    for (let e = 0; e < followersRes.length; e++) {
+      if (
+        followersRes[e].followersusername == localStorage.getItem('username')
+      ) {
+        this.isFollowing = true;
+      }
+    }
   },
   watch: {},
   methods: {
+    async followUser() {
+      let addFollowerRes = await fetch(
+        '/rest/users/addFollower/' + this.author,
+        {
+          method: 'PUT',
+        }
+      );
+      let followerRes = await addFollowerRes.json();
+
+      let newFollower = {
+        followersusername: localStorage.getItem('username'),
+        targetusername: this.author,
+      };
+
+      let newFollowerRes = await fetch('/rest/followers/addNewFollower', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newFollower),
+      });
+
+      let newFollowerResult = await newFollowerRes.json();
+      this.isFollowing = true;
+    },
     async postComment() {
       let comment = {
         articleid: this.$route.params.id,
@@ -528,7 +586,7 @@ export default {
 
       let commentRes = await postCommentRes.json();
       this.commentsArray.push(commentRes);
-      console.log(commentRes);
+
     },
     goToLoginPage() {
       this.$router.push('/login');
@@ -959,6 +1017,18 @@ export default {
   position: absolute;
   top: 2px;
   left: 5px;
+}
+.followButton {
+  padding: 2px;
+  border: solid 1px black;
+  margin-left: 12px;
+  margin-top: 2px;
+}
+.unfollowButton {
+  padding: 2px;
+  border: solid 1px black;
+  margin-left: 8px;
+  margin-top: 2px;
 }
 .mainDiv {
   height: 100%;

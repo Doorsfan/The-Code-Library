@@ -224,16 +224,23 @@ export default {
           firstsection: this.wantedFirstSection,
           seconddescription: this.wantedSecondDescription,
           secondtitle: this.wantedSecondTitle,
-          secondcontent: this.wantedSecondSection,
+          secondsection: this.wantedSecondSection,
           thirddescription: this.wantedThirdDescription,
           thirdtitle: this.wantedThirdTitle,
           thirdsection: this.wantedThirdSection,
           authorimage: localStorage.getItem('profileURL'),
+          likes: 0,
+          dislikes: 0,
+          comments: 0,
+          timestamp: Date.now()
         };
 
         let res = await fetch('/rest/articles/publish', {
           method: 'POST',
-          body: JSON.stringify(newArticle),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newArticle)
         });
 
         let response = await res.json();
