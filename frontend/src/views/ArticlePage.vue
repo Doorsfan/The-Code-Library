@@ -522,7 +522,7 @@ export default {
     );
 
     let articleCommentsRes = await getCommentsRes.json();
-    console.log(articleCommentsRes);
+
     this.comments = articleCommentsRes.length;
     this.commentsArray = [];
     for (let i = 0; i < articleCommentsRes.length; i++) {
@@ -586,7 +586,7 @@ export default {
 
       let commentRes = await postCommentRes.json();
       this.commentsArray.push(commentRes);
-      console.log(commentRes);
+
     },
     goToLoginPage() {
       this.$router.push('/login');
