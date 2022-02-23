@@ -135,12 +135,12 @@ public class Article {
         this.secondtitle = secondtitle;
     }
 
-    public String getSecondcontent() {
-        return secondcontent;
+    public String getSecondsection() {
+        return secondsection;
     }
 
-    public void setSecondcontent(String secondcontent) {
-        this.secondcontent = secondcontent;
+    public void setSecondsection(String secondsection) {
+        this.secondsection = secondsection;
     }
 
     public String getThirddescription() {
@@ -228,7 +228,7 @@ public class Article {
                 ", firstsection='" + firstsection + '\'' +
                 ", seconddescription='" + seconddescription + '\'' +
                 ", secondtitle='" + secondtitle + '\'' +
-                ", secondcontent='" + secondcontent + '\'' +
+                ", secondsection='" + secondsection + '\'' +
                 ", thirddescription='" + thirddescription + '\'' +
                 ", thirdtitle='" + thirdtitle + '\'' +
                 ", thirdsection='" + thirdsection + '\'' +
@@ -259,7 +259,7 @@ public class Article {
     private String firstsection;
     private String seconddescription;
     private String secondtitle;
-    private String secondcontent;
+    private String secondsection;
     private String thirddescription;
     private String thirdtitle;
     private String thirdsection;

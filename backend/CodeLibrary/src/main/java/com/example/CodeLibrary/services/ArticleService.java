@@ -3,9 +3,15 @@ package com.example.CodeLibrary.services;
 import com.example.CodeLibrary.entitites.Article;
 import com.example.CodeLibrary.repositories.ArticleRepo;
 
+import com.example.CodeLibrary.utility.StringFormatter;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,10 +125,10 @@ public class ArticleService {
         return articleRepo.findDislikesForArticleWithId(id);
     }
 
-    public int updateArticle(int id, String maintitle, String firsttag, String secondtag, String thirdtag, String firstprereq, String secondprereq, String thirdprereq, String difficulty, String language, String firstdescription, String firsttitle, String firstsection, String seconddescription, String secondtitle, String secondcontent, String thirddescription, String thirdtitle, String thirdsection) { return articleRepo.updateArticle(id, maintitle, firsttag, secondtag, thirdtag, firstprereq, secondprereq, thirdprereq, difficulty, language, firstdescription, firsttitle, firstsection, seconddescription, secondtitle, secondcontent, thirddescription, thirdtitle, thirdsection); }
+    public int updateArticle(int id, String maintitle, String firsttag, String secondtag, String thirdtag, String firstprereq, String secondprereq, String thirdprereq, String difficulty, String language, String firstdescription, String firsttitle, String firstsection, String seconddescription, String secondtitle, String secondsection, String thirddescription, String thirdtitle, String thirdsection) { return articleRepo.updateArticle(id, maintitle, firsttag, secondtag, thirdtag, firstprereq, secondprereq, thirdprereq, difficulty, language, firstdescription, firsttitle, firstsection, seconddescription, secondtitle, secondsection, thirddescription, thirdtitle, thirdsection); }
 
-    public Article saveNewArticleToDB(Article article){
-        return articleRepo.save(article);
+    public Article saveNewArticleToDB(Article newArticle){
+        return articleRepo.save(newArticle);
     }
 
     public String deleteArticleByID(int id){
