@@ -57,6 +57,11 @@ public class UserService {
         return owner; */
     }
 
+    public String addFollowerForUser(String username) {
+        userRepo.updateFollowsOfUser(username);
+        return userRepo.findFollowersForUserByUsername(username);
+    }
+
     public User findUserByUsername(String username) {
         return userRepo.findByUsername(username);
     }

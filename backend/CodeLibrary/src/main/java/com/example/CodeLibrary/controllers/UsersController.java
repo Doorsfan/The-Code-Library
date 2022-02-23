@@ -67,6 +67,11 @@ public class UsersController {
         return userService.deleteUserByID(id);
     }
 
+    @PutMapping("/users/addFollower/{username}")
+    public String addFollower(@PathVariable String username) {
+        return userService.addFollowerForUser(username);
+    }
+
     @PutMapping("/users")
     public String updateUser(@RequestBody User user) {
         return userService.updateUser(user);
