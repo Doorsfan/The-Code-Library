@@ -13,7 +13,11 @@ public class NotificationService {
     @Autowired
     private NotificationRepo notificationRepo;
 
-    public Notification saveNewNotification(Notification newNotification){ return notificationRepo.save(newNotification); }
+    public Notification saveNewNotification(Notification newNotification) {
+        return notificationRepo.save(newNotification);
+    }
 
-    public List<Notification> getNotificationsForAuthor(String author){ return notificationRepo.findNotificationsByAuthor(author); }
+    public List<Notification> getNotificationsForAuthor(String author) {
+        return notificationRepo.findNotificationsByAuthor(author);
+    }
 }

@@ -55,7 +55,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Revalia&family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Revalia&family=Roboto:wght@300;400&display=swap');
 
-.footerDiv{
+.footerDiv {
   position: sticky;
   margin-top: 10px;
 }

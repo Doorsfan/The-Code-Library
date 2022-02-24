@@ -18,8 +18,12 @@ public class NotificationController {
     private NotificationService notificationService;
 
     @PostMapping("/notification/addNewNotification")
-    public Notification createNewNotification(@RequestBody Notification newNotification){ return notificationService.saveNewNotification(newNotification); }
+    public Notification createNewNotification(@RequestBody Notification newNotification) {
+        return notificationService.saveNewNotification(newNotification);
+    }
 
     @GetMapping("/notification/notificationsFrom/{authorname}")
-    public List<Notification> getNotifications(@PathVariable String authorname){ return notificationService.getNotificationsForAuthor(authorname); }
+    public List<Notification> getNotifications(@PathVariable String authorname) {
+        return notificationService.getNotificationsForAuthor(authorname);
+    }
 }
