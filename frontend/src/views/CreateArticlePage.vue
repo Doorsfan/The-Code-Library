@@ -243,7 +243,22 @@ export default {
           body: JSON.stringify(newArticle)
         });
 
-        let response = await res.json();
+        let newNotification = {
+          content: localStorage.getItem('username') + ' posted a new article.',
+          authorname: localStorage.getItem('username'),
+          authorurl: localStorage.getItem('profileURL'),
+          timestamp: Date.now()
+        }
+
+        let notificationRes = await fetch('/rest/notification/addNewNotification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(newNotification)
+        });
+
+        let notificationResponse = await notificationRes.json();
         this.$router.push('/');
       }
     },

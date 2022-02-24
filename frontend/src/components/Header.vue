@@ -1,6 +1,6 @@
 <template>
   <div class="backgroundDiv">
-    <div class="upperGrid">
+    <div v-if="!isLoggedIn" class="notLoggedInUpperGrid">
       <img
         @click="goBackToHomePage"
         class="homeIcon"
@@ -8,6 +8,56 @@
       />
       <div class="codeTextDiv">
         <p class="libraryText">--=== The Code Library ===--</p>
+      </div>
+      <div v-if="!isLoggedIn" class="loginDiv">
+        <router-link to="/login">
+          <button value="login" class="loginButton">Login</button>
+        </router-link>
+      </div>
+      <div v-if="isLoggedIn" class="profileURL">
+        <img
+          @click="goToMyContent"
+          v-if="profileURL.length > 0"
+          class="profileImage"
+          :src="profileURL"
+        />
+        <img
+          @click="goToMyContent"
+          v-if="profileURL.length == 0"
+          class="profileImage"
+          src="../images/profile.png"
+        />
+        <div @click="logout" class="logoutDiv">Logout</div>
+      </div>
+
+      <div class="searchDiv">
+        <input
+          v-model="searchTerm"
+          class="searchInput"
+          placeholder="Search.."
+          type="text"
+        />
+        <img @click="search" class="glassIcon" src="../images/glass.png" />
+      </div>
+    </div>
+    <div v-if="isLoggedIn" class="upperGrid">
+      <img
+        @click="goBackToHomePage"
+        class="homeIcon"
+        src="../images/home.png"
+      />
+      <div class="codeTextDiv">
+        <p class="libraryText">--=== The Code Library ===--</p>
+      </div>
+      <div class="notificationDiv">
+        <div v-if="myNotifications.length > 0" class="numberOfNotificationsDiv">
+          {{ myNotifications.length > 9 ? '9+' : myNotifications.length }}
+        </div>
+        <img
+          v-if="isLoggedIn"
+          class="notificationIcon"
+          src="../images/bell_icon.png"
+        />
       </div>
       <div v-if="!isLoggedIn" class="loginDiv">
         <router-link to="/login">
@@ -53,6 +103,7 @@ export default {
       isLoggedIn: false,
       profileURL: '',
       searchTerm: '',
+      myNotifications: [],
     };
   },
 
@@ -60,6 +111,30 @@ export default {
     if (localStorage.getItem('username') != null) {
       this.isLoggedIn = true;
       this.profileURL = localStorage.getItem('profileURL');
+
+      let followedUsers = await fetch(
+        '/rest/followers/getOwnFollowersOf/' + localStorage.getItem('username'),
+        {
+          method: 'GET',
+        }
+      );
+
+      let followersResponse = await followedUsers.json();
+
+      this.myNotifications = [];
+      for (let i = 0; i < followersResponse.length; i++) {
+        let notificationsRes = await fetch(
+          '/rest/notification/notificationsFrom/' +
+            followersResponse[i].targetusername,
+          {
+            method: 'GET',
+          }
+        );
+        let relevantNotifications = await notificationsRes.json();
+        for (let e = 0; e < relevantNotifications.length; e++) {
+          this.myNotifications.push(relevantNotifications[e]);
+        }
+      }
     }
   },
 
@@ -123,7 +198,12 @@ export default {
 .upperGrid {
   background-color: rgb(97, 191, 197);
   display: grid;
-  grid-template-columns: 47px auto 52px;
+  grid-template-columns: 47px auto max-content 47px;
+}
+.notLoggedInUpperGrid {
+  background-color: rgb(97, 191, 197);
+  display: grid;
+  grid-template-columns: 47px auto max-content 1px;
 }
 .lowerGrid {
   background-color: rgb(97, 191, 197);
@@ -136,7 +216,7 @@ export default {
   line-height: 28px;
   text-align: center;
   color: #ffffff;
-  padding-top: 16px;
+  padding-top: 20px;
   position: relative;
   left: -6px;
 }
@@ -158,12 +238,25 @@ export default {
   position: relative;
   left: 0px;
 }
+.numberOfNotificationsDiv {
+  background-color: red;
+  color: white;
+  position: relative;
+  text-align: center;
+  top: 32px;
+  z-index: 20;
+  left: -20px;
+  width: 13px;
+  height: 17px;
+  font-size: 14px;
+  border-radius: 30px;
+}
 .homeIcon {
   height: 30px;
   width: 30px;
   border-radius: 30px;
   margin-left: 12px;
-  margin-top: 16px;
+  margin-top: 20px;
 }
 .searchInput {
   border-radius: 10px;
@@ -188,6 +281,14 @@ export default {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
   font-size: 20px;
+}
+.notificationIcon {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  top: 4px;
+  left: -18px;
+  z-index: 5;
 }
 .profileURL {
   position: relative;
