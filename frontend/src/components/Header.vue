@@ -49,13 +49,30 @@
       <div class="codeTextDiv">
         <p class="libraryText">--=== The Code Library ===--</p>
       </div>
-      <div class="notificationDiv">
-        <div v-if="myNotifications.length > 0" class="numberOfNotificationsDiv">
-          {{ myNotifications.length > 9 ? '9+' : myNotifications.length }}
+      <div @click="showNotifications" class="notificationDiv">
+        <div
+          v-if="newNotifications.length > 0 && !shownNotificationsYet"
+          class="numberOfNotificationsDiv"
+        >
+          {{ newNotifications.length > 9 ? '9+' : newNotifications.length }}
         </div>
         <img
-          v-if="isLoggedIn"
+          v-if="
+            isLoggedIn && !shownNotificationsYet && newNotifications.length == 0
+          "
           class="notificationIcon"
+          src="../images/bell_icon.png"
+        />
+        <img
+          v-if="
+            isLoggedIn && !shownNotificationsYet && newNotifications.length > 0
+          "
+          class="notificationIconWithNumber"
+          src="../images/bell_icon.png"
+        />
+        <img
+          v-if="isLoggedIn && shownNotificationsYet"
+          class="notificationIconShown"
           src="../images/bell_icon.png"
         />
       </div>
@@ -90,23 +107,36 @@
         <img @click="search" class="glassIcon" src="../images/glass.png" />
       </div>
     </div>
+    <div v-if="showNotificationsMenu" class="notificationBox">
+      <NotificationItem
+        v-for="(notificationItem, index) of newNotifications"
+        :key="index"
+        :notification="notificationItem"
+      />
+    </div>
   </div>
 </template>
 <script>
 import store from '../store';
+import NotificationItem from '../components/NotificationItem.vue';
 
 export default {
   name: 'Header',
+  components: {
+    NotificationItem,
+  },
   emits: ['searchResult'],
   data() {
     return {
       isLoggedIn: false,
       profileURL: '',
       searchTerm: '',
-      myNotifications: [],
+      alreadyShownNotifications: [],
+      newNotifications: [],
+      showNotificationsMenu: false,
+      shownNotificationsYet: false,
     };
   },
-
   async mounted() {
     if (localStorage.getItem('username') != null) {
       this.isLoggedIn = true;
@@ -121,7 +151,22 @@ export default {
 
       let followersResponse = await followedUsers.json();
 
-      this.myNotifications = [];
+      let alreadyShownNotifications = await fetch(
+        '/rest/shownnotification/getNotificationsFor/' +
+          localStorage.getItem('username'),
+        {
+          method: 'GET',
+        }
+      );
+      let alreadyShownNotificationsResponse =
+        await alreadyShownNotifications.json();
+      for (let e = 0; e < alreadyShownNotificationsResponse.length; e++) {
+        this.alreadyShownNotifications.push(
+          alreadyShownNotificationsResponse[e]
+        );
+      }
+
+      this.newNotifications = [];
       for (let i = 0; i < followersResponse.length; i++) {
         let notificationsRes = await fetch(
           '/rest/notification/notificationsFrom/' +
@@ -132,13 +177,60 @@ export default {
         );
         let relevantNotifications = await notificationsRes.json();
         for (let e = 0; e < relevantNotifications.length; e++) {
-          this.myNotifications.push(relevantNotifications[e]);
+          if (alreadyShownNotificationsResponse.length == 0) {
+            this.newNotifications.push(relevantNotifications[e]);
+          } else {
+            let shouldAdd = true;
+            for (let a = 0; a < alreadyShownNotificationsResponse.length; a++) {
+              if (
+                relevantNotifications[e].id ==
+                alreadyShownNotificationsResponse[a].id
+              ) {
+                shouldAdd = false;
+              }
+            }
+            if (shouldAdd) {
+              this.newNotifications.push(relevantNotifications[e]);
+            }
+          }
         }
       }
     }
   },
 
   methods: {
+    async showNotifications() {
+      if (
+        this.showNotificationsMenu == false &&
+        this.newNotifications.length > 0
+      ) {
+        this.showNotificationsMenu = true;
+        this.shownNotificationsYet = true;
+      } else {
+        this.showNotificationsMenu = false;
+        for (let i = 0; i < this.newNotifications.length; i++) {
+          let newNotification = {
+            content: this.newNotifications[i].content,
+            authorname: this.newNotifications[i].authorname,
+            authorurl: this.newNotifications[i].authorurl,
+            timestamp: Date.now(),
+            shownToUsername: localStorage.getItem('username'),
+          };
+
+          let notificationRes = await fetch(
+            '/rest/shownnotification/addNewShownNotification',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(newNotification),
+            }
+          );
+        }
+        this.newNotifications = [];
+      }
+    },
     async goBackToHomePage() {
       let res = await fetch('/rest/articles/', {
         method: 'GET',
@@ -194,6 +286,18 @@ export default {
   padding-left: 6px;
   padding-right: 6px;
   border: solid 0.6px black;
+}
+.notificationBox {
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border: solid 1px black;
+  display: inline;
+  position: absolute;
+  top: 50px;
+  right: 60px;
+  z-index: 30;
+  border-radius: 30px;
 }
 .upperGrid {
   background-color: rgb(97, 191, 197);
@@ -286,7 +390,39 @@ export default {
   position: relative;
   width: 30px;
   height: 30px;
-  top: 4px;
+  top: 20px;
+  left: -18px;
+  z-index: 5;
+}
+.notificationIconWithNumber {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  top: 1px;
+  left: -18px;
+  z-index: 5;
+}
+.notificationIconShown {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  top: 20px;
+  left: -18px;
+  z-index: 5;
+}
+.notificationIconWithShowNotificationsMenu {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  top: 20px;
+  left: -18px;
+  z-index: 5;
+}
+.NoNotificationsIcon {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  top: 20px;
   left: -18px;
   z-index: 5;
 }

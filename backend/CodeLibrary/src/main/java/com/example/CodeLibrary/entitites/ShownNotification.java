@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "notification")
+@Table(name = "shownnotification")
 public class ShownNotification {
 
     @Id
@@ -13,18 +13,30 @@ public class ShownNotification {
     String content;
     String authorname;
     String authorurl;
-    String shownToUsername;
+    String showntousername;
     Timestamp timestamp;
 
     public ShownNotification() {
     }
 
-    public String getShownToUsername() {
-        return shownToUsername;
+    @Override
+    public String toString() {
+        return "ShownNotification{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", authorname='" + authorname + '\'' +
+                ", authorurl='" + authorurl + '\'' +
+                ", showntousername='" + showntousername + '\'' +
+                ", timestamp=" + timestamp +
+                '}';
     }
 
-    public void setShownToUsername(String shownToUsername) {
-        this.shownToUsername = shownToUsername;
+    public String getshowntousername() {
+        return showntousername;
+    }
+
+    public void setShownToUsername(String showntousername) {
+        this.showntousername = showntousername;
     }
 
     public Timestamp getTimestamp() {
@@ -69,16 +81,5 @@ public class ShownNotification {
         this.authorurl = authorurl;
     }
 
-    @Override
-    public String toString() {
-        return "ShownNotification{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", authorname='" + authorname + '\'' +
-                ", authorurl='" + authorurl + '\'' +
-                ", shownToUsername='" + shownToUsername + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
-    }
 
 }

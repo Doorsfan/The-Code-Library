@@ -244,7 +244,7 @@ export default {
         });
 
         let newNotification = {
-          content: localStorage.getItem('username') + ' posted a new article.',
+          content: 'Posted a new article.',
           authorname: localStorage.getItem('username'),
           authorurl: localStorage.getItem('profileURL'),
           timestamp: Date.now(),
