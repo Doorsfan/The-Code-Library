@@ -14,15 +14,6 @@ public class Follower {
     public Follower() {
     }
 
-    @Override
-    public String toString() {
-        return "Follower{" +
-                "id=" + id +
-                ", followersusername='" + followersusername + '\'' +
-                ", targetusername='" + targetusername + '\'' +
-                '}';
-    }
-
     public String getFollowersusername() {
         return followersusername;
     }
@@ -47,5 +38,13 @@ public class Follower {
         this.id = id;
     }
 
+    @Override
+    public String toString() {
+        return "Follower{" +
+                "id=" + id +
+                ", followersusername='" + followersusername + '\'' +
+                ", targetusername='" + targetusername + '\'' +
+                '}';
+    }
 
 }

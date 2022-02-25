@@ -29,6 +29,7 @@ export default {
 .app-main {
   min-height: 100vh;
   height: max-content;
+  overflow-y: hidden;
 }
 .BackDrop {
   background-color: #131313;

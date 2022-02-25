@@ -11,4 +11,7 @@ public interface FollowerRepo extends CrudRepository<Follower, Integer> {
 
     @Query(value = "SELECT * FROM followers WHERE targetusername = :targetusername", nativeQuery = true)
     List<Follower> findFollowersForUserByUsername(@Param("targetusername") String targetusername);
+
+    @Query(value = "SELECT * FROM followers WHERE followersusername = :followersusername", nativeQuery = true)
+    List<Follower> findFollowedUsersBasedOnUsername(@Param("followersusername") String followersusername);
 }

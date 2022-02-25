@@ -24,4 +24,9 @@ public class FollowersController {
     public List<Follower> getFollowers(@PathVariable String targetusername) {
         return followerService.getFollowersForUser(targetusername);
     }
+
+    @GetMapping("/followers/getOwnFollowersOf/{followersusername}")
+    public List<Follower> getMyOwnFollowers(@PathVariable String followersusername) {
+        return followerService.findOwnFollowersFor(followersusername);
+    }
 }

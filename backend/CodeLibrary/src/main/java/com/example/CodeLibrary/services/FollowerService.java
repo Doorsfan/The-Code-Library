@@ -17,6 +17,10 @@ public class FollowerService {
         return followerRepo.save(follower);
     }
 
+    public List<Follower> findOwnFollowersFor(String followersusername) {
+        return followerRepo.findFollowedUsersBasedOnUsername(followersusername);
+    }
+
     public List<Follower> getFollowersForUser(String targetusername) {
         return followerRepo.findFollowersForUserByUsername(targetusername);
     }

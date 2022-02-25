@@ -586,7 +586,6 @@ export default {
 
       let commentRes = await postCommentRes.json();
       this.commentsArray.push(commentRes);
-
     },
     goToLoginPage() {
       this.$router.push('/login');
