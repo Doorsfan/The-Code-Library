@@ -13,9 +13,30 @@ public class Notification {
     String content;
     String authorname;
     String authorurl;
+    Integer articleid;
     private Timestamp timestamp;
 
     public Notification() {
+    }
+
+    @Override
+    public String toString() {
+        return "Notification{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", authorname='" + authorname + '\'' +
+                ", authorurl='" + authorurl + '\'' +
+                ", articleid=" + articleid +
+                ", timestamp=" + timestamp +
+                '}';
+    }
+
+    public Integer getArticleid() {
+        return articleid;
+    }
+
+    public void setArticleid(Integer articleid) {
+        this.articleid = articleid;
     }
 
     public Timestamp getTimestamp() {
@@ -59,15 +80,5 @@ public class Notification {
         this.authorurl = authorurl;
     }
 
-    @Override
-    public String toString() {
-        return "Notification{" +
-                "id=" + id +
-                ", content='" + content + '\'' +
-                ", authorname='" + authorname + '\'' +
-                ", authorurl='" + authorurl + '\'' +
-                ", timestamp=" + timestamp +
-                '}';
-    }
 
 }

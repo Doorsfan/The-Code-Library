@@ -74,9 +74,13 @@
           />
         </div>
         <div class="SpaceBlock" />
-        <div v-if="!editMode" class="secondTag">{{ secondTag }}</div>
+        <div v-if="!editMode && secondTag.length > 0" class="secondTag">
+          {{ secondTag }}
+        </div>
         <div class="SpaceBlock" />
-        <div v-if="!editMode" class="thirdTag">{{ thirdTag }}</div>
+        <div v-if="!editMode && thirdTag.length > 0" class="thirdTag">
+          {{ thirdTag }}
+        </div>
         <div class="SpaceBlock" />
       </div>
       <div

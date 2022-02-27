@@ -189,9 +189,12 @@ export default {
       wantedThirdDescription: '',
       wantedThirdTitle: '',
       wantedThirdSection: '',
+      articleId: 0,
     };
   },
-  mounted() {},
+  mounted() {
+    this.articleId = this.$route.params.id;
+  },
   watch: {},
   methods: {
     async publishArticle() {
@@ -243,10 +246,13 @@ export default {
           body: JSON.stringify(newArticle),
         });
 
+        let articlePostedRes = await res.json();
+
         let newNotification = {
           content: 'Posted a new article.',
           authorname: localStorage.getItem('username'),
           authorurl: localStorage.getItem('profileURL'),
+          articleid: articlePostedRes.id,
           timestamp: Date.now(),
         };
 
