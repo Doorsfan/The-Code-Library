@@ -682,6 +682,24 @@ export default {
             method: 'GET',
           }
         );
+        let newNotification = {
+          content: 'Disliked a Article.',
+          authorname: localStorage.getItem('username'),
+          authorurl: localStorage.getItem('profileURL'),
+          articleid: this.$route.params.id,
+          timestamp: Date.now(),
+        };
+
+        let notificationRes = await fetch(
+          '/rest/notification/addNewNotification',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newNotification),
+          }
+        );
       } else {
         alert('You have to be logged in to dislike Articles.');
       }
@@ -918,6 +936,25 @@ export default {
             this.$route.params.id,
           {
             method: 'GET',
+          }
+        );
+
+        let newNotification = {
+          content: 'Liked an article.',
+          authorname: localStorage.getItem('username'),
+          authorurl: localStorage.getItem('profileURL'),
+          articleid: this.$route.params.id,
+          timestamp: Date.now(),
+        };
+
+        let notificationRes = await fetch(
+          '/rest/notification/addNewNotification',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newNotification),
           }
         );
       } else {
