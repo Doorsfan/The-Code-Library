@@ -377,7 +377,7 @@
           <img class="profileImage" :src="currentProfile" />
           <div class="SpaceBlock" />
           <div class="authorNameDiv">
-            {{ author }}
+            {{ currentUsername }}
           </div>
           <div class="SpaceBlock" />
           <div class="DateDiv">
@@ -514,9 +514,8 @@ export default {
     this.likes = response.likes == null ? 0 : response.likes;
     this.dislikes = response.dislikes == null ? 0 : response.dislikes;
     this.comments = response.comments == null ? 0 : response.comments;
-    if (localStorage.getItem('username') == this.author) {
-      this.currentUsername = localStorage.getItem('username');
-    }
+
+    this.currentUsername = localStorage.getItem('username');
 
     let getCommentsRes = await fetch(
       '/rest/comments/getCommentsForArticle/' + this.$route.params.id,
@@ -590,6 +589,25 @@ export default {
 
       let commentRes = await postCommentRes.json();
       this.commentsArray.push(commentRes);
+
+      let newNotification = {
+        content: 'Posted a new comment.',
+        authorname: localStorage.getItem('username'),
+        authorurl: localStorage.getItem('profileURL'),
+        articleid: this.$route.params.id,
+        timestamp: Date.now(),
+      };
+
+      let notificationRes = await fetch(
+        '/rest/notification/addNewNotification',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newNotification),
+        }
+      );
     },
     goToLoginPage() {
       this.$router.push('/login');
