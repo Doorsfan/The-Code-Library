@@ -325,6 +325,12 @@
             @click="likeArticle"
             class="likesIcon"
             src="../images/up_arrow.png"
+            v-if="!alreadyLiked"
+          />
+          <img
+            class="likesIcon"
+            src="../images/already_upvoted.png"
+            v-if="alreadyLiked"
           />
           <div class="SpaceBlock" />
         </div>
@@ -337,8 +343,14 @@
           <div class="SpaceBlock" />
           <img
             @click="dislikeArticle"
+            v-if="!alreadyDisliked"
             class="dislikesIcon"
             src="../images/down_arrow.png"
+          />
+          <img
+            v-if="alreadyDisliked"
+            class="dislikesIcon"
+            src="../images/already_downvoted.png"
           />
           <div class="SpaceBlock" />
         </div>
@@ -466,6 +478,8 @@ export default {
       commentsArray: [],
       canFollow: false,
       isFollowing: false,
+      alreadyLiked: false,
+      alreadyDisliked: false,
     };
   },
   async mounted() {
@@ -637,7 +651,8 @@ export default {
       this.$router.push('/');
     },
     async dislikeArticle() {
-      if (localStorage.getItem('username')) {
+      if (localStorage.getItem('username') && !this.alreadyLiked) {
+        this.alreadyDisliked = true;
         let myArticle = {
           maintitle: this.maintitle,
           authorimage: this.authorimage,
@@ -893,7 +908,8 @@ export default {
       this.editMode = false;
     },
     async likeArticle() {
-      if (localStorage.getItem('username')) {
+      if (localStorage.getItem('username') && !this.alreadyDisliked) {
+        this.alreadyLiked = true;
         let myArticle = {
           maintitle: this.maintitle,
           authorimage: this.authorimage,
