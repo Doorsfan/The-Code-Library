@@ -15,6 +15,7 @@ public class ShownNotification {
     String authorurl;
     String showntousername;
     Timestamp timestamp;
+    Integer articleid;
 
     public ShownNotification() {
     }
@@ -28,7 +29,16 @@ public class ShownNotification {
                 ", authorurl='" + authorurl + '\'' +
                 ", showntousername='" + showntousername + '\'' +
                 ", timestamp=" + timestamp +
+                ", articleid=" + articleid +
                 '}';
+    }
+
+    public Integer getArticleid() {
+        return articleid;
+    }
+
+    public void setArticleid(Integer articleid) {
+        this.articleid = articleid;
     }
 
     public String getshowntousername() {

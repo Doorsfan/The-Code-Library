@@ -1,5 +1,5 @@
 <template>
-  <div class="OuterNotificationBox">
+  <div @click="goToArticle" class="OuterNotificationBox">
     <div class="timeOfPosting">
       {{
         notification.timestamp
@@ -30,7 +30,11 @@ export default {
     return {};
   },
   async mounted() {},
-  methods: {},
+  methods: {
+    goToArticle() {
+      this.$router.push('/Article/' + this.notification.articleid);
+    },
+  },
 };
 </script>
 

@@ -183,8 +183,8 @@ export default {
             let shouldAdd = true;
             for (let a = 0; a < alreadyShownNotificationsResponse.length; a++) {
               if (
-                relevantNotifications[e].id ==
-                alreadyShownNotificationsResponse[a].id
+                relevantNotifications[e].articleid ==
+                alreadyShownNotificationsResponse[a].articleid
               ) {
                 shouldAdd = false;
               }
@@ -208,27 +208,27 @@ export default {
         this.shownNotificationsYet = true;
       } else {
         this.showNotificationsMenu = false;
-        for (let i = 0; i < this.newNotifications.length; i++) {
-          let newNotification = {
-            content: this.newNotifications[i].content,
-            authorname: this.newNotifications[i].authorname,
-            authorurl: this.newNotifications[i].authorurl,
-            timestamp: Date.now(),
-            shownToUsername: localStorage.getItem('username'),
-          };
+      }
+      for (let i = 0; i < this.newNotifications.length; i++) {
+        let newNotification = {
+          content: this.newNotifications[i].content,
+          authorname: this.newNotifications[i].authorname,
+          authorurl: this.newNotifications[i].authorurl,
+          timestamp: Date.now(),
+          shownToUsername: localStorage.getItem('username'),
+          articleid: this.newNotifications[i].articleid,
+        };
 
-          let notificationRes = await fetch(
-            '/rest/shownnotification/addNewShownNotification',
-            {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(newNotification),
-            }
-          );
-        }
-        this.newNotifications = [];
+        let notificationRes = await fetch(
+          '/rest/shownnotification/addNewShownNotification',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newNotification),
+          }
+        );
       }
     },
     async goBackToHomePage() {
