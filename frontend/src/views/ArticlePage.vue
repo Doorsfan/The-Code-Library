@@ -561,6 +561,36 @@ export default {
         this.isFollowing = true;
       }
     }
+
+    let getLikedArticleAlready = await fetch(
+      '/rest/likes/findLikedArticle/' +
+        localStorage.getItem('userid') +
+        '/' +
+        this.$route.params.id,
+      {
+        method: 'GET',
+      }
+    );
+
+    let likedAlreadyResponse = await getLikedArticleAlready.json();
+    if (likedAlreadyResponse.length > 0) {
+      this.alreadyLiked = true;
+    }
+
+    let getDislikedArticleAlready = await fetch(
+      '/rest/dislikes/findDislikedArticle/' +
+        localStorage.getItem('userid') +
+        '/' +
+        this.$route.params.id,
+      {
+        method: 'GET',
+      }
+    );
+
+    let dislikedAlreadyResponse = await getDislikedArticleAlready.json();
+    if (dislikedAlreadyResponse.length > 0) {
+      this.alreadyDisliked = true;
+    }
   },
   watch: {},
   methods: {
