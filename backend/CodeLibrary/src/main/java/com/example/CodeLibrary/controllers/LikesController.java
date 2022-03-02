@@ -5,6 +5,8 @@ import com.example.CodeLibrary.services.LikesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 // Använd @RestController istället för @Controller
 // @RestController Spring Boot specifikt, tillåter oss använda @RequestBody för att
@@ -33,6 +35,11 @@ public class LikesController {
         myLike.setArticleId(articleid);
         myLike.setUserid(userid);
         return likesService.saveNewLikeToDB(myLike);
+    }
+
+    @GetMapping("/likes/findLikedArticle/{userid}/{articleid}")
+    public List<Like> findLikeForArticle(@PathVariable int userid, @PathVariable int articleid) {
+        return likesService.getLikeByArticleIdAndUserId(userid, articleid);
     }
 
 }

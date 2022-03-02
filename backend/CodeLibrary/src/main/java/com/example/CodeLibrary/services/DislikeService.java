@@ -73,4 +73,8 @@ public class DislikeService {
         }
     }
 
+    public List<Dislike> getDislikeByArticleIdAndUserId(int articleid, int userid) {
+        return dislikeRepo.findDislikesByUserIdAndArticleId(articleid, userid);
+    }
+
 }

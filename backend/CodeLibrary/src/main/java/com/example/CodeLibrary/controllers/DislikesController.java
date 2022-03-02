@@ -5,6 +5,8 @@ import com.example.CodeLibrary.services.DislikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 // Använd @RestController istället för @Controller
 // @RestController Spring Boot specifikt, tillåter oss använda @RequestBody för att
@@ -34,6 +36,11 @@ public class DislikesController {
         myDislike.setUserid(userid);
 
         return dislikeService.saveNewDislikeToDB(myDislike);
+    }
+
+    @GetMapping("/dislikes/findDislikedArticle/{userid}/{articleid}")
+    public List<Dislike> findDislikeForArticle(@PathVariable int userid, @PathVariable int articleid) {
+        return dislikeService.getDislikeByArticleIdAndUserId(userid, articleid);
     }
 
 }

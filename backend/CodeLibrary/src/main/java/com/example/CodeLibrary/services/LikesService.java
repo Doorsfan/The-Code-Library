@@ -71,4 +71,8 @@ public class LikesService {
         }
     }
 
+    public List<Like> getLikeByArticleIdAndUserId(int articleid, int userid) {
+        return likeRepo.findLikesByUserIdAndArticleId(articleid, userid);
+    }
+
 }
