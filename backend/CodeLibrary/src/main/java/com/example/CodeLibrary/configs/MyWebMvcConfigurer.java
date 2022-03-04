@@ -29,8 +29,7 @@ class MyWebMvcConfigurer implements WebMvcConfigurer {
                     protected Resource getResource(String resourcePath,
                                                    Resource location) throws IOException {
                         Resource requestedResource = location.createRelative(resourcePath);
-                        System.out.println("Went in here");
-                        System.out.println(requestedResource);
+
                         return requestedResource.exists() && requestedResource.isReadable() ? requestedResource
                                 : new ClassPathResource("/static/index.html");
                     }

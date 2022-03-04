@@ -62,12 +62,11 @@ public class LikesService {
         }
     }
 
-    public String deleteLikeByID(int articleid, int userid) {
+    public void deleteLikeByID(int articleid, int userid) {
         try {
             likeRepo.deleteLikeByArticleIdAndUserId(articleid, userid);
-            return "Success";
         } catch (Exception e) {
-            return "Failed";
+
         }
     }
 

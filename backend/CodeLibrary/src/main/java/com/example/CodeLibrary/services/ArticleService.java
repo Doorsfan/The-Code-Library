@@ -111,6 +111,14 @@ public class ArticleService {
         return articleRepo.findLikesForArticleWithId(id);
     }
 
+    public int decreaseLikesOfArticle(int id) {
+        return articleRepo.decreaseLikesOfArticle(id);
+    }
+
+    public int decreaseDislikesOfArticle(int id) {
+        return articleRepo.decreaseDislikesOfArticle(id);
+    }
+
     public List<Article> findArticlesByAuthor(String author) {
         return articleRepo.findArticlesByAuthor(author);
     }
