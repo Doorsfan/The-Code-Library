@@ -22,7 +22,9 @@ public interface LikesRepo extends CrudRepository<Like, Integer> {
     @Query(value = "SELECT * FROM likes WHERE userid = :userid", nativeQuery = true)
     List<Like> findLikesByUserId(@Param("userid") Integer userid);
 
-    @Query(value = "DELETE * FROM likes WHERE userid = :userid AND articleId = :articleId", nativeQuery = true)
+    @Modifying(clearAutomatically = true)
+    @Transactional
+    @Query(value = "DELETE FROM likes WHERE userid = :userid AND articleId = :articleId", nativeQuery = true)
     void deleteLikeByArticleIdAndUserId(@Param("userid") Integer userid, @Param("articleId") Integer articleId);
 
     @Modifying(clearAutomatically = true)

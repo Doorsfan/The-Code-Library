@@ -22,6 +22,8 @@ public interface DislikesRepo extends CrudRepository<Dislike, Integer> {
     @Query(value = "SELECT * FROM dislikes WHERE userid = :userid", nativeQuery = true)
     List<Dislike> findDislikesByUserId(@Param("userid") Integer userid);
 
+    @Modifying(clearAutomatically = true)
+    @Transactional
     @Query(value = "DELETE FROM dislikes WHERE userid = :userid AND articleId = :articleId", nativeQuery = true)
     void deleteDislikeByArticleIdAndUserId(@Param("userid") Integer userid, @Param("articleId") Integer articleId);
 

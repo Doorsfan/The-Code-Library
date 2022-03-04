@@ -34,7 +34,6 @@ public class UsersController {
     public UserWithoutPW getUsersContaining(@PathVariable String username, @PathVariable String password) {
         UserWithoutPW userDTO = new UserWithoutPW(0, "", "");
         List<User> relevantUsers = userService.getUsersContaining(username);
-        System.out.println(password);
         for (int i = 0; i < relevantUsers.size(); i++) {
             if (relevantUsers.get(i).getUsername().equals(username) && relevantUsers.get(i).getPassword().equals(password)) {
                 userDTO.setId(relevantUsers.get(i).getId());

@@ -55,6 +55,16 @@ public class ArticlesController {
         return articleService.updateArticle(id, maintitle, firsttag, secondtag, thirdtag, firstprereq, secondprereq, thirdprereq, difficulty, language, firstdescription, firsttitle, firstsection, seconddescription, secondtitle, secondsection, thirddescription, thirdtitle, thirdsection);
     }
 
+    @PutMapping("/articles/decreaseLikeOfArticle/{id}")
+    public int decreaseArticleLike(@PathVariable int id) {
+        return articleService.decreaseLikesOfArticle(id);
+    }
+
+    @PutMapping("/articles/decreaseDislikeOfArticle/{id}")
+    public int decreaseArticleDislike(@PathVariable int id) {
+        return articleService.decreaseDislikesOfArticle(id);
+    }
+
 
     @PutMapping("/articles/likeArticle/{id}")
     public int updateArticleLikes(@PathVariable int id) {

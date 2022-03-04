@@ -18,7 +18,7 @@ public class DislikesController {
     @Autowired
     private DislikeService dislikeService;
 
-    @DeleteMapping("/dislikes/{userid}/{articleId}")
+    @DeleteMapping("/dislikes/takeBackDislike/{userid}/{articleId}")
     public String deletedislikeByID(@PathVariable int userid, @PathVariable int articleId) {
         return dislikeService.deleteLikeByID(userid, articleId);
     }
@@ -30,7 +30,6 @@ public class DislikesController {
 
     @GetMapping("/dislikes/{userid}/{articleid}")
     public Dislike dislikeArticle(@PathVariable int userid, @PathVariable int articleid) {
-        System.out.println("Got in here");
         Dislike myDislike = new Dislike();
         myDislike.setArticleId(articleid);
         myDislike.setUserid(userid);

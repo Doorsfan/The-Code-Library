@@ -331,6 +331,7 @@
             class="likesIcon"
             src="../images/already_upvoted.png"
             v-if="alreadyLiked"
+            @click="takeBackLike"
           />
           <div class="SpaceBlock" />
         </div>
@@ -348,6 +349,7 @@
             src="../images/down_arrow.png"
           />
           <img
+            @click="takeBackDislike"
             v-if="alreadyDisliked"
             class="dislikesIcon"
             src="../images/already_downvoted.png"
@@ -594,6 +596,48 @@ export default {
   },
   watch: {},
   methods: {
+    async takeBackLike() {
+      let deleteLikeRes = await fetch(
+        '/rest/likes/takeBackLike/' +
+          localStorage.getItem('userid') +
+          '/' +
+          this.$route.params.id,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      this.alreadyLiked = false;
+      this.likes = this.likes - 1;
+
+      let reduceLikeRes = await fetch(
+        '/rest/articles/decreaseLikeOfArticle/' + this.$route.params.id,
+        {
+          method: 'PUT',
+        }
+      );
+    },
+    async takeBackDislike() {
+      let deleteDislikeRes = await fetch(
+        '/rest/dislikes/takeBackDislike/' +
+          localStorage.getItem('userid') +
+          '/' +
+          this.$route.params.id,
+        {
+          method: 'DELETE',
+        }
+      );
+
+      this.alreadyDisliked = false;
+      this.dislikes = this.dislikes - 1;
+
+      let reduceLikeRes = await fetch(
+        '/rest/articles/decreaseDislikeOfArticle/' + this.$route.params.id,
+        {
+          method: 'PUT',
+        }
+      );
+    },
     async followUser() {
       let addFollowerRes = await fetch(
         '/rest/users/addFollower/' + this.author,
