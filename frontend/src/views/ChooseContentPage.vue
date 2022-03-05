@@ -23,6 +23,14 @@
     >
       Create New Article
     </button>
+    <button
+      @click="goToActivityLog"
+      class="newArticleButton"
+      type="button"
+      value="My Activity Log"
+    >
+      My Activity Log
+    </button>
   </div>
   <Footer class="loginFooter" />
 </template>
@@ -41,6 +49,9 @@ export default {
   mounted() {},
   watch: {},
   methods: {
+    goToActivityLog() {
+      this.$router.push('/activityLog/' + localStorage.getItem('username'));
+    },
     goToHomepage() {
       this.$router.push('/');
     },
@@ -83,7 +94,7 @@ button {
 .myArticlesButton,
 .newArticleButton {
   position: relative;
-  top: 30px;
+  top: -5px;
 }
 .profileHeader {
   display: grid;

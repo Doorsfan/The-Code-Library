@@ -8,6 +8,7 @@ import ChooseContentPage from './views/ChooseContentPage.vue';
 import CreateArticlePage from './views/CreateArticlePage.vue';
 import ArticlePage from './views/ArticlePage.vue';
 import ProfilePage from './views/ProfilePage.vue';
+import ActivityLogPage from './views/ActivityLogPage.vue';
 
 export default createRouter({
   history: createWebHistory(),
@@ -40,5 +41,9 @@ export default createRouter({
       path: '/profilePage/:username',
       component: ProfilePage,
     },
+    {
+      path: '/activityLog/:username',
+      component: ActivityLogPage
+    }
   ],
 });
