@@ -1,48 +1,76 @@
 <template>
-  <div @click="goToArticle" class="OuterNotificationBox">
-    <div class="timeOfPosting">
-      {{
-        notification.timestamp
-          .replaceAll('T', ' ')
-          .substring(0, notification.timestamp.length - 18)
-      }}
-    </div>
-    <div class="upperGrid">
+  <div @click="goToArticle" class="activityBox">
+    <div v-if="activity.timestamp" class="timestampDiv">
+      <div class="dateDiv">
+        {{
+          activity.timestamp
+            .replaceAll('T', ' ')
+            .substring(0, activity.timestamp.length - 18)
+        }}
+      </div>
       <div class="SpaceBlock" />
-      <img class="authorImage" :src="notification.authorurl" />
-      <div class="SpaceBlock" />
-      <div class="authorName">
-        {{ notification.authorname }}
+      <div class="timeDiv">
+        {{
+          activity.timestamp
+            .replaceAll('T', ' ')
+            .substring(11, activity.timestamp.length - 13)
+        }}
       </div>
     </div>
-    <div class="NotificationContent">
-      {{ notification.content }}
+    <div class="usernameGrid">
+      <img class="authorImage" :src="activity.authorurl" />
+      <div class="SpaceBlock" />
+      <div class="usernameSubdiv">{{ activity.username }}</div>
     </div>
+    <div class="contentDiv">{{ activity.event }}</div>
   </div>
 </template>
 <script>
 import store from '../store';
 
 export default {
-  name: 'NotificationItem',
-  props: ['notification'],
+  name: 'Activity',
+  props: ['activity'],
   data() {
     return {};
   },
   async mounted() {},
   methods: {
     goToArticle() {
-      this.$router.push('/Article/' + this.notification.articleid);
+      if (this.activity.articleid) {
+        this.$router.push('/Article/' + this.activity.articleid);
+      }
+      /* else if(this.activity.followeduser){
+        this.$router.push('/profilePage/' + this.activity.followeduser);
+      } Later */
     },
   },
 };
 </script>
 
 <style scoped>
+.usernameGrid {
+  display: grid;
+  grid-template-columns: max-content 5px max-content;
+}
+.timestampDiv {
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+}
+.usernameSubdiv {
+  margin-top: 4px;
+}
 .upperGrid {
   display: grid;
   margin-top: 2px;
   grid-template-columns: 10px max-content 5px max-content auto max-content 10px;
+}
+.activityBox {
+  background-color: white;
+  padding: 7px;
+  width: 320px;
+  border-radius: 10px;
+  margin-bottom: 5px;
 }
 .authorImage {
   width: 30px;

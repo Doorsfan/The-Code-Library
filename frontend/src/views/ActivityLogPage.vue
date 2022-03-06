@@ -7,26 +7,48 @@
     <div class="codeLibraryText">--=== The Code Library ===--</div>
   </div>
   <div class="ContentBox">
-    bla
+    <Activity
+      v-for="(activityItem, index) of relevantActivities"
+      :key="index"
+      :activity="activityItem"
+    />
   </div>
   <Footer class="loginFooter" />
 </template>
 <script>
 import Footer from '../components/Footer.vue';
+import Activity from '../components/Activity.vue';
 import store from '../store';
 
 export default {
-  name: 'ChooseContentPage',
+  name: 'ActivityLogPage',
   components: {
+    Activity,
     Footer,
   },
   data() {
-    return {};
+    return {
+      relevantActivities: [],
+    };
   },
-  mounted() {},
+  async mounted() {
+    this.relevantActivities = [];
+    let activitiesres = await fetch(
+      '/rest/activity/findActivityByUsername/' + this.$route.params.username,
+      {
+        method: 'GET',
+      }
+    );
+    let activities = await activitiesres.json();
+    for (let i = 0; i < activities.length; i++) {
+      this.relevantActivities.push(activities[i]);
+    }
+  },
   watch: {},
   methods: {
-
+    goToHomepage() {
+      this.$router.push('/');
+    },
   },
 };
 </script>
@@ -78,14 +100,14 @@ export default {
 }
 
 .ContentBox {
-  height: 242px;
+  min-height: 75px;
   width: max-content;
   padding: 20px;
   margin-left: auto;
   margin-right: auto;
   background-color: #61bfc5;
   position: relative;
-  top: 241px;
+  top: 20px;
   display: block;
   border-radius: 10px;
 }

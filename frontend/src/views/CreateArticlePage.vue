@@ -268,6 +268,23 @@ export default {
         );
 
         let notificationResponse = await notificationRes.json();
+
+        let newActivity = {
+          event: 'Posted a new Article',
+          timestamp: Date.now(),
+          username: localStorage.getItem('username'),
+          authorurl: localStorage.getItem('profileURL'),
+          articleid: articlePostedRes.id,
+          followeduser: null,
+        };
+
+        let activityRes = await fetch('/rest/activity/saveNewActivity', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newActivity),
+        });
         this.$router.push('/');
       }
     },

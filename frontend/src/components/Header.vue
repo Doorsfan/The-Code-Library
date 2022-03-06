@@ -289,7 +289,8 @@ export default {
 }
 .notificationBox {
   width: 200px;
-  height: 200px;
+  min-height: 200px;
+  height: max-content;
   background-color: white;
   border: solid 1px black;
   display: inline;
