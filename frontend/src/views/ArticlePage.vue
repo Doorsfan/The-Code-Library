@@ -662,6 +662,23 @@ export default {
 
       let newFollowerResult = await newFollowerRes.json();
       this.isFollowing = true;
+
+      let newActivity = {
+        event: 'Is now following another User: ' + this.author,
+        timestamp: Date.now(),
+        username: localStorage.getItem('username'),
+        authorurl: localStorage.getItem('profileURL'),
+        articleid: null,
+        followeduser: this.author,
+      };
+
+      let activityRes = await fetch('/rest/activity/saveNewActivity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newActivity),
+      });
     },
     async postComment() {
       let comment = {
@@ -685,6 +702,23 @@ export default {
         articleid: this.$route.params.id,
         timestamp: Date.now(),
       };
+
+      let newActivity = {
+        event: 'Posted a Comment',
+        timestamp: Date.now(),
+        username: localStorage.getItem('username'),
+        authorurl: localStorage.getItem('profileURL'),
+        articleid: this.$route.params.id,
+        followeduser: null,
+      };
+
+      let activityRes = await fetch('/rest/activity/saveNewActivity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newActivity),
+      });
 
       let notificationRes = await fetch(
         '/rest/notification/addNewNotification',
@@ -789,6 +823,23 @@ export default {
             body: JSON.stringify(newNotification),
           }
         );
+
+        let newActivity = {
+          event: 'Disliked a Article',
+          timestamp: Date.now(),
+          username: localStorage.getItem('username'),
+          authorurl: localStorage.getItem('profileURL'),
+          articleid: this.$route.params.id,
+          followeduser: null,
+        };
+
+        let activityRes = await fetch('/rest/activity/saveNewActivity', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newActivity),
+        });
       } else {
         alert('You have to be logged in to dislike Articles.');
       }
@@ -980,6 +1031,23 @@ export default {
           : this.wantedThirdSection;
       let response = await res.json();
       this.editMode = false;
+
+      let newActivity = {
+        event: 'Edited an Article',
+        timestamp: Date.now(),
+        username: this.author,
+        authorurl: this.authorimage,
+        articleid: this.$route.params.id,
+        followeduser: null,
+      };
+
+      let activityRes = await fetch('/rest/activity/saveNewActivity', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newActivity),
+      });
     },
     async likeArticle() {
       if (localStorage.getItem('username') && !this.alreadyDisliked) {
@@ -1047,6 +1115,23 @@ export default {
             body: JSON.stringify(newNotification),
           }
         );
+
+        let newActivity = {
+          event: 'Liked a Article',
+          timestamp: Date.now(),
+          username: localStorage.getItem('username'),
+          authorurl: localStorage.getItem('profileURL'),
+          articleid: this.$route.params.id,
+          followeduser: null,
+        };
+
+        let activityRes = await fetch('/rest/activity/saveNewActivity', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newActivity),
+        });
       } else {
         alert('You have to be logged in to Like Articles.');
       }
