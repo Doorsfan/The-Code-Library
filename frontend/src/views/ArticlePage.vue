@@ -600,9 +600,9 @@ export default {
     removeComment(removedId) {
       let oldComments = this.commentsArray;
       let newComments = [];
-      for(let i = 0; i < oldComments.length; i++){
-        if(oldComments[i].id != removedId){
-          newComments.push(oldComments[i])
+      for (let i = 0; i < oldComments.length; i++) {
+        if (oldComments[i].id != removedId) {
+          newComments.push(oldComments[i]);
         }
       }
       this.commentsArray = newComments;

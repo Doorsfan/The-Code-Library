@@ -42,7 +42,6 @@ export default {
   },
 
   async mounted() {
-    console.log(this.comment);
     let offset = new Date().getTimezoneOffset() * -1;
     this.date = new Date(new Date(this.comment.timestamp).getTime() + offset)
       .toString()
@@ -52,10 +51,13 @@ export default {
 
   methods: {
     async removeComment() {
-      let deleteCommentRes = await fetch('/rest/comments/deleteComment/' + this.comment.id, {
-        method: 'DELETE',
-      });
-      this.$emit("deleteComment", this.comment.id);
+      let deleteCommentRes = await fetch(
+        '/rest/comments/deleteComment/' + this.comment.id,
+        {
+          method: 'DELETE',
+        }
+      );
+      this.$emit('deleteComment', this.comment.id);
     },
   },
 };
