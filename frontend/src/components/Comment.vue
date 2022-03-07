@@ -8,6 +8,14 @@
         {{ comment.authorname }}
       </div>
       <div class="Spaceblock" />
+      <img
+        v-if="comment.authorname === currentUser"
+        @click="removeComment"
+        class="trashImage"
+        src="../images/dark_trash.png"
+      />
+      <div v-else class="SpaceBlock" />
+      <div class="Spaceblock" />
       <div class="dateDiv">
         {{ date }}
       </div>
@@ -24,10 +32,12 @@ import store from '../store';
 export default {
   name: 'Comment',
   props: ['comment'],
+  emits: ['deleteComment'],
   data() {
     return {
       authorImage: this.comment.authorurl,
       date: this.comment.timestamp,
+      currentUser: localStorage.getItem('username'),
     };
   },
 
@@ -39,7 +49,17 @@ export default {
       .substring(0, 17);
   },
 
-  methods: {},
+  methods: {
+    async removeComment() {
+      let deleteCommentRes = await fetch(
+        '/rest/comments/deleteComment/' + this.comment.id,
+        {
+          method: 'DELETE',
+        }
+      );
+      this.$emit('deleteComment', this.comment.id);
+    },
+  },
 };
 </script>
 
@@ -47,6 +67,11 @@ export default {
 .Authorname,
 .dateDiv {
   margin-top: 10px;
+}
+.trashImage {
+  width: 30px;
+  height: 30px;
+  margin-top: 2px;
 }
 .commentBox {
   width: 350px;
@@ -69,7 +94,7 @@ export default {
 }
 .imageNameDateGrid {
   display: grid;
-  grid-template-columns: 10px max-content 10px auto 10px max-content 10px;
+  grid-template-columns: 10px max-content 10px auto 10px max-content 5px max-content 10px;
 }
 .textDiv {
   margin-left: 55px;

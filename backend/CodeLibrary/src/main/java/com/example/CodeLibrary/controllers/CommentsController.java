@@ -44,4 +44,9 @@ public class CommentsController {
         return commentService.getCommentsForArticleId(articleid);
     }
 
+    @DeleteMapping("/comments/deleteComment/{id}")
+    public void deleteComment(@PathVariable Integer id) {
+        commentService.deleteComment(id);
+    }
+
 }

@@ -20,4 +20,6 @@ public class CommentService {
     public List<Comment> getCommentsForArticleId(int articleid) {
         return commentRepo.findAllCommentsByArticleId(articleid);
     }
+
+    public void deleteComment(Integer id) { commentRepo.deleteById(id); }
 }
