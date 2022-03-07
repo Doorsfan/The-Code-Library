@@ -372,6 +372,7 @@
         v-for="(commentItem, index) of commentsArray"
         :key="index"
         :comment="commentItem"
+        @deleteComment="removeComment"
       />
       <div v-if="!currentUsername" class="loginBox">
         <div class="loginTextDiv">
@@ -596,6 +597,16 @@ export default {
   },
   watch: {},
   methods: {
+    removeComment(removedId) {
+      let oldComments = this.commentsArray;
+      let newComments = [];
+      for(let i = 0; i < oldComments.length; i++){
+        if(oldComments[i].id != removedId){
+          newComments.push(oldComments[i])
+        }
+      }
+      this.commentsArray = newComments;
+    },
     async takeBackLike() {
       let deleteLikeRes = await fetch(
         '/rest/likes/takeBackLike/' +
