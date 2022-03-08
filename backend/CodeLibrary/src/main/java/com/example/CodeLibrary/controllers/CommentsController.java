@@ -49,4 +49,9 @@ public class CommentsController {
         commentService.deleteComment(id);
     }
 
+    @PutMapping("/comments/updateComment/{id}/{content}")
+    public void decreaseArticleLike(@PathVariable int id, @PathVariable String content) {
+        commentService.updateComment(id, content);
+    }
+
 }
