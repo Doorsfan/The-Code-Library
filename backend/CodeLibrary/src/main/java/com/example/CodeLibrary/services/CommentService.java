@@ -21,5 +21,11 @@ public class CommentService {
         return commentRepo.findAllCommentsByArticleId(articleid);
     }
 
-    public void deleteComment(Integer id) { commentRepo.deleteById(id); }
+    public void deleteComment(Integer id) {
+        commentRepo.deleteById(id);
+    }
+
+    public void updateComment(Integer id, String content) {
+        commentRepo.updateComment(id, content);
+    }
 }
