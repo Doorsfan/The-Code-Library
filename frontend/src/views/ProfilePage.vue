@@ -12,7 +12,7 @@
       :article="articleItem"
     />
   </div>
-  <Footer class="footerDiv"/>
+  <Footer class="footerDiv" />
 </template>
 <script>
 import Footer from '../components/Footer.vue';

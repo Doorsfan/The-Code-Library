@@ -58,10 +58,17 @@
       <div v-if="editMode" class="EditAuthorText">Author</div>
       <div class="topGrid">
         <div class="SpaceBlock" />
-        <img @click="goToAuthorPage" v-if="!editMode" class="authorImage" :src="authorimage" />
+        <img
+          @click="goToAuthorPage"
+          v-if="!editMode"
+          class="authorImage"
+          :src="authorimage"
+        />
         <img v-if="editMode" class="editAuthorImage" :src="authorimage" />
         <div class="SpaceBlock" />
-        <div @click="goToAuthorPage" v-if="!editMode" class="authorText">{{ author }}</div>
+        <div @click="goToAuthorPage" v-if="!editMode" class="authorText">
+          {{ author }}
+        </div>
         <div v-if="editMode" class="EditAuthorName">{{ author }}</div>
         <div class="SpaceBlock" />
         <div v-if="!editMode" class="firstTag">{{ firstTag }}</div>
@@ -520,7 +527,8 @@ export default {
       response.firstsection == 'null' ? '' : response.firstsection;
     this.seconddescription =
       response.seconddescription == 'null' ? '' : response.seconddescription;
-    this.secondtitle = response.secondtitle == 'null' ? '' : response.secondtitle;
+    this.secondtitle =
+      response.secondtitle == 'null' ? '' : response.secondtitle;
     this.secondsection =
       response.secondcontent == null ? '' : response.secondcontent;
     this.thirddescription =
@@ -601,7 +609,7 @@ export default {
   },
   watch: {},
   methods: {
-    goToAuthorPage(){
+    goToAuthorPage() {
       this.$router.push('/profilePage/' + this.author);
     },
     removeComment(removedId) {

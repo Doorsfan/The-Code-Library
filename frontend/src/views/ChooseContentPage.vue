@@ -47,7 +47,7 @@ export default {
     return {};
   },
   mounted() {
-    if(!localStorage.getItem('username')){
+    if (!localStorage.getItem('username')) {
       this.$router.push('/');
     }
   },
