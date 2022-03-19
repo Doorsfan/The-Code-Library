@@ -9,12 +9,13 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DislikesRepo extends CrudRepository<Dislike, Integer> {
 
     @Query(value = "SELECT * FROM dislikes WHERE userid = :userid AND articleId = :articleId", nativeQuery = true)
-    List<Dislike> findDislikesByUserIdAndArticleId(@Param("userid") Integer userid, @Param("articleId") Integer articleId);
+    Optional<List<Dislike>> findDislikesByUserIdAndArticleId(@Param("userid") Integer userid, @Param("articleId") Integer articleId);
 
     @Query(value = "SELECT * FROM dislikes WHERE articleId = :articleId", nativeQuery = true)
     List<Dislike> findDislikesByArticleId(@Param("articleId") Integer articleId);

@@ -3,6 +3,7 @@ package com.example.CodeLibrary.services;
 import com.example.CodeLibrary.entitites.User;
 import com.example.CodeLibrary.repositories.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public class UserService {
     // Spring handles it for us in the best way.
     @Autowired // Exempelvis för att importera spring klasser som @Service, @Repository etc
     private UserRepo userRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     /**
      * When I retrieve ALL OWNERS, According to my system design, I don't want
@@ -71,6 +75,7 @@ public class UserService {
     }
 
     public User saveNewUserToDB(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 

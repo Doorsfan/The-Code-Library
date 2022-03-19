@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 // Använd @RestController istället för @Controller
@@ -38,7 +39,7 @@ public class DislikesController {
     }
 
     @GetMapping("/dislikes/findDislikedArticle/{userid}/{articleid}")
-    public List<Dislike> findDislikeForArticle(@PathVariable int userid, @PathVariable int articleid) {
+    public Optional<List<Dislike>> findDislikeForArticle(@PathVariable int userid, @PathVariable int articleid) {
         return dislikeService.getDislikeByArticleIdAndUserId(userid, articleid);
     }
 

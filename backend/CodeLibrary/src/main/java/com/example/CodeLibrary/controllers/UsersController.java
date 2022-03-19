@@ -4,6 +4,7 @@ import com.example.CodeLibrary.DTOs.UserWithoutPW;
 import com.example.CodeLibrary.entitites.User;
 import com.example.CodeLibrary.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class UsersController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/users")
     public List<User> getAllUsers() {
         return userService.findAllUsers();
@@ -35,7 +39,7 @@ public class UsersController {
         UserWithoutPW userDTO = new UserWithoutPW(0, "", "");
         List<User> relevantUsers = userService.getUsersContaining(username);
         for (int i = 0; i < relevantUsers.size(); i++) {
-            if (relevantUsers.get(i).getUsername().equals(username) && relevantUsers.get(i).getPassword().equals(password)) {
+            if (relevantUsers.get(i).getUsername().equals(username) && passwordEncoder.matches(password, relevantUsers.get(i).getPassword())) {
                 userDTO.setId(relevantUsers.get(i).getId());
                 userDTO.setUsername(relevantUsers.get(i).getUsername());
                 userDTO.setProfileURL(relevantUsers.get(i).getImage());

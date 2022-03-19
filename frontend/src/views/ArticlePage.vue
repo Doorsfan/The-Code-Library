@@ -58,10 +58,17 @@
       <div v-if="editMode" class="EditAuthorText">Author</div>
       <div class="topGrid">
         <div class="SpaceBlock" />
-        <img v-if="!editMode" class="authorImage" :src="authorimage" />
+        <img
+          @click="goToAuthorPage"
+          v-if="!editMode"
+          class="authorImage"
+          :src="authorimage"
+        />
         <img v-if="editMode" class="editAuthorImage" :src="authorimage" />
         <div class="SpaceBlock" />
-        <div v-if="!editMode" class="authorText">{{ author }}</div>
+        <div @click="goToAuthorPage" v-if="!editMode" class="authorText">
+          {{ author }}
+        </div>
         <div v-if="editMode" class="EditAuthorName">{{ author }}</div>
         <div class="SpaceBlock" />
         <div v-if="!editMode" class="firstTag">{{ firstTag }}</div>
@@ -502,25 +509,26 @@ export default {
     ) {
       this.canFollow = true;
     }
-    this.firstTag = response.firsttag == null ? 'N/A' : response.firsttag;
-    this.secondTag = response.secondtag == null ? '' : response.secondtag;
-    this.thirdTag = response.thirdtag == null ? '' : response.thirdtag;
-    this.difficulty = response.difficulty == null ? '' : response.difficulty;
+    this.firstTag = response.firsttag == 'null' ? 'N/A' : response.firsttag;
+    this.secondTag = response.secondtag == 'null' ? '' : response.secondtag;
+    this.thirdTag = response.thirdtag == 'null' ? '' : response.thirdtag;
+    this.difficulty = response.difficulty == 'null' ? '' : response.difficulty;
     this.firstPreReq =
-      response.firstprerequisite == null ? '' : response.firstprerequisite;
-    this.language = response.language == null ? '' : response.language;
+      response.firstprerequisite == 'null' ? '' : response.firstprerequisite;
+    this.language = response.language == 'null' ? '' : response.language;
     this.secondPreReq =
-      response.secondprerequisite == null ? '' : response.secondprerequisite;
+      response.secondprerequisite == 'null' ? '' : response.secondprerequisite;
     this.thirdPreReq =
-      response.thirdprerequisite == null ? '' : response.thirdprerequisite;
+      response.thirdprerequisite == 'null' ? '' : response.thirdprerequisite;
     this.firstdescription =
-      response.firstdescription == null ? '' : response.firstdescription;
-    this.firsttitle = response.firsttitle == null ? '' : response.firsttitle;
+      response.firstdescription == 'null' ? '' : response.firstdescription;
+    this.firsttitle = response.firsttitle == 'null' ? '' : response.firsttitle;
     this.firstsection =
-      response.firstsection == null ? '' : response.firstsection;
+      response.firstsection == 'null' ? '' : response.firstsection;
     this.seconddescription =
-      response.seconddescription == null ? '' : response.seconddescription;
-    this.secondtitle = response.secondtitle == null ? '' : response.secondtitle;
+      response.seconddescription == 'null' ? '' : response.seconddescription;
+    this.secondtitle =
+      response.secondtitle == 'null' ? '' : response.secondtitle;
     this.secondsection =
       response.secondcontent == null ? '' : response.secondcontent;
     this.thirddescription =
@@ -565,38 +573,45 @@ export default {
       }
     }
 
-    let getLikedArticleAlready = await fetch(
-      '/rest/likes/findLikedArticle/' +
-        localStorage.getItem('userid') +
-        '/' +
-        this.$route.params.id,
-      {
-        method: 'GET',
-      }
-    );
+    if (localStorage.getItem('userid')) {
+      let getLikedArticleAlready = await fetch(
+        '/rest/likes/findLikedArticle/' +
+          localStorage.getItem('userid') +
+          '/' +
+          this.$route.params.id,
+        {
+          method: 'GET',
+        }
+      );
 
-    let likedAlreadyResponse = await getLikedArticleAlready.json();
-    if (likedAlreadyResponse.length > 0) {
-      this.alreadyLiked = true;
+      let likedAlreadyResponse = await getLikedArticleAlready.json();
+      if (likedAlreadyResponse.length > 0) {
+        this.alreadyLiked = true;
+      }
     }
 
-    let getDislikedArticleAlready = await fetch(
-      '/rest/dislikes/findDislikedArticle/' +
-        localStorage.getItem('userid') +
-        '/' +
-        this.$route.params.id,
-      {
-        method: 'GET',
-      }
-    );
+    if (localStorage.getItem('userid')) {
+      let getDislikedArticleAlready = await fetch(
+        '/rest/dislikes/findDislikedArticle/' +
+          localStorage.getItem('userid') +
+          '/' +
+          this.$route.params.id,
+        {
+          method: 'GET',
+        }
+      );
 
-    let dislikedAlreadyResponse = await getDislikedArticleAlready.json();
-    if (dislikedAlreadyResponse.length > 0) {
-      this.alreadyDisliked = true;
+      let dislikedAlreadyResponse = await getDislikedArticleAlready.json();
+      if (dislikedAlreadyResponse.length > 0) {
+        this.alreadyDisliked = true;
+      }
     }
   },
   watch: {},
   methods: {
+    goToAuthorPage() {
+      this.$router.push('/profilePage/' + this.author);
+    },
     removeComment(removedId) {
       let oldComments = this.commentsArray;
       let newComments = [];
