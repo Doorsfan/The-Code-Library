@@ -1,6 +1,5 @@
 package com.example.CodeLibrary.controllers;
 
-import com.example.CodeLibrary.entitites.Dislike;
 import com.example.CodeLibrary.entitites.Like;
 import com.example.CodeLibrary.services.LikesService;
 import com.google.gson.JsonParser;
@@ -29,7 +28,7 @@ public class LikesController {
     public void deleteLikesByArticleId(@PathVariable int articleid) {
         likesService.deleteLikesByArticleId(articleid);
     }
-    
+
     @PostMapping("/likes/likeArticle/{articleid}")
     public Like likeArticle(@PathVariable int articleid, @RequestBody String userid) {
         Like myLike = new Like();

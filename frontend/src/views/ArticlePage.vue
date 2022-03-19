@@ -785,7 +785,9 @@ export default {
       this.$router.push('/');
     },
     async dislikeArticle() {
-      if (localStorage.getItem('username') && !this.alreadyLiked) {
+      if (localStorage.getItem('username') == this.author) {
+        alert('You cannot dislike your own articles.');
+      } else if (localStorage.getItem('username') && !this.alreadyLiked) {
         this.alreadyDisliked = true;
         let myArticle = {
           maintitle: this.maintitle,
@@ -823,16 +825,19 @@ export default {
         this.dislikes = response;
 
         let relevantDislikeInfo = {
-          userid: localStorage.getItem('userid')
+          userid: localStorage.getItem('userid'),
         };
 
-        let dislikeRes = await fetch('/rest/dislikes/dislikeArticle/' + this.$route.params.id, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(relevantDislikeInfo),
-        });
+        let dislikeRes = await fetch(
+          '/rest/dislikes/dislikeArticle/' + this.$route.params.id,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(relevantDislikeInfo),
+          }
+        );
 
         let newNotification = {
           content: 'Disliked a Article.',
@@ -869,6 +874,8 @@ export default {
           },
           body: JSON.stringify(newActivity),
         });
+      } else if (this.alreadyLiked) {
+        alert('You cannot like and dislike the same article at the same time.');
       } else {
         alert('You have to be logged in to dislike Articles.');
       }
@@ -1079,7 +1086,9 @@ export default {
       });
     },
     async likeArticle() {
-      if (localStorage.getItem('username') && !this.alreadyDisliked) {
+      if (localStorage.getItem('username') == this.author) {
+        alert('You cannot like your own articles.');
+      } else if (localStorage.getItem('username') && !this.alreadyDisliked) {
         this.alreadyLiked = true;
         let myArticle = {
           maintitle: this.maintitle,
@@ -1117,16 +1126,19 @@ export default {
         this.likes = response;
 
         let relevantLikeInfo = {
-          userid: localStorage.getItem('userid')
+          userid: localStorage.getItem('userid'),
         };
 
-        let likeRes = await fetch('/rest/likes/likeArticle/' + this.$route.params.id, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(relevantLikeInfo),
-        });
+        let likeRes = await fetch(
+          '/rest/likes/likeArticle/' + this.$route.params.id,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(relevantLikeInfo),
+          }
+        );
 
         let newNotification = {
           content: 'Liked an article.',
@@ -1163,9 +1175,8 @@ export default {
           },
           body: JSON.stringify(newActivity),
         });
-      } 
-      else if(localStorage.getItem('username') == this.author) {
-        alert("You cannot like your own articles.")
+      } else if (this.alreadyDisliked) {
+        alert('You cannot like and dislike the same article at the same time.');
       } else {
         alert('You have to be logged in to Like Articles.');
       }
