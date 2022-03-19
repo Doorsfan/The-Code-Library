@@ -2,6 +2,7 @@ package com.example.CodeLibrary.controllers;
 
 import com.example.CodeLibrary.entitites.Like;
 import com.example.CodeLibrary.services.LikesService;
+import com.google.gson.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,11 +29,11 @@ public class LikesController {
         likesService.deleteLikesByArticleId(articleid);
     }
 
-    @GetMapping("/likes/{userid}/{articleid}")
-    public Like likeArticle(@PathVariable int userid, @PathVariable int articleid) {
+    @PostMapping("/likes/likeArticle/{articleid}")
+    public Like likeArticle(@PathVariable int articleid, @RequestBody String userid) {
         Like myLike = new Like();
         myLike.setArticleId(articleid);
-        myLike.setUserid(userid);
+        myLike.setUserid(JsonParser.parseString(userid).getAsJsonObject().get("userid").getAsInt());
         return likesService.saveNewLikeToDB(myLike);
     }
 
