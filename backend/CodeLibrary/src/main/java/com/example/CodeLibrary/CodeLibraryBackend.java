@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages = {"com.example"})
 public class CodeLibraryBackend {
 
-	public static void main(String[] args) {
-		SpringApplication.run(CodeLibraryBackend.class, args);
+    public static void main(String[] args) {
+        SpringApplication.run(CodeLibraryBackend.class, args);
 
-	}
+    }
 
 }
