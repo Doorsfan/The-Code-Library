@@ -47,7 +47,6 @@ public class ArticleService {
      */
     public Article findOneArticle(int id) {
         Article article = articleRepo.findBySpecificId(id);
-        System.out.println(article);
 
         return article;
         /*
