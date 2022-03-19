@@ -12,7 +12,7 @@
       :article="articleItem"
     />
   </div>
-  <Footer />
+  <Footer class="footerDiv"/>
 </template>
 <script>
 import Footer from '../components/Footer.vue';
@@ -54,6 +54,10 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Revalia&family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Revalia&family=Roboto:wght@300;400&display=swap');
 
+.footerDiv {
+  position: sticky;
+  margin-top: 10px;
+}
 .myProfileText {
   width: max-content;
   left: 60px;

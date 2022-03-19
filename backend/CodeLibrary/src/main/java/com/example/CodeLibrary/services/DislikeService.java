@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This service class handles the logic of writing and reading from the database.
@@ -73,7 +74,7 @@ public class DislikeService {
         }
     }
 
-    public List<Dislike> getDislikeByArticleIdAndUserId(int articleid, int userid) {
+    public Optional<List<Dislike>> getDislikeByArticleIdAndUserId(int articleid, int userid) {
         return dislikeRepo.findDislikesByUserIdAndArticleId(articleid, userid);
     }
 

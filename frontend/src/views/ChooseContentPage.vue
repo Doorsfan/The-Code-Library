@@ -46,7 +46,11 @@ export default {
   data() {
     return {};
   },
-  mounted() {},
+  mounted() {
+    if(!localStorage.getItem('username')){
+      this.$router.push('/');
+    }
+  },
   watch: {},
   methods: {
     goToActivityLog() {
