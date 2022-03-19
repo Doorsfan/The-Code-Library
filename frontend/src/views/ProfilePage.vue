@@ -31,7 +31,7 @@ export default {
   async mounted() {
     this.myArticles = [];
     let res = await fetch(
-      '/rest/articles/findArticlesByAuthor/' + localStorage.getItem('username'),
+      '/rest/articles/findArticlesByAuthor/' + this.$route.params.username,
       {
         method: 'GET',
       }
