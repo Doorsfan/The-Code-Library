@@ -2,6 +2,8 @@ package com.example.CodeLibrary.controllers;
 
 import com.example.CodeLibrary.entitites.Dislike;
 import com.example.CodeLibrary.services.DislikeService;
+import com.google.gson.JsonParser;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,12 +31,11 @@ public class DislikesController {
         dislikeService.deleteDislikesByArticleId(articleid);
     }
 
-    @GetMapping("/dislikes/{userid}/{articleid}")
-    public Dislike dislikeArticle(@PathVariable int userid, @PathVariable int articleid) {
+    @PostMapping("/dislikes/dislikeArticle/{articleid}")
+    public Dislike dislikeArticle(@PathVariable int articleid, @RequestBody String userid) {
         Dislike myDislike = new Dislike();
         myDislike.setArticleId(articleid);
-        myDislike.setUserid(userid);
-
+        myDislike.setUserid(JsonParser.parseString(userid).getAsJsonObject().get("userid").getAsInt());
         return dislikeService.saveNewDislikeToDB(myDislike);
     }
 
