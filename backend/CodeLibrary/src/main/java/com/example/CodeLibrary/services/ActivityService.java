@@ -7,12 +7,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-/**
- * This service class handles the logic of writing and reading from the database.
- * The Repo is only used for direct queries to the Database.
- * Built-in methods through 'extends CrudRepository'
- * The Controller classes handles receiving requests from the frontend.
- */
 @Service
 public class ActivityService {
 

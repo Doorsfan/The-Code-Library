@@ -46,7 +46,7 @@ export default {
   data() {
     return {};
   },
-  mounted() {
+  beforeMount() {
     if (!localStorage.getItem('username')) {
       this.$router.push('/');
     }
