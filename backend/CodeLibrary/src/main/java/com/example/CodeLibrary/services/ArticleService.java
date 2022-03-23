@@ -9,10 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This service class handles the logic of writing and reading from the database.
- * The Repo is only used for direct queries to the Database.
- * Built-in methods through 'extends CrudRepository'
- * The Controller classes handles receiving requests from the frontend.
+ * When we wish to denote something as being the delegated Service handler, we put a @Service annotation.
+ * This is to denote the parts of the respective layer that passes on requests to the Repository, and is
+ * wired/mapped to the Repository through the @Autowired annotation, along with the Repo class notation.
  */
 @Service
 public class ArticleService {
