@@ -351,7 +351,8 @@ export default {
   top: 32px;
   z-index: 20;
   left: -20px;
-  width: 13px;
+  width: 16px;
+  padding-left: 1px;
   height: 17px;
   font-size: 14px;
   border-radius: 30px;
