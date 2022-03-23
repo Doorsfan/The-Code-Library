@@ -77,7 +77,7 @@
       Register
     </button>
   </div>
-  <Footer class="registerFooter" />
+  <Footer class="loginFooter" />
 </template>
 <script>
 import store from '../store';
@@ -231,9 +231,9 @@ export default {
   border-radius: 30px;
   margin-bottom: 14px;
 }
-.registerFooter {
-  position: relative;
-  top: 293px;
+
+.loginFooter {
+  position: sticky;
 }
 .codeLibraryText {
   width: max-content;

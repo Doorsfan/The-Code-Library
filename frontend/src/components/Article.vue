@@ -56,11 +56,11 @@
         <div class="SpaceBlock" />
         <div class="firsttagdiv">{{ article.firsttag }}</div>
         <div class="SpaceBlock" />
-        <div v-if="article.secondtag.length > 0" class="secondtagdiv">
+        <div v-if="article.secondtag.length > 0 && article.secondtag != 'null'" class="secondtagdiv">
           {{ article.secondtag }}
         </div>
         <div class="SpaceBlock" />
-        <div v-if="article.thirdtag.length > 0" class="thirdtagdiv">
+        <div v-if="article.thirdtag.length > 0 && article.thirdtag != 'null'" class="thirdtagdiv">
           {{ article.thirdtag }}
         </div>
         <div class="SpaceBlock" />

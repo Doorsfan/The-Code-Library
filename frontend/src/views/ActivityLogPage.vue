@@ -111,4 +111,8 @@ export default {
   display: block;
   border-radius: 10px;
 }
+.loginFooter {
+  position: sticky;
+  margin-top: 30px;
+}
 </style>
