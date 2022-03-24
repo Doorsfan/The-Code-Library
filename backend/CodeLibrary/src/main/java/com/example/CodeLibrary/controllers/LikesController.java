@@ -9,13 +9,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 
-// Använd @RestController istället för @Controller
-// @RestController Spring Boot specifikt, tillåter oss använda @RequestBody för att
-// automatiskt konvertera JSON till Java objekt. Med vanlig @Controller är det flera extra steg.
+/**
+ * RestController allows us to map RequestBody to the respective Rest Path
+ * and the RequestMapping allows us to denote what mapping of a path we wish
+ * to have - along with allowed methods.
+ */
 @RestController
 @RequestMapping(value = "/rest", method = RequestMethod.POST)
 public class LikesController {
 
+    /**
+     * Acts as the mapping annotation in terms of what Repository it should be delegating parameters further unto.
+     */
     @Autowired
     private LikesService likesService;
 
@@ -24,11 +29,17 @@ public class LikesController {
         likesService.deleteLikeByID(userid, articleid);
     }
 
+    /**
+     * Path variables are the variables we put in the URL in terms of {} encapsulation
+     */
     @DeleteMapping("/likes/deleteLikesByArticleId/{articleid}")
     public void deleteLikesByArticleId(@PathVariable int articleid) {
         likesService.deleteLikesByArticleId(articleid);
     }
 
+    /**
+     * RequestBody allows us to access the body sent to this path through the request
+     */
     @PostMapping("/likes/likeArticle/{articleid}")
     public Like likeArticle(@PathVariable int articleid, @RequestBody String userid) {
         Like myLike = new Like();

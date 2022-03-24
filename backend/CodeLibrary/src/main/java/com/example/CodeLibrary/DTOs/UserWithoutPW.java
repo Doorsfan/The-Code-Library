@@ -1,5 +1,9 @@
 package com.example.CodeLibrary.DTOs;
 
+/**
+ * A DTO is just a Object that represents another entity/class, but with certain attributes omitted.
+ * In this case, the PW of a User.
+ */
 public class UserWithoutPW {
     String username, profileURL;
     Integer id;

@@ -16,9 +16,16 @@ import java.util.List;
 @Service
 public class ArticleService {
 
+    /**
+     * Acts as the mapping annotation in terms of what Repository it should be delegating parameters further unto.
+     */
     @Autowired
     private ArticleRepo articleRepo;
 
+    /**
+     * Methods in the Service layer enact as methods to call when you wish to further down the request unto the
+     * Repo to persist in the DB and get a response from there, which then returns it back to the calling Controllers.
+     */
     public List<Article> findAllArticles() {
         return (List<Article>) articleRepo.findAll();
     }

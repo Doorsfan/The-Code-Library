@@ -16,10 +16,17 @@ import java.util.List;
 @Service
 public class LikesService {
 
+    /**
+     * Acts as the mapping annotation in terms of what Repository it should be delegating parameters further unto.
+     */
     @Autowired
     private LikesRepo likeRepo;
 
 
+    /**
+     * Methods in the Service layer enact as methods to call when you wish to further down the request unto the
+     * Repo to persist in the DB and get a response from there, which then returns it back to the calling Controllers.
+     */
     public List<Like> findLikesByUserId(int id) {
         List<Like> like = likeRepo.findLikesByUserId(id);
 

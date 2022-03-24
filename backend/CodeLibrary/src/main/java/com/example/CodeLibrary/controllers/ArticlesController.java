@@ -7,14 +7,18 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-// Använd @RestController istället för @Controller
-// @RestController Spring Boot specifikt, tillåter oss använda @RequestBody för att
-// automatiskt konvertera JSON till Java objekt. Med vanlig @Controller är det flera extra steg.
+/**
+ * RestController allows us to map RequestBody to the respective Rest Path
+ * and the RequestMapping allows us to denote what mapping of a path we wish
+ * to have - along with allowed methods.
+ */
 @RestController
 @RequestMapping(value = "/rest", method = RequestMethod.POST)
-// Sätter denna strängen att komma automatiskt efter localhost:4000{minSträng}
 public class ArticlesController {
 
+    /**
+     * Acts as the mapping annotation in terms of what Repository it should be delegating parameters further unto.
+     */
     @Autowired
     private ArticleService articleService;
 
@@ -23,6 +27,9 @@ public class ArticlesController {
         return articleService.findAllArticles();
     }
 
+    /**
+     * Path variables are the variables we put in the URL in terms of {} encapsulation
+     */
     @GetMapping("/articles/findArticleByTerm/{term}")
     public List<Article> getArticlesContaining(@PathVariable String term) {
         return articleService.getArticlesContaining(term);
@@ -38,7 +45,9 @@ public class ArticlesController {
         return articleService.findOneArticle(id);
     }
 
-    // @RequestBody konverterar Req JSON objektet till det specifika java objektet vi anger som parameter
+    /**
+     * RequestBody allows us to access the body sent to this path through the request
+     */
     @PostMapping("/articles/publish")
     public Article createNewArticle(@RequestBody Article article) {
         return articleService.saveNewArticleToDB(article);
